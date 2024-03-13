@@ -1,4 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:econo_mia/pages/summary.dart';
+
+void main() async {
+  runApp(const App());
+}
+
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Material App',
+      routes: {
+        '/inicio': (context) => const Summary(),
+      },
+      home: Scaffold(
+        appBar: AppBar(
+            title: const Text(
+              "EconoMÍA",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
+            ),
+            backgroundColor: Colors.blue),
+        body: ListView(children: [
+          Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, right: 20, bottom: 20, left: 20),
+              child: Container(color: Colors.amber, height: 200)),
+          Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
+              child: Container(color: Colors.amber, height: 200)),
+          Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
+              child: Container(color: Colors.amber, height: 200)),
+          Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
+              child: Container(color: Colors.amber, height: 200)),
+          Padding(
+              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
+              child: Container(color: Colors.amber, height: 200)),
+        ]),
+      ),
+    );
+  }
+}
+
+/* import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -66,4 +121,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
+} */
