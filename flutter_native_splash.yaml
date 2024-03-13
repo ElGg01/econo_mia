@@ -1,0 +1,13 @@
+flutter_native_splash:
+  color: "#43e5ef"
+  image: assets/logoAppGastos.png
+  color_dark: "#43e5ef"
+  image_dark: assets/logoAppGastos.png
+
+  android_12:
+    image: assets/logoAppGastos.png
+    icon_background_color: "#43e5ef"
+    image_dark: assets/logoAppGastos.png
+    icon_background_color_dark: "#43e5ef"
+
+  web: true
