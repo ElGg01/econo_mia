@@ -31,12 +31,13 @@ class _AppState extends State<App> {
                     fontWeight: FontWeight.bold,
                     fontSize: 24),
               ),
-              backgroundColor: Colors.blue),
+              backgroundColor: Colors.cyan),
           body: Container(
-            decoration: const BoxDecoration(
+            color: Colors.white70,
+            /* decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/abstract-background.png"),
-                    fit: BoxFit.cover)),
+                    fit: BoxFit.cover)), */
             child: ListView(physics: const BouncingScrollPhysics(), children: [
               Padding(
                   padding: const EdgeInsets.only(
@@ -48,10 +49,31 @@ class _AppState extends State<App> {
                         child: Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: Colors.cyan.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
+                                  width: 2, color: (Colors.cyanAccent))),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset(
+                                  "assets/logoAppGastosFixed.png",
+                                  width: 150,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("RESUMEN:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Gasto 1"),
+                                    Text("Gasto 2"),
+                                    Text("Gasto 3"),
+                                    Text("Gasto 4"),
+                                    Text("Gasto 5"),
+                                  ],
+                                )
+                              ]),
                         ),
                       ))),
               Padding(
@@ -64,10 +86,31 @@ class _AppState extends State<App> {
                         child: Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: Colors.cyan.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
+                                  width: 2, color: (Colors.cyanAccent))),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset(
+                                  "assets/logoAppGastosFixed.png",
+                                  width: 150,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("RESUMEN:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Gasto 1"),
+                                    Text("Gasto 2"),
+                                    Text("Gasto 3"),
+                                    Text("Gasto 4"),
+                                    Text("Gasto 5"),
+                                  ],
+                                )
+                              ]),
                         ),
                       ))),
               Padding(
@@ -80,10 +123,31 @@ class _AppState extends State<App> {
                         child: Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: Colors.cyan.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
+                                  width: 2, color: (Colors.cyanAccent))),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset(
+                                  "assets/logoAppGastosFixed.png",
+                                  width: 150,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("RESUMEN:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Gasto 1"),
+                                    Text("Gasto 2"),
+                                    Text("Gasto 3"),
+                                    Text("Gasto 4"),
+                                    Text("Gasto 5"),
+                                  ],
+                                )
+                              ]),
                         ),
                       ))),
               Padding(
@@ -96,10 +160,31 @@ class _AppState extends State<App> {
                         child: Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: Colors.cyan.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
+                                  width: 2, color: (Colors.cyanAccent))),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset(
+                                  "assets/logoAppGastosFixed.png",
+                                  width: 150,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("RESUMEN:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Gasto 1"),
+                                    Text("Gasto 2"),
+                                    Text("Gasto 3"),
+                                    Text("Gasto 4"),
+                                    Text("Gasto 5"),
+                                  ],
+                                )
+                              ]),
                         ),
                       ))),
               Padding(
@@ -112,26 +197,31 @@ class _AppState extends State<App> {
                         child: Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: Colors.cyan.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(25),
                               border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
-                        ),
-                      ))),
-              Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, right: 20, bottom: 20, left: 20),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                        child: Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(
-                                  width: 2, color: (Colors.blue[300]!))),
+                                  width: 2, color: (Colors.cyanAccent))),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Image.asset(
+                                  "assets/logoAppGastosFixed.png",
+                                  width: 150,
+                                ),
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("RESUMEN:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Gasto 1"),
+                                    Text("Gasto 2"),
+                                    Text("Gasto 3"),
+                                    Text("Gasto 4"),
+                                    Text("Gasto 5"),
+                                  ],
+                                )
+                              ]),
                         ),
                       ))),
             ]),
