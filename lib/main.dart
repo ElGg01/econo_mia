@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:econo_mia/pages/summary.dart';
 
@@ -21,34 +23,119 @@ class _AppState extends State<App> {
         '/inicio': (context) => const Summary(),
       },
       home: Scaffold(
-        appBar: AppBar(
-            title: const Text(
-              "EconoMÍA",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
-            ),
-            backgroundColor: Colors.blue),
-        body: ListView(children: [
-          Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 20, bottom: 20, left: 20),
-              child: Container(color: Colors.amber, height: 200)),
-          Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
-              child: Container(color: Colors.amber, height: 200)),
-          Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
-              child: Container(color: Colors.amber, height: 200)),
-          Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
-              child: Container(color: Colors.amber, height: 200)),
-          Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20, left: 20),
-              child: Container(color: Colors.amber, height: 200)),
-        ]),
-      ),
+          appBar: AppBar(
+              title: const Text(
+                "EconoMÍA",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24),
+              ),
+              backgroundColor: Colors.blue),
+          body: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/abstract-background.png"),
+                    fit: BoxFit.cover)),
+            child: ListView(physics: const BouncingScrollPhysics(), children: [
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 20, bottom: 20, left: 20),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 2, color: (Colors.blue[300]!))),
+                        ),
+                      ))),
+            ]),
+          )),
     );
   }
 }
