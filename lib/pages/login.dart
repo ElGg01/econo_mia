@@ -23,9 +23,9 @@ class _LoginState extends State<Login> {
                     fontSize: 24)),
           ),
           centerTitle: true,
-          backgroundColor: Colors.cyan,
+          backgroundColor: const Color.fromARGB(255, 67, 229, 239),
         ),
-        backgroundColor: Colors.cyan,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Center(
             child:
@@ -44,16 +44,16 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                            width: 2, color: Colors.white), //<-- SEE HERE
+                            width: 2, color: Colors.black), //<-- SEE HERE
                       ),
                       labelText: "Correo",
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       prefixIcon: Icon(Icons.email),
-                      prefixIconColor: Colors.white,
+                      prefixIconColor: Colors.black,
                     ),
                     autofocus: false,
-                    style: TextStyle(color: Colors.white),
-                    cursorColor: Colors.white,
+                    style: TextStyle(color: Colors.black),
+                    cursorColor: Colors.black,
                   ),
                 ),
               ),
@@ -65,15 +65,15 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              width: 2, color: Colors.white), //<-- SEE HERE
+                              width: 2, color: Colors.black), //<-- SEE HERE
                         ),
                         labelText: "Contraseña",
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: TextStyle(color: Colors.black),
                         prefixIcon: Icon(Icons.password),
-                        prefixIconColor: Colors.white,
+                        prefixIconColor: Colors.black,
                       ),
                       obscureText: true,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   )),
               FadeInUpBig(
@@ -97,7 +97,10 @@ class _LoginState extends State<Login> {
                             fontStyle: FontStyle.italic,
                             color: Colors.black,
                             decoration: TextDecoration.underline),
-                      )))
+                      ))),
+              const SizedBox(
+                height: 20,
+              )
             ]),
           ),
         ));
