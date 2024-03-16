@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -63,10 +66,32 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Image.asset(
+                                    Container(
+                                      width: 200,
+                                      child: SfCircularChart(
+                                        title: const ChartTitle(text: "Titulo"),
+                                        legend: const Legend(isVisible: false),
+                                        series: <CircularSeries>[
+                                          PieSeries<ChartData, String>(
+                                            dataSource: <ChartData>[
+                                              ChartData('India', 280),
+                                              ChartData('USA', 210),
+                                              ChartData('China', 140),
+                                              ChartData('Japan', 120),
+                                              ChartData('UK', 90),
+                                            ],
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.x,
+                                            yValueMapper: (ChartData data, _) =>
+                                                data.y,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    /* Image.asset(
                                       "assets/logoAppGastosFixed.png",
                                       width: 150,
-                                    ),
+                                    ), */
                                     const Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -181,4 +206,10 @@ class _HomeState extends State<Home> {
           ]),
         ));
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double y;
 }
