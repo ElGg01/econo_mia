@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "216667509234",
+    "project_id": "economia-fa271",
+    "storage_bucket": "economia-fa271.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216667509234:android:25e54d09070b9b86175b6b",
+        "android_client_info": {
+          "package_name": "com.example.econo_mia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216667509234-eejn5jsikg6hgtlse13soo6a5hb0p13a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiJfxI_b0eJLmWDFB_n113n-K-ZuGwTZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216667509234-eejn5jsikg6hgtlse13soo6a5hb0p13a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
