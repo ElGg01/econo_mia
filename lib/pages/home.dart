@@ -21,12 +21,13 @@ class _HomeState extends State<Home> {
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           delay: const Duration(seconds: 1),
-          child: Text("EconoMÍA",
+          child: Text(
+            "EconoMÍA",
             style: GoogleFonts.roboto(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 24
-            )
+              fontSize: 24,
+            ),
           ),
         ),
         centerTitle: true,
@@ -36,16 +37,19 @@ class _HomeState extends State<Home> {
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(15),
             bottomRight: Radius.circular(15),
-          )
+          ),
         ),
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/user_settings');
-              },
-              icon: const Icon(Icons.person)
-          )
+            onPressed: () {
+              Navigator.pushNamed(context, '/user_settings');
+            },
+            icon: const Icon(Icons.person),
+          ),
         ],
       ),
       body: Container(
@@ -54,164 +58,185 @@ class _HomeState extends State<Home> {
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
             ElasticInLeft(
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20, right: 20, bottom: 20, left: 20),
-                    child: InkWell(
-                      child: ClipRRect(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                ),
+                child: InkWell(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 15,
+                        sigmaY: 15,
+                      ),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.cyan.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(25),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                            child: Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  color: Colors.cyan.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                      width: 2, color: (Colors.cyanAccent))),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: 200,
-                                      child: SfCircularChart(
-                                        title: const ChartTitle(text: "Titulo"),
-                                        legend: const Legend(isVisible: false),
-                                        series: <CircularSeries>[
-                                          PieSeries<ChartData, String>(
-                                            dataSource: <ChartData>[
-                                              ChartData('India', 280),
-                                              ChartData('USA', 210),
-                                              ChartData('China', 140),
-                                              ChartData('Japan', 120),
-                                              ChartData('UK', 90),
-                                            ],
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.x,
-                                            yValueMapper: (ChartData data, _) =>
-                                                data.y,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    /* Image.asset(
-                                      "assets/logoAppGastosFixed.png",
-                                      width: 150,
-                                    ), */
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("RESUMEN:",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text("Gasto 1"),
-                                        Text("Gasto 2"),
-                                        Text("Gasto 3"),
-                                        Text("Gasto 4"),
-                                        Text("Gasto 5"),
-                                      ],
-                                    )
-                                  ]),
+                          border: Border.all(
+                            width: 2,
+                            color: (Colors.cyanAccent),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Container(
+                              width: 200,
+                              child: SfCircularChart(
+                                title: const ChartTitle(text: "Titulo"),
+                                legend: const Legend(isVisible: false),
+                                series: <CircularSeries>[
+                                  PieSeries<ChartData, String>(
+                                    dataSource: <ChartData>[
+                                      ChartData('India', 280),
+                                      ChartData('USA', 210),
+                                      ChartData('China', 140),
+                                      ChartData('Japan', 120),
+                                      ChartData('UK', 90),
+                                    ],
+                                    xValueMapper: (ChartData data, _) => data.x,
+                                    yValueMapper: (ChartData data, _) => data.y,
+                                  ),
+                                ],
+                              ),
                             ),
-                          )),
-                      onTap: () {
-                        print("Presiono el widget");
-                      },
-                    ))),
+                            const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "RESUMEN:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text("Gasto 1"),
+                                Text("Gasto 2"),
+                                Text("Gasto 3"),
+                                Text("Gasto 4"),
+                                Text("Gasto 5"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    print("Presiono el widget");
+                  },
+                ),
+              ),
+            ),
             ElasticInLeft(
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20, right: 20, bottom: 20, left: 20),
-                    child: InkWell(
-                      child: ClipRRect(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, right: 20, bottom: 20, left: 20),
+                child: InkWell(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(25),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                            child: Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  color: Colors.red.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                      width: 2, color: (Colors.redAccent))),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Image.asset(
-                                      "assets/logoAppGastosFixed.png",
-                                      width: 150,
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("RESUMEN:",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text("Gasto 1"),
-                                        Text("Gasto 2"),
-                                        Text("Gasto 3"),
-                                        Text("Gasto 4"),
-                                        Text("Gasto 5"),
-                                      ],
-                                    )
-                                  ]),
+                          border: Border.all(
+                            width: 2,
+                            color: (Colors.redAccent),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Image.asset(
+                              "assets/logoAppGastosFixed.png",
+                              width: 150,
                             ),
-                          )),
-                      onTap: () {
-                        print("Presiono el widget");
-                      },
-                    ))),
+                            const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Text>[
+                                Text(
+                                  "RESUMEN:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text("Gasto 1"),
+                                Text("Gasto 2"),
+                                Text("Gasto 3"),
+                                Text("Gasto 4"),
+                                Text("Gasto 5"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    print("Presiono el widget");
+                  },
+                ),
+              ),
+            ),
             ElasticInLeft(
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20, right: 20, bottom: 20, left: 20),
-                    child: InkWell(
-                      child: ClipRRect(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, right: 20, bottom: 20, left: 20),
+                child: InkWell(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(25),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                            child: Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                  color: Colors.green.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                      width: 2, color: (Colors.greenAccent))),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Image.asset(
-                                      "assets/logoAppGastosFixed.png",
-                                      width: 150,
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("RESUMEN:",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                        Text("Gasto 1"),
-                                        Text("Gasto 2"),
-                                        Text("Gasto 3"),
-                                        Text("Gasto 4"),
-                                        Text("Gasto 5"),
-                                      ],
-                                    )
-                                  ]),
+                          border: Border.all(
+                            width: 2,
+                            color: (Colors.greenAccent),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Image.asset(
+                              "assets/logoAppGastosFixed.png",
+                              width: 150,
                             ),
-                          )),
-                      onTap: () {
-                        print("Presiono el widget");
-                      },
-                    ))),
-          ]),
-        ));
+                            const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Text>[
+                                Text(
+                                  "RESUMEN:",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text("Gasto 1"),
+                                Text("Gasto 2"),
+                                Text("Gasto 3"),
+                                Text("Gasto 4"),
+                                Text("Gasto 5"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    print("Presiono el widget");
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

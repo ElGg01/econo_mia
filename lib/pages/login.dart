@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
               children: [
                 Icon(Icons.dangerous),
                 SizedBox(width: 20,),
-                Expanded(child: Text('Invalid credentials')),
+                Expanded(child: Text('Invalid credentials'),),
               ],
             ),
             backgroundColor: Colors.red,
@@ -108,7 +108,7 @@ class _LoginState extends State<Login> {
                   child: Image.asset(
                     "assets/logoAppGastosFixed.png",
                     width: 200,
-                  )
+                  ),
                 ),
                 // Email
                 FadeInUpBig(
@@ -164,14 +164,14 @@ class _LoginState extends State<Login> {
                         return null;
                       },
                     ),
-                  )
+                  ),
                 ),
                 FadeInUpBig(
                   delay: const Duration(milliseconds: 300),
                   child: ElevatedButton(
                     onPressed: _signIn,
                     child: const Text("Submit")
-                  )
+                  ),
                 ),
                 const SizedBox(height: 10),
                 FadeInUpBig(
@@ -194,11 +194,11 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 20,
                 ),
-              ]
+              ],
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }
