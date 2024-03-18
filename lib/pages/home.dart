@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
-
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,6 +13,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  late FirebaseFirestore db;
+
+  @override
+  void initState() {
+    super.initState();
+    db = FirebaseFirestore.instance;
+  }
+
+  Future<void> loadData() async {
+    await db.collection('financial').get().then((value) {
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

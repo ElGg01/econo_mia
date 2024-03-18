@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "216667509234-3d6epkm5beu5v18st5920dprkmfpt5q3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.econo_mia",
+            "certificate_hash": "5c1151b54dfe18b552ef40b42eb3cfdd509bd445"
+          }
+        },
+        {
           "client_id": "216667509234-eejn5jsikg6hgtlse13soo6a5hb0p13a.apps.googleusercontent.com",
           "client_type": 3
         }

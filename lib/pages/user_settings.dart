@@ -15,11 +15,9 @@ class _UserSettingsState extends State<UserSettings> {
 
 
   Future<void> _signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      print('Error signing out: $e');
-    }
+    await FirebaseAuth.instance.signOut();
+    if (!context.mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
   @override
@@ -46,12 +44,9 @@ class _UserSettingsState extends State<UserSettings> {
             children: <Widget>[
               const SizedBox(height: 30,),
               ElevatedButton(
-                onPressed: (){
-                  _signOut();
-                  Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-                },
+                onPressed: _signOut,
                 child: const Text('Logout'),
-              )
+              ),
             ],
           ),
         ),

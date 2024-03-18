@@ -44,7 +44,8 @@ class _RegisterState extends State<Register> {
       if (user != null){
         print('User is signed in successfully');
         if (!context.mounted) return;
-        Navigator.pushNamed(context, '/home');
+        // Navigator.pushNamed(context, '/home');
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         print('Some error happened');
       }

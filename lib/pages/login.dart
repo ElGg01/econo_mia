@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../auth/firebase_auth_services.dart';
 
 class Login extends StatefulWidget {
@@ -25,7 +25,8 @@ class _LoginState extends State<Login> {
         print('User is currently signed out');
       } else {
         print('User is signed in, his uid is: ${user.uid}');
-        Navigator.pushNamed(context, "/home");
+        // Navigator.pushNamed(context, "/home");
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
     });
   }
@@ -42,7 +43,7 @@ class _LoginState extends State<Login> {
       if (user != null){
         print('User is signed in successfully');
         if (!context.mounted) return;
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,6 +62,29 @@ class _LoginState extends State<Login> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Check the form'))
+      );
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    User? user = await _auth.signInWithGoogleService();
+    if (user != null){
+      print('User is signed in successfully');
+      if (!context.mounted) return;
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    } else {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: <Widget>[
+              Icon(Icons.dangerous),
+              SizedBox(width: 20,),
+              Expanded(child: Text('Invalid Google credentials'),),
+            ],
+          ),
+          backgroundColor: Colors.red,
+        ),
       );
     }
   }
@@ -166,6 +190,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+                // Submit
                 FadeInUpBig(
                   delay: const Duration(milliseconds: 300),
                   child: ElevatedButton(
@@ -173,7 +198,22 @@ class _LoginState extends State<Login> {
                     child: const Text("Submit")
                   ),
                 ),
+                // Sign in with google
+                FadeInUpBig(
+                  delay: const Duration(milliseconds: 300),
+                  child: ElevatedButton(
+                      onPressed: _signInWithGoogle,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(MdiIcons.fromString('google')),
+                          const SizedBox(width: 30,),
+                          const Text('Sign in with Google'),
+                        ],
+                      )
+                  ),
+                ),
                 const SizedBox(height: 10),
+                // Register
                 FadeInUpBig(
                   delay: const Duration(milliseconds: 300),
                   child: GestureDetector(
