@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,7 +14,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   late FirebaseFirestore db;
 
   @override
@@ -22,12 +22,15 @@ class _HomeState extends State<Home> {
     db = FirebaseFirestore.instance;
   }
 
-  Future<void> loadData() async {
-    await db.collection('financial').get().then((value) {
-
-    });
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    if (!context.mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
+  Future<void> loadData() async {
+    await db.collection('financial').get().then((value) {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +56,34 @@ class _HomeState extends State<Home> {
             bottomRight: Radius.circular(15),
           ),
         ),
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text(
+                "EconoMÍA",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              title: const Text("Mi cuenta"),
+              leading: const Icon(Icons.person),
+              onTap: () {
+                Navigator.pushNamed(context, '/user_settings');
+              },
+            ),
+            ListTile(
+              title: const Text("Cerrar sesión"),
+              leading: const Icon(Icons.logout),
+              onTap: () {
+                _signOut();
+              },
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/user_settings');
-            },
-            icon: const Icon(Icons.person),
-          ),
-        ],
       ),
       body: Container(
         child: ListView(
