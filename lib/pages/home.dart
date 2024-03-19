@@ -39,14 +39,13 @@ class _HomeState extends State<Home> {
           child: Text(
             "EconoMÍA",
             style: GoogleFonts.roboto(
-              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.cyan,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -68,7 +67,6 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Container(
-        color: Colors.white70,
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: <Widget>[

@@ -1,7 +1,10 @@
+import 'package:econo_mia/ui/theme_mode_option.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import './ui/color_schemes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:econo_mia/pages/register.dart';
 import 'package:econo_mia/pages/login.dart';
 import 'package:econo_mia/pages/home.dart';
@@ -31,24 +34,48 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      routes: {
-        '/login': (context) => const Login(),
-        '/register': (context) => const Register(),
-        '/home': (context) => const Home(),
-        '/user_settings': (context) => const UserSettings(),
-      },
-      initialRoute: "/login",
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es'),
-      ],
+
+    return ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _){
+          return MaterialApp(
+            title: 'Material App',
+            theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: lightColorScheme,
+                brightness: Brightness.light
+            ),
+            darkTheme: ThemeData(
+                useMaterial3: true,
+                colorScheme: darkColorScheme,
+                brightness: Brightness.dark
+            ),
+            themeMode: themeProvider.themeMode == ThemeModeOption.system
+              ? ThemeMode.system
+              : themeProvider.themeMode == ThemeModeOption.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+            routes: {
+              '/login': (context) => const Login(),
+              '/register': (context) => const Register(),
+              '/home': (context) => const Home(),
+              '/user_settings': (context) => const UserSettings(),
+            },
+            initialRoute: "/login",
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('es'),
+            ],
+          );
+        },
+      ),
     );
+
   }
 }
