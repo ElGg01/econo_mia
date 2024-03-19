@@ -57,32 +57,38 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text(
-                "EconoMÍA",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.bold, fontSize: 24),
+      drawer: Drawer(
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(0.7),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: ListView(
+            children: [
+              ListTile(
+                tileColor: Theme.of(context).colorScheme.primaryContainer,
+                title: Text(
+                  "EconoMÍA",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.bold, fontSize: 24),
+                ),
               ),
-            ),
-            ListTile(
-              title: const Text("Mi cuenta"),
-              leading: const Icon(Icons.person),
-              onTap: () {
-                Navigator.pushNamed(context, '/user_settings');
-              },
-            ),
-            ListTile(
-              title: const Text("Cerrar sesión"),
-              leading: const Icon(Icons.logout),
-              onTap: () {
-                _signOut();
-              },
-            ),
-          ],
+              ListTile(
+                title: const Text("Mi cuenta"),
+                leading: const Icon(Icons.person),
+                onTap: () {
+                  Navigator.pushNamed(context, '/user_settings');
+                },
+              ),
+              ListTile(
+                title: const Text("Cerrar sesión"),
+                leading: const Icon(Icons.logout),
+                onTap: () {
+                  _signOut();
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Container(
