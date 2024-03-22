@@ -59,11 +59,20 @@ class _HomeState extends State<Home> {
       ),
       drawer: Drawer(
         backgroundColor:
-            Theme.of(context).colorScheme.background.withOpacity(0.7),
+            Theme.of(context).colorScheme.background.withOpacity(1),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
           child: ListView(
             children: [
+              Container(
+                child: Image.asset(
+                  "assets/logoAppGastosFixed.png",
+                  height: 150,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               ListTile(
                 tileColor: Theme.of(context).colorScheme.primaryContainer,
                 title: Text(
@@ -72,6 +81,9 @@ class _HomeState extends State<Home> {
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.bold, fontSize: 24),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               ListTile(
                 title: const Text("Mi cuenta"),
