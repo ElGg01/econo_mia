@@ -18,18 +18,8 @@ class _LoginState extends State<Login> {
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = true;
 
-  void listenAuthChanges() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out');
-      } else {
-        print('User is signed in, his uid is: ${user.uid}');
-        // Navigator.pushNamed(context, "/home");
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-      }
-    });
-  }
 
   Future<void> _signIn() async {
     if (_formKey.currentState!.validate()){
@@ -92,7 +82,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    listenAuthChanges();
   }
 
   @override
@@ -107,134 +96,164 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
-          duration: const Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 800),
           child: Text("Login",
             style: GoogleFonts.roboto(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onBackground,
               fontWeight: FontWeight.bold,
               fontSize: 24
             ),
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 67, 229, 239),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 30),
-                ZoomIn(
-                  child: Image.asset(
-                    "assets/logoAppGastosFixed.png",
-                    width: 200,
-                  ),
-                ),
-                // Email
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.black), //<-- SEE HERE
-                        ),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.black),
-                        prefixIcon: Icon(Icons.email),
-                        prefixIconColor: Colors.black,
-                      ),
-                      autofocus: false,
-                      style: const TextStyle(color: Colors.black),
-                      cursorColor: Colors.black,
-                      validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                        if (!emailValid){
-                          return 'Type a correct email';
-                        }
-                        return null;
-                      },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: 30),
+                  ZoomIn(
+                    child: Image.asset(
+                      "assets/logoAppGastosFixed.png",
+                      width: 200,
                     ),
                   ),
-                ),
-                // Password
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.black), //<-- SEE HERE
+                  // Email
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).colorScheme.onBackground
+                            ),
+                          ),
+                          labelText: "Email",
+                          prefixIcon: const Icon(Icons.email),
                         ),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.black),
-                        prefixIcon: Icon(Icons.password),
-                        prefixIconColor: Colors.black,
+                        autofocus: false,
+                        cursorColor: Colors.black,
+                        validator: (String? value){
+                          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
+                          if (!emailValid){
+                            return 'Type a correct email';
+                          }
+                          return null;
+                        },
                       ),
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.black),
-                      validator: (String? value){
-                        if (value!.isEmpty || value == "") {
-                          return 'Password is empty';
-                        }
-                        return null;
-                      },
                     ),
                   ),
-                ),
-                // Submit
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: ElevatedButton(
-                    onPressed: _signIn,
-                    child: const Text("Submit")
+                  // Password
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).colorScheme.onBackground
+                            ),
+                          ),
+                          labelText: "Password",
+                          prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: (){
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                        obscureText: _isPasswordVisible,
+                        validator: (String? value){
+                          if (value!.isEmpty || value == "") {
+                            return 'Password is empty';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                // Sign in with google
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: ElevatedButton(
+                  // Submit
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      onPressed: _signIn,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Submit",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.background
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Sign in with google
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: ElevatedButton(
                       onPressed: _signInWithGoogle,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(MdiIcons.fromString('google')),
                           const SizedBox(width: 30,),
                           const Text('Sign in with Google'),
                         ],
                       )
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                // Register
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, "/register");
-                    },
-                    child: const Text(
-                      "Don't have an account? Register here",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black,
-                          decoration: TextDecoration.underline
+                  const SizedBox(height: 10),
+                  // Register
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/register");
+                      },
+                      child: const Text(
+                        "Don't have an account? Register here",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            decoration: TextDecoration.underline
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

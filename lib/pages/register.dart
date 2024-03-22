@@ -1,3 +1,4 @@
+import 'package:econo_mia/auth/email_verification_alert.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +19,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = true;
 
   @override
   void initState() {
@@ -43,8 +45,16 @@ class _RegisterState extends State<Register> {
       );
       if (user != null){
         print('User is signed in successfully');
+        await user.updateDisplayName(_nameController.text);
+        await user.sendEmailVerification();
         if (!context.mounted) return;
-        // Navigator.pushNamed(context, '/home');
+        // showDialog(
+        //   context: context,
+        //   builder: (BuildContext context) {
+        //     return EmailVerificationAlert(user: user);
+        //   }
+        // );
+
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         print('Some error happened');
@@ -61,54 +71,50 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
-          duration: const Duration(seconds: 1),
+          duration: const Duration(milliseconds: 800),
           child: Text("REGISTRATION",
             style: GoogleFonts.roboto(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onBackground,
               fontWeight: FontWeight.bold,
               fontSize: 24
             )
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 67, 229, 239),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 30),
-                ZoomIn(
-                  child: Image.asset(
-                    "assets/logoAppGastosFixed.png",
-                    width: 200,
-                  )
-                ),
-                // Name
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: 30),
+                  ZoomIn(
+                    child: Image.asset(
+                      "assets/logoAppGastosFixed.png",
+                      width: 200,
+                    )
+                  ),
+                  // Name
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
                     child: TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              width: 2, color: Colors.black
+                            width: 2,
+                            color: Theme.of(context).colorScheme.onBackground
                           ),
                         ),
                         labelText: "Name",
-                        labelStyle: TextStyle(color: Colors.black),
-                        prefixIcon: Icon(Icons.person),
-                        prefixIconColor: Colors.black,
+                        prefixIcon: const Icon(Icons.person),
                       ),
                       autofocus: false,
-                      style: const TextStyle(color: Colors.black),
-                      cursorColor: Colors.black,
                       validator: (String? value){
                         bool emailValid = RegExp(r"^[a-zA-Z0-9a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]").hasMatch(value!);
                         if (!emailValid){
@@ -118,107 +124,130 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                   ),
-                ),
-                // Email
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2, color: Colors.black
+                  // Email
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).colorScheme.onBackground
+                            ),
                           ),
+                          labelText: "Email",
+                          prefixIcon: const Icon(Icons.email),
                         ),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.black),
-                        prefixIcon: Icon(Icons.email),
-                        prefixIconColor: Colors.black,
+                        autofocus: false,
+                        validator: (String? value){
+                          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
+                          if (!emailValid){
+                            return 'Type a correct email';
+                          }
+                          return null;
+                        },
                       ),
-                      autofocus: false,
-                      style: const TextStyle(color: Colors.black),
-                      cursorColor: Colors.black,
-                      validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                        if (!emailValid){
-                          return 'Type a correct email';
-                        }
-                        return null;
-                      },
                     ),
                   ),
-                ),
-                // Password
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2, color: Colors.black
+                  // Password
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        obscureText: _isPasswordVisible,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).colorScheme.onBackground
+                            ),
+                          ),
+                          labelText: "Password",
+                          prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                            ),
+                            onPressed: (){
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
                           ),
                         ),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.black),
-                        prefixIcon: Icon(Icons.password),
-                        prefixIconColor: Colors.black,
-                      ),
-                      obscureText: true,
-                      style: const TextStyle(color: Colors.black),
-                      validator: (String? value){
-                        RegExp validateUppercase = RegExp(r'[A-Z]');
-                        RegExp validateDigits = RegExp(r'[0-9]');
-                        RegExp validateSpecialCharacters = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
-                        if (value!.length < 8) {
-                          return 'Your password must contain at least 8 characters';
-                        }
-                        else if (!value.contains(validateUppercase)){
-                          return 'Your password must contain at least one uppercase letter';
-                        }
-                        else if (!value.contains(validateDigits)){
-                          return 'Your password must contain at least one digit';
-                        }
-                        else if (!value.contains(validateSpecialCharacters)){
-                          return 'Your password must contain at least one special character';
-                        }
-                        return null;
-                      },
-                    ),
-                  )
-                ),
-                // Enter button
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: ElevatedButton(
-                    onPressed: _signUp,
-                    child: const Text("Submit")
-                  )
-                ),
-                const SizedBox(height: 10),
-                FadeInUpBig(
-                  delay: const Duration(milliseconds: 300),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      "Already have an account?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.black,
-                        decoration: TextDecoration.underline
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                        validator: (String? value){
+                          RegExp validateUppercase = RegExp(r'[A-Z]');
+                          RegExp validateDigits = RegExp(r'[0-9]');
+                          RegExp validateSpecialCharacters = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
+                          if (value!.length < 8) {
+                            return 'Your password must contain at least 8 characters';
+                          }
+                          else if (!value.contains(validateUppercase)){
+                            return 'Your password must contain at least one uppercase letter';
+                          }
+                          else if (!value.contains(validateDigits)){
+                            return 'Your password must contain at least one digit';
+                          }
+                          else if (!value.contains(validateSpecialCharacters)){
+                            return 'Your password must contain at least one special character';
+                          }
+                          return null;
+                        },
                       ),
                     )
-                  )
-                ),
-                const SizedBox( height: 20, )
-              ]
+                  ),
+                  // Enter button
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      onPressed: _signUp,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Submit",
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.background
+                          ),
+                          ),
+                        ],
+                      )
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Already have an account?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.onBackground,
+                          decoration: TextDecoration.underline
+                        ),
+                      )
+                    )
+                  ),
+                  const SizedBox( height: 20, )
+                ]
+              ),
             ),
           ),
         ),
