@@ -1,4 +1,3 @@
-import 'package:econo_mia/auth/email_verification_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -25,19 +24,11 @@ class _UserSettingsState extends State<UserSettings> {
   void initState() {
     super.initState();
     setThemeStringMode();
-    setEmailVerifiedState();
   }
 
   late String _themeStringOption;
   late IconData _icon;
-  late bool _isEmailVerified;
 
-  void setEmailVerifiedState(){
-    setState(() {
-      user?.reload();
-      _isEmailVerified = user!.emailVerified;
-    });
-  }
 
   void setThemeStringMode(){
     setState(() {
@@ -101,14 +92,6 @@ class _UserSettingsState extends State<UserSettings> {
     );
   }
 
-  void _showEmailVerificationDialog(BuildContext context){
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return EmailVerificationAlert(user: user);
-        }
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,15 +129,6 @@ class _UserSettingsState extends State<UserSettings> {
                   ),
                   subtitle: Text(user?.email ?? ""),
                   tileColor: Theme.of(context).colorScheme.tertiaryContainer,
-                  trailing: _isEmailVerified ? null : IconButton(
-                    icon: Icon(
-                      MdiIcons.fromString('alert'),
-                      color: Colors.red,
-                    ),
-                    onPressed: (){
-                      _showEmailVerificationDialog(context);
-                    },
-                  ),
                 ),
               ],
             ),

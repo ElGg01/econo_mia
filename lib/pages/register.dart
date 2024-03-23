@@ -1,4 +1,3 @@
-import 'package:econo_mia/auth/email_verification_alert.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
