@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:animate_do/animate_do.dart';
 
 class Balance extends StatefulWidget {
   const Balance({super.key});
@@ -78,352 +79,216 @@ class _BalanceState extends State<Balance> {
                 ],
               ),
               const Text("Historial de tu efectivo:"),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
+              FadeInLeft(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, // Color del contenedor
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey
+                              .withOpacity(0.5), // Color de la sombra
+                          spreadRadius: 4, // Radio de propagación de la sombra
+                          blurRadius: 4, // Radio de desenfoque de la sombra
+                          offset:
+                              const Offset(0, 3), // Desplazamiento de la sombra
                         ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            color: Colors.purple,
+                            width: 40,
+                            height: 40,
+                            child: const Icon(Icons.money, color: Colors.white),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        const Text(
+                          "MONAS CHINAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
+                        const SizedBox(
+                          width: 180,
                         ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        const Text(
+                          "-100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
+              FadeInLeft(
+                delay: const Duration(milliseconds: 500),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, // Color del contenedor
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey
+                              .withOpacity(0.5), // Color de la sombra
+                          spreadRadius: 4, // Radio de propagación de la sombra
+                          blurRadius: 4, // Radio de desenfoque de la sombra
+                          offset:
+                              const Offset(0, 3), // Desplazamiento de la sombra
                         ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            color: Colors.purple,
+                            width: 40,
+                            height: 40,
+                            child: const Icon(Icons.money, color: Colors.white),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        const Text(
+                          "MONAS CHINAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        const Text(
+                          "-100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
+              FadeInLeft(
+                delay: const Duration(milliseconds: 1000),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, // Color del contenedor
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey
+                              .withOpacity(0.5), // Color de la sombra
+                          spreadRadius: 4, // Radio de propagación de la sombra
+                          blurRadius: 4, // Radio de desenfoque de la sombra
+                          offset:
+                              const Offset(0, 3), // Desplazamiento de la sombra
+                        ),
+                      ],
+                    ),
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            color: Colors.purple,
+                            width: 40,
+                            height: 40,
+                            child: const Icon(Icons.money, color: Colors.white),
+                          ),
+                        ),
+                        const Text(
+                          "MONAS CHINAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        const Text(
+                          "-100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
+                ),
+              ),
+              FadeInLeft(
+                delay: const Duration(milliseconds: 1500),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer, // Color del contenedor
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey
+                              .withOpacity(0.5), // Color de la sombra
+                          spreadRadius: 4, // Radio de propagación de la sombra
+                          blurRadius: 4, // Radio de desenfoque de la sombra
+                          offset:
+                              const Offset(0, 3), // Desplazamiento de la sombra
                         ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      ],
+                    ),
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            color: Colors.purple,
+                            width: 40,
+                            height: 40,
+                            child: const Icon(Icons.money, color: Colors.white),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        const Text(
+                          "MONAS CHINAS",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        const Text(
+                          "-100",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               const Text("Historial de tu mercado pago:"),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
-                        ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
-                        ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer, // Color del contenedor
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.grey.withOpacity(0.5), // Color de la sombra
-                        spreadRadius: 4, // Radio de propagación de la sombra
-                        blurRadius: 4, // Radio de desenfoque de la sombra
-                        offset:
-                            const Offset(0, 3), // Desplazamiento de la sombra
-                      ),
-                    ],
-                  ),
-                  height: 60,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Container(
-                          color: Colors.purple,
-                          width: 40,
-                          height: 40,
-                          child: const Icon(Icons.money, color: Colors.white),
-                        ),
-                      ),
-                      const Text(
-                        "MONAS CHINAS",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Text(
-                        "-100",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Container(
