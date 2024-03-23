@@ -1,3 +1,4 @@
+import 'package:econo_mia/pages/balance.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +27,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   @override
   void initState() {
     super.initState();
@@ -34,33 +34,31 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _){
+        builder: (context, themeProvider, _) {
           return MaterialApp(
             title: 'Material App',
             theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: lightColorScheme,
-                brightness: Brightness.light
-            ),
+                brightness: Brightness.light),
             darkTheme: ThemeData(
                 useMaterial3: true,
                 colorScheme: darkColorScheme,
-                brightness: Brightness.dark
-            ),
+                brightness: Brightness.dark),
             themeMode: themeProvider.themeMode == ThemeModeOption.system
-              ? ThemeMode.system
-              : themeProvider.themeMode == ThemeModeOption.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
+                ? ThemeMode.system
+                : themeProvider.themeMode == ThemeModeOption.light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
             routes: {
               '/login': (context) => const Login(),
               '/register': (context) => const Register(),
               '/home': (context) => const Home(),
               '/user_settings': (context) => const UserSettings(),
+              '/balance': (context) => const Balance(),
             },
             initialRoute: "/login",
             localizationsDelegates: const [
@@ -76,6 +74,5 @@ class _AppState extends State<App> {
         },
       ),
     );
-
   }
 }
