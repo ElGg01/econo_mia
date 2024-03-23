@@ -109,7 +109,7 @@ class _LoginState extends State<Login> {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Center(
             child: Form(
@@ -124,75 +124,72 @@ class _LoginState extends State<Login> {
                       width: 200,
                     ),
                   ),
+                  const SizedBox( height: 50, ),
                   // Email
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: TextFormField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).colorScheme.onBackground
-                            ),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.onBackground
                           ),
-                          labelText: "Email",
-                          prefixIcon: const Icon(Icons.email),
                         ),
-                        autofocus: false,
-                        cursorColor: Colors.black,
-                        validator: (String? value){
-                          bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                          if (!emailValid){
-                            return 'Type a correct email';
-                          }
-                          return null;
-                        },
+                        labelText: "Email",
+                        prefixIcon: const Icon(Icons.email),
                       ),
+                      autofocus: false,
+                      cursorColor: Colors.black,
+                      validator: (String? value){
+                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
+                        if (!emailValid){
+                          return 'Type a correct email';
+                        }
+                        return null;
+                      },
                     ),
                   ),
+                  const SizedBox( height: 20, ),
                   // Password
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).colorScheme.onBackground
-                            ),
-                          ),
-                          labelText: "Password",
-                          prefixIcon: const Icon(Icons.password),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            onPressed: (){
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              });
-                            },
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Theme.of(context).colorScheme.onBackground
                           ),
                         ),
-                        obscureText: _isPasswordVisible,
-                        validator: (String? value){
-                          if (value!.isEmpty || value == "") {
-                            return 'Password is empty';
-                          }
-                          return null;
-                        },
+                        labelText: "Password",
+                        prefixIcon: const Icon(Icons.password),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
+                      obscureText: _isPasswordVisible,
+                      validator: (String? value){
+                        if (value!.isEmpty || value == "") {
+                          return 'Password is empty';
+                        }
+                        return null;
+                      },
                     ),
                   ),
+                  const SizedBox( height: 20, ),
                   // Submit
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),

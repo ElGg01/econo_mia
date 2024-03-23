@@ -60,6 +60,12 @@ class _UserSettingsState extends State<UserSettings> {
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
+  Future<void> _deleteAccount() async{
+    await _auth.deleteAccount();
+    if (!context.mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
+
   Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -86,10 +92,7 @@ class _UserSettingsState extends State<UserSettings> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              onPressed: (){
-                _auth.deleteAccount();
-                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-              },
+              onPressed: _deleteAccount,
               child: const Text('Delete'),
             ),
           ],

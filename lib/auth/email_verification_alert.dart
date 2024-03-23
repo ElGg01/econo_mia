@@ -12,7 +12,9 @@ class EmailVerificationAlert extends StatelessWidget {
     return AlertDialog(
       title: const Text('Verify your email'),
       content: Text(
-        'An email has been sent to ${user?.email}. Please verify your email address to continue'
+        'An email has been sent to ${user?.email}. '
+        'Please verify your email address'
+        'Unverified email addresses will be deleted on 30 days'
       ),
       actions: <TextButton>[
         TextButton(

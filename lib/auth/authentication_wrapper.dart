@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
