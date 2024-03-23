@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../auth/firebase_auth_services.dart';
+import '../auth/validators.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -94,20 +94,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: BounceInDown(
-          duration: const Duration(milliseconds: 800),
-          child: Text("Login",
-            style: GoogleFonts.roboto(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontWeight: FontWeight.bold,
-              fontSize: 24
-            ),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -117,11 +103,24 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 100),
                   ZoomIn(
                     child: Image.asset(
                       "assets/logoAppGastosFixed.png",
                       width: 200,
+                    ),
+                  ),
+                  const SizedBox( height: 100, ),
+                  const Text('HELLO AGAIN',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox( height: 20, ),
+                  const Text("Welcome back, you've been missed",
+                    style: TextStyle(
+                        fontSize: 24,
                     ),
                   ),
                   const SizedBox( height: 50, ),
@@ -136,6 +135,7 @@ class _LoginState extends State<Login> {
                             width: 2,
                             color: Theme.of(context).colorScheme.onBackground
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Email",
                         prefixIcon: const Icon(Icons.email),
@@ -143,11 +143,7 @@ class _LoginState extends State<Login> {
                       autofocus: false,
                       cursorColor: Colors.black,
                       validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                        if (!emailValid){
-                          return 'Type a correct email';
-                        }
-                        return null;
+                        return Validators.validateEmail(value);
                       },
                     ),
                   ),
@@ -163,6 +159,7 @@ class _LoginState extends State<Login> {
                             width: 2,
                             color: Theme.of(context).colorScheme.onBackground
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Password",
                         prefixIcon: const Icon(Icons.password),
@@ -190,12 +187,38 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   const SizedBox( height: 20, ),
+                  // Forgot Password
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 300),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushNamed(context, "/forgot_password");
+                            },
+                            child: Text('Forgot Password?',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.tertiary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox( height: 20, ),
                   // Submit
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                       ),
                       onPressed: _signIn,
                       child: Row(
@@ -205,17 +228,22 @@ class _LoginState extends State<Login> {
                           Text(
                             "Submit",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.background
+                              color: Theme.of(context).colorScheme.background,
+                              fontSize: 18,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
+                  const SizedBox( height: 20, ),
                   // Sign in with google
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                      ),
                       onPressed: _signInWithGoogle,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,27 +251,43 @@ class _LoginState extends State<Login> {
                         children: <Widget>[
                           Icon(MdiIcons.fromString('google')),
                           const SizedBox(width: 30,),
-                          const Text('Sign in with Google'),
+                          const Text('Sign in with Google',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
                         ],
                       )
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
                   // Register
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/register");
-                      },
-                      child: const Text(
-                        "Don't have an account? Register here",
-                        style: TextStyle(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Not a member? ",
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            decoration: TextDecoration.underline
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/register");
+                          },
+                          child: Text(
+                            "Register now",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
