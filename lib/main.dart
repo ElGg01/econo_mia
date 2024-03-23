@@ -1,4 +1,8 @@
+import 'package:econo_mia/auth/authentication_wrapper.dart';
+import 'package:econo_mia/auth/change_password.dart';
+import 'package:econo_mia/pages/email_verification.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -57,12 +61,15 @@ class _AppState extends State<App> {
                 ? ThemeMode.light
                 : ThemeMode.dark,
             routes: {
+              '/': (context) => const AuthenticationWrapper(),
               '/login': (context) => const Login(),
               '/register': (context) => const Register(),
+              '/email_verification': (context) => const EmailVerification(),
               '/home': (context) => const Home(),
               '/user_settings': (context) => const UserSettings(),
+              '/user_settings/change_password': (context) => const ChangePassword(),
             },
-            initialRoute: "/login",
+            initialRoute: "/",
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
