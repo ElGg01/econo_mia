@@ -1,3 +1,4 @@
+import 'package:econo_mia/pages/balance.dart';
 import 'package:econo_mia/auth/authentication_wrapper.dart';
 import 'package:econo_mia/auth/change_password.dart';
 import 'package:econo_mia/pages/email_verification.dart';
@@ -42,7 +43,7 @@ class _AppState extends State<App> {
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _){
+        builder: (context, themeProvider, _) {
           return MaterialApp(
             title: 'Material App',
             theme: ThemeData(
@@ -68,6 +69,7 @@ class _AppState extends State<App> {
               '/home': (context) => const Home(),
               '/user_settings': (context) => const UserSettings(),
               '/user_settings/change_password': (context) => const ChangePassword(),
+              '/balance': (context) => const Balance(),
             },
             initialRoute: "/",
             localizationsDelegates: const [
@@ -83,6 +85,5 @@ class _AppState extends State<App> {
         },
       ),
     );
-
   }
 }

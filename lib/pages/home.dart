@@ -116,6 +116,9 @@ class _HomeState extends State<Home> {
                   left: 20,
                 ),
                 child: InkWell(
+                  onTapUp: (details) {
+                    Navigator.pushNamed(context, '/balance');
+                  },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: BackdropFilter(
@@ -134,40 +137,127 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
                               width: 200,
                               child: SfCircularChart(
-                                title: const ChartTitle(text: "Titulo"),
-                                legend: const Legend(isVisible: false),
+                                title: const ChartTitle(text: "Tus cuentas:"),
+                                legend: const Legend(
+                                  isVisible: false,
+                                ),
                                 series: <CircularSeries>[
                                   PieSeries<ChartData, String>(
+                                    //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
                                     dataSource: <ChartData>[
-                                      ChartData('India', 280),
-                                      ChartData('USA', 210),
-                                      ChartData('China', 140),
-                                      ChartData('Japan', 120),
-                                      ChartData('UK', 90),
+                                      ChartData(
+                                        'Efectivo',
+                                        150,
+                                        Colors.green,
+                                      ),
+                                      ChartData(
+                                        'Mercado Pago',
+                                        250,
+                                        Colors.lightBlue,
+                                      ),
+                                      ChartData(
+                                        'BBVA',
+                                        500,
+                                        Colors.blueAccent,
+                                      ),
+                                      ChartData(
+                                        'Claro Pay',
+                                        100,
+                                        Colors.red,
+                                      ),
                                     ],
                                     xValueMapper: (ChartData data, _) => data.x,
                                     yValueMapper: (ChartData data, _) => data.y,
+                                    radius: '70%',
+                                    pointColorMapper: (ChartData data, _) =>
+                                        data.color,
+                                    dataLabelSettings: const DataLabelSettings(
+                                      isVisible: true,
+                                      labelPosition:
+                                          ChartDataLabelPosition.outside,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            const Column(
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
+                                const Text(
                                   "RESUMEN:",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text("Gasto 1"),
-                                Text("Gasto 2"),
-                                Text("Gasto 3"),
-                                Text("Gasto 4"),
-                                Text("Gasto 5"),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: Colors.green,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("Efectivo"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: Colors.lightBlue,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("Mercado Pago"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: Colors.blueAccent,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("BBVA"),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: Colors.red,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Text("Claro Pay"),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Container(
+                                      color: Colors.red,
+                                      child: const Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 10,
+                                          right: 10,
+                                        ),
+                                        child: Text(
+                                          "TOTAL: 1000",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
                           ],
@@ -291,7 +381,8 @@ class _HomeState extends State<Home> {
 }
 
 class ChartData {
-  ChartData(this.x, this.y);
+  ChartData(this.x, this.y, this.color);
   final String x;
   final double y;
+  final Color color;
 }
