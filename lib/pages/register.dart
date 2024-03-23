@@ -1,4 +1,5 @@
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import 'package:econo_mia/auth/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
@@ -43,18 +44,14 @@ class _RegisterState extends State<Register> {
         _passwordController.text
       );
       if (user != null){
-        print('User is signed in successfully');
         await user.updateDisplayName(_nameController.text);
         await user.sendEmailVerification();
         if (!context.mounted) return;
-        // showDialog(
-        //   context: context,
-        //   builder: (BuildContext context) {
-        //     return EmailVerificationAlert(user: user);
-        //   }
-        // );
-
-        Navigator.pushNamedAndRemoveUntil(context, '/email_verification', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/email_verification',
+          (route) => false
+        );
       } else {
         print('Some error happened');
       }
@@ -91,12 +88,25 @@ class _RegisterState extends State<Register> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 60),
                   ZoomIn(
                     child: Image.asset(
                       "assets/logoAppGastosFixed.png",
                       width: 200,
                     )
+                  ),
+                  const SizedBox( height: 100, ),
+                  const Text('BECOME A MEMBER!',
+                    style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  const SizedBox( height: 20, ),
+                  const Text("Fill the form to sign up in our app",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
                   ),
                   const SizedBox( height: 50, ),
                   // Name
@@ -110,17 +120,14 @@ class _RegisterState extends State<Register> {
                             width: 2,
                             color: Theme.of(context).colorScheme.onBackground
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Name",
                         prefixIcon: const Icon(Icons.person),
                       ),
                       autofocus: false,
                       validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]").hasMatch(value!);
-                        if (!emailValid){
-                          return 'Type a correct name';
-                        }
-                        return null;
+                        return Validators.validateName(value);
                       },
                     ),
                   ),
@@ -136,6 +143,7 @@ class _RegisterState extends State<Register> {
                             width: 2,
                             color: Theme.of(context).colorScheme.onBackground
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Email",
                         prefixIcon: const Icon(Icons.email),
@@ -163,6 +171,7 @@ class _RegisterState extends State<Register> {
                             width: 2,
                             color: Theme.of(context).colorScheme.onBackground
                           ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Password",
                         prefixIcon: const Icon(Icons.password),
@@ -209,6 +218,7 @@ class _RegisterState extends State<Register> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
                       ),
                       onPressed: _signUp,
                       child: Row(
@@ -217,7 +227,8 @@ class _RegisterState extends State<Register> {
                         children: [
                           Text("Submit",
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.background
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 18,
                           ),
                           ),
                         ],
@@ -228,19 +239,30 @@ class _RegisterState extends State<Register> {
                   // Log in
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 100),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Already have an account?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic,
-                          color: Theme.of(context).colorScheme.onBackground,
-                          decoration: TextDecoration.underline
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          "Already have an account? ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
-                      )
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Sign in here",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontSize: 18,
+                            ),
+                          )
+                        ),
+                      ],
                     )
                   ),
                 ]

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import '../auth/validators.dart';
+import 'firebase_auth_services.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -11,25 +13,107 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-
+  User? user = FirebaseAuth.instance.currentUser;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _oldPassword = TextEditingController();
   final TextEditingController _newPassword = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  bool _isOldPasswordVisible = true;
+  bool _isNewPasswordVisible = true;
+  bool _isConfirmPasswordVisible = true;
 
   @override
   void dispose() {
     _oldPassword.dispose();
     _newPassword.dispose();
+    _confirmPassword.dispose();
     super.dispose();
   }
 
-  void _changePassword(){
-    if (_formKey.currentState!.validate()){
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.dangerous),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Text(message),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
 
-    } else {
+  Future<void> showPasswordChangedDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Password changed'),
+          content: Icon(
+            Icons.check_circle,
+            size: 80,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Ok')),
+          ],
+          elevation: 16.0,
+        );
+      },
+    );
+  }
+
+  Future _changePassword() async {
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Check the form')));
+      return;
+    }
+    if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Check the form'))
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.dangerous),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text('There is an old sign-in register. Try to sign in'),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+        ),
       );
+      return;
+    }
+    try {
+      await _auth.reAuthenticateWithEmailAndPassword(
+          user!.email, _oldPassword.text);
+      await user?.updatePassword(_newPassword.text.trim());
+      if (!context.mounted) return;
+      showPasswordChangedDialog(context);
+    } on FirebaseAuthException catch (e) {
+      String wrongPassword = 'Wrong Password';
+      String defaultError = 'Something went wrong. Try again later';
+      if (e.code == 'wrong-password') {
+        showSnackBar(wrongPassword);
+      } else {
+        showSnackBar(defaultError);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -39,12 +123,12 @@ class _ChangePasswordState extends State<ChangePassword> {
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(milliseconds: 800),
-          child: Text("Change Password",
-              style: GoogleFonts.roboto(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24
-              )
+          child: Text(
+            "Change Password",
+            style: GoogleFonts.roboto(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontWeight: FontWeight.bold,
+                fontSize: 24),
           ),
         ),
         centerTitle: true,
@@ -59,7 +143,28 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  const Text(
+                    'Change Password',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Fill the form to change your password",
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
                   // Old Password
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 100),
@@ -69,57 +174,138 @@ class _ChangePasswordState extends State<ChangePassword> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: 2,
-                              color: Theme.of(context).colorScheme.onBackground
-                          ),
+                              color:
+                                  Theme.of(context).colorScheme.onBackground),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         labelText: "Old Password",
                         prefixIcon: const Icon(Icons.password),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isOldPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isOldPasswordVisible = !_isOldPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
                       autofocus: false,
+                      obscureText: _isOldPasswordVisible,
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   // New password
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 100),
                     child: TextFormField(
-                        controller: _oldPassword,
+                        controller: _newPassword,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 width: 2,
-                                color: Theme.of(context).colorScheme.onBackground
-                            ),
+                                color:
+                                    Theme.of(context).colorScheme.onBackground),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           labelText: "New Password",
                           prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isNewPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isNewPasswordVisible = !_isNewPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
                         autofocus: false,
-                        validator: (String? value){
+                        obscureText: _isNewPasswordVisible,
+                        validator: (String? value) {
                           return Validators.validatePassword(value);
-                        }
+                        }),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  // Confirm New Password
+                  FadeInUpBig(
+                    delay: const Duration(milliseconds: 100),
+                    child: TextFormField(
+                      controller: _confirmPassword,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2,
+                              color:
+                                  Theme.of(context).colorScheme.onBackground),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        labelText: "Confirm Password",
+                        prefixIcon: const Icon(Icons.password),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isConfirmPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isConfirmPasswordVisible =
+                                  !_isConfirmPasswordVisible;
+                            });
+                          },
+                        ),
+                      ),
+                      autofocus: false,
+                      obscureText: _isConfirmPasswordVisible,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        String? result = _confirmPassword.text ==
+                                _newPassword.text
+                            ? null
+                            : 'The confirm password does not match with the new password';
+                        return result;
+                      },
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   // Submit button
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 100),
                     child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
-                        ),
-                        onPressed: _changePassword,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("Submit",
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.background
-                              ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                      ),
+                      onPressed: _changePassword,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Change password",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.background,
+                              fontSize: 18,
                             ),
-                          ],
-                        )
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -131,4 +317,3 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 }
-
