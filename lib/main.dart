@@ -1,19 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:econo_mia/auth/forgot_password.dart';
 import 'package:econo_mia/pages/balance.dart';
 import 'package:econo_mia/auth/authentication_wrapper.dart';
 import 'package:econo_mia/auth/change_password.dart';
 import 'package:econo_mia/pages/email_verification.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import './ui/color_schemes.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:econo_mia/pages/register.dart';
 import 'package:econo_mia/pages/login.dart';
 import 'package:econo_mia/pages/home.dart';
 import 'package:econo_mia/pages/user_settings.dart';
+import './ui/color_schemes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,15 +73,9 @@ class _AppState extends State<App> {
               '/balance': (context) => const Balance(),
             },
             initialRoute: "/",
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('es'),
-            ],
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('es'),
           );
         },
       ),

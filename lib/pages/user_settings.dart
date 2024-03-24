@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,7 +63,7 @@ class _UserSettingsState extends State<UserSettings> {
       barrierDismissible: false,
       builder: (BuildContext context2) {
         return AlertDialog(
-          title: const Text('Are you sure to want to delete the account?'),
+          title: Text('Are you sure to want to delete the account?'),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -95,11 +95,14 @@ class _UserSettingsState extends State<UserSettings> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
-          child: Text("User settings",
+          child: Text(text!.appbar_userSettings,
             style: GoogleFonts.roboto(
               fontWeight: FontWeight.bold,
               fontSize: 24
@@ -133,7 +136,7 @@ class _UserSettingsState extends State<UserSettings> {
               ],
             ),
             const SizedBox(height: 30,),
-            Text('Account',
+            Text(text.title_heading_account,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 10,),
@@ -151,8 +154,8 @@ class _UserSettingsState extends State<UserSettings> {
                     },
                     child: ListTile(
                       leading: const Icon(Icons.password),
-                      title: const Text('Change Password'),
-                      trailing: Icon(MdiIcons.fromString('greater-than')),
+                      title: Text(text.changePassword_GestureDetector),
+                      trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 ],
@@ -174,14 +177,14 @@ class _UserSettingsState extends State<UserSettings> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Choose Theme'),
+                        title: Text(text.chooseTheme_GestureDetector),
                         content: SizedBox(
                           width: double.maxFinite,
                           child: ListView(
                             shrinkWrap: true,
                             children: <RadioListTile>[
                               RadioListTile(
-                                title: const Text('Light'),
+                                title: Text(text.light_titleRadialButton),
                                 value: ThemeModeOption.light,
                                 groupValue: context.read<ThemeProvider>().themeMode,
                                 onChanged: (value){
@@ -192,7 +195,7 @@ class _UserSettingsState extends State<UserSettings> {
                                 hoverColor: Theme.of(context).shadowColor,
                               ),
                               RadioListTile(
-                                title: const Text('Dark'),
+                                title: Text(text.dark_titleRadialButton),
                                 value: ThemeModeOption.dark,
                                 groupValue: context.read<ThemeProvider>().themeMode,
                                 onChanged: (value){
@@ -203,7 +206,7 @@ class _UserSettingsState extends State<UserSettings> {
                                 hoverColor: Theme.of(context).shadowColor,
                               ),
                               RadioListTile(
-                                title: const Text('System Default'),
+                                title: Text(text.systemTheme_titleRadialButton),
                                 value: ThemeModeOption.system,
                                 groupValue: context.read<ThemeProvider>().themeMode,
                                 onChanged: (value){
@@ -221,7 +224,7 @@ class _UserSettingsState extends State<UserSettings> {
                             onPressed: (){
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Cancel'),
+                            child: Text(text.cancelButton_dialog),
                           ),
                         ],
                       );

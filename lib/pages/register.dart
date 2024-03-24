@@ -1,4 +1,5 @@
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:econo_mia/auth/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,11 +65,14 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(milliseconds: 800),
-          child: Text("REGISTRATION",
+          child: Text(text!.appbar_register_page,
             style: GoogleFonts.roboto(
               color: Theme.of(context).colorScheme.onBackground,
               fontWeight: FontWeight.bold,
@@ -96,17 +100,18 @@ class _RegisterState extends State<Register> {
                     )
                   ),
                   const SizedBox( height: 100, ),
-                  const Text('BECOME A MEMBER!',
-                    style: TextStyle(
+                  Text(text.titleRegisterPage,
+                    style: const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold
                     ),
                   ),
                   const SizedBox( height: 20, ),
-                  const Text("Fill the form to sign up in our app",
-                    style: TextStyle(
+                  Text(text.subtitleRegisterPage,
+                    style: const TextStyle(
                       fontSize: 24,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox( height: 50, ),
                   // Name
@@ -122,12 +127,12 @@ class _RegisterState extends State<Register> {
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Name",
+                        labelText: text.nameTextFormField,
                         prefixIcon: const Icon(Icons.person),
                       ),
                       autofocus: false,
                       validator: (String? value){
-                        return Validators.validateName(value);
+                        return Validators.validateName(value, text);
                       },
                     ),
                   ),
@@ -145,16 +150,12 @@ class _RegisterState extends State<Register> {
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Email",
+                        labelText: text.emailTextFormField,
                         prefixIcon: const Icon(Icons.email),
                       ),
                       autofocus: false,
                       validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                        if (!emailValid){
-                          return 'Type a correct email';
-                        }
-                        return null;
+                        return Validators.validateEmail(value, text);
                       },
                     ),
                   ),
@@ -173,7 +174,7 @@ class _RegisterState extends State<Register> {
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Password",
+                        labelText: text.passwordTextFormField,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -192,22 +193,7 @@ class _RegisterState extends State<Register> {
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
                       validator: (String? value){
-                        RegExp validateUppercase = RegExp(r'[A-Z]');
-                        RegExp validateDigits = RegExp(r'[0-9]');
-                        RegExp validateSpecialCharacters = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
-                        if (value!.length < 8) {
-                          return 'Your password must contain at least 8 characters';
-                        }
-                        else if (!value.contains(validateUppercase)){
-                          return 'Your password must contain at least one uppercase letter';
-                        }
-                        else if (!value.contains(validateDigits)){
-                          return 'Your password must contain at least one digit';
-                        }
-                        else if (!value.contains(validateSpecialCharacters)){
-                          return 'Your password must contain at least one special character';
-                        }
-                        return null;
+                        return Validators.validatePassword(value, text);
                       },
                     )
                   ),
@@ -225,7 +211,7 @@ class _RegisterState extends State<Register> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Submit",
+                          Text(text.submitButton,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.background,
                             fontSize: 18,
@@ -242,9 +228,9 @@ class _RegisterState extends State<Register> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text(
-                          "Already have an account? ",
-                          style: TextStyle(
+                        Text(
+                          text.helperMessageToLogIn,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -254,7 +240,7 @@ class _RegisterState extends State<Register> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Sign in here",
+                            text.signInHereLink,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.tertiary,

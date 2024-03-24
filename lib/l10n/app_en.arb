@@ -1,0 +1,214 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "loginTitle": "HELLO AGAIN",
+  "@loginTitle": {
+    "description": "Login Title"
+  },
+  "loginSubtitle": "Welcome back, you've been missed",
+  "@loginSubtitle": {
+    "description": "Login Subtitle"
+  },
+  "emailTextFormField": "Email",
+  "@emailTextFormField": {
+    "description": "Hint Text of Email Button"
+  },
+  "validatorMsg_emailTextFormField": "Type a correct email",
+  "@validatorMsg_emailTextFormField": {
+    "description": "Message that appears on email of the text form field validator"
+  },
+  "validatorMsg_nameTextFormField": "Type a correct name",
+  "@validatorMsg_nameTextFormField": {
+    "description": "Message that appears on name of the text form field validator"
+  },
+  "passwordTextFormField": "Password",
+  "@passwordTextFormField": {
+    "description": "Hint Text of password button"
+  },
+  "validatorMsg_passwordCaseEmptyTextFormField": "Password empty",
+  "@validatorMsg_passwordCaseEmptyTextFormField": {
+    "description": "Case password contains no characters"
+  },
+  "validatorMsg_passwordCaseLengthTextFormField": "Your password must contain at least 8 characters",
+  "@validatorMsg_passwordCaseLengthTextFormField": {
+    "description": "Case password contain less than 8 characters in validator"
+  },
+  "validatorMsg_passwordCaseDigitTextFormField": "Your password must contain at least one digit",
+  "@validatorMsg_passwordCaseDigitTextFormField": {
+    "description": "Case password not contains one digit"
+  },
+  "validatorMsg_passwordCaseSpecialCharTextFormField": "Your password must contain at least one special character",
+  "@validatorMsg_passwordCaseSpecialCharTextFormField": {
+    "description": "Case password not contains one special character"
+  },
+  "validatorMsg_passwordCaseUpperCaseTextFormField": "Your password must contain at least one uppercase letter",
+  "@validatorMsg_passwordCaseUpperCaseTextFormField": {
+    "description": "Case password not contains one special character"
+  },
+  "submitButton": "Submit",
+  "@submitButton": {
+    "description": "Submit button to login"
+  },
+  "submitWithGoogleButton": "Sign in with Google",
+  "@submitWithGoogleButton": {
+    "description": "Submit button to login with google"
+  },
+  "forgotPasswordLink": "Forgot Password?",
+  "@forgotPasswordLink": {
+    "description": "Link to redirect to password-forgotten page"
+  },
+  "helperMessageToRegister": "Not a member?",
+  "@helperMessageToRegister": {
+    "description": "Helper message to accomplish with the link to redirect to register page"
+  },
+  "registerNowLink": "Register now",
+  "@registerNowLink": {
+    "description": "Link to redirect to register page"
+  },
+  "appbar_password_forgotten": "Recover Password",
+  "@appbar_password_forgotten": {
+    "description": "Title for appbar to password forgotten page"
+  },
+  "title_password_forgotten": "Enter your email and we will send you a password reset link",
+  "@title_password_forgotten": {
+    "description": "Title for Password forgotten screen"
+  },
+  "resetPasswordButton": "Reset Password",
+  "@resetPasswordButton": {
+    "description": "Reset Password Button"
+  },
+  "appbar_register_page": "Registration",
+  "@appbar_register_page": {
+    "description": "Appbar title to register screen"
+  },
+  "titleRegisterPage": "BECOME A MEMBER!",
+  "@titleRegisterPage": {
+    "description": "Title for the register screen page"
+  },
+  "subtitleRegisterPage": "Fill the form to sign up in our app",
+  "@subtitleRegisterPage": {
+    "description": "Subtitle for the register screen page"
+  },
+  "nameTextFormField": "Name",
+  "@nameTextFormField": {
+    "description": "Name for text form field"
+  },
+  "helperMessageToLogIn": "Already have an account? ",
+  "@helperMessageToLogIn": {
+    "description": "Helper message to accomplish with the link to redirect to log in page"
+  },
+  "signInHereLink": "Sign in here",
+  "@signInHereLink": {
+    "description": "Link to redirect to log in page"
+  },
+  "appbarEmailVerification": "Email Verification",
+  "@appbarEmailVerification": {
+    "description": "Appbar title to email-verification screen"
+  },
+  "title_emailVerification": "An email was sent to ",
+  "@title_emailVerification": {
+    "description": "Title for the email-verification screen page"
+  },
+  "subtitle_emailVerification": "Please verify your email address to continue",
+  "@subtitle_emailVerification": {
+    "description": "Subtitle for the email-verification screen page"
+  },
+  "resendEmailButton": "Re-send email verification",
+  "@resendEmailButton": {
+    "description": "Re-send button to re-send email verification"
+  },
+  "appbarChangePassword": "Change Password",
+  "@appbarChangePassword": {
+    "description": "Appbar title to change-password screen"
+  },
+  "title_ChangePassword": "Change Password",
+  "@title_ChangePassword": {
+    "description": "Title for the change-password screen page"
+  },
+  "subtitle_ChangePassword": "Fill the form to change your password",
+  "@subtitle_ChangePassword": {
+    "description": "Subtitle for the change-password screen page"
+  },
+  "oldPasswordTextFormField": "Old password",
+  "@oldPasswordTextFormField": {
+    "description": "Old password text form field to login"
+  },
+  "newPasswordTextFormField": "New password",
+  "@newPasswordTextFormField": {
+    "description": "New password text form field to login"
+  },
+  "confirmPasswordTextFormField": "Confirm password",
+  "@confirmPasswordTextFormField": {
+    "description": "Confirm password text form field to login"
+  },
+  "changePasswordButton": "Change password",
+  "@changePasswordButton": {
+    "description": "Change password button to login"
+  },
+  "validatorMsg_confirmPassword": "The confirm password does not match with the new password",
+  "@validatorMsg_confirmPassword": {
+    "description": "Case confirm password does not match with the new password"
+  },
+  "appbar_userSettings": "User settings",
+  "@appbar_userSettings": {
+    "description": "Title for appbar to user settings page"
+  },
+  "title_heading_account": "Account",
+  "@title_heading_account": {
+    "description": "Title for account heading to user settings page"
+  },
+  "title_heading_theme": "Theme",
+  "@title_heading_theme": {
+    "description": "Title for theme heading to user settings page"
+  },
+  "changePassword_GestureDetector": "Change password",
+  "@changePassword_GestureDetector": {
+    "description": "Title for change password gesture detector"
+  },
+  "chooseTheme_GestureDetector": "Choose theme",
+  "@chooseTheme_GestureDetector": {
+    "description": "Title for choose theme gesture detector"
+  },
+  "logOutButton": "Log Out",
+  "@logOutButton": {
+    "description": "Log out button to exit from the account"
+  },
+  "deleteAccountButton": "Delete account",
+  "@deleteAccountButton": {
+    "description": "Delete-account button to exit from the account"
+  },
+  "title_dialog_deleteAccount": "Are you sure to want to delete the account?",
+  "@title_dialog_deleteAccount": {
+    "description": "Title for delete-account dialog"
+  },
+  "subtitle_dialog_deleteAccount": "This action cannot be undone",
+  "@subTitle_dialog_deleteAccount": {
+    "description": "Subtitle for delete-account dialog"
+  },
+  "cancelButton_dialog": "Cancel",
+  "@cancelButton_dialog": {
+    "description": "Cancel button to cancel operation"
+  },
+  "deleteButton_dialog": "Delete",
+  "@deleteButton_dialog": {
+    "description": "Delete button to cancel operation"
+  },
+  "title_dialog_chooseTheme": "Choose Theme",
+  "@title_dialog_chooseTheme": {
+    "description": "Title for choose-theme dialog"
+  },
+  "light_titleRadialButton": "Light",
+  "@light_titleRadialButton": {
+    "description": "Light option in radial button to choose"
+  },
+  "dark_titleRadialButton": "Dark",
+  "@dark_titleRadialButton": {
+    "description": "Dark option in radial button to choose"
+  },
+  "systemTheme_titleRadialButton": "System Theme",
+  "@systemTheme_titleRadialButton": {
+    "description": "System-theme option in radial button to choose"
+  }
+}
