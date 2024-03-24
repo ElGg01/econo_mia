@@ -183,17 +183,35 @@ class _HomeState extends State<Home> {
                               value: "Total",
                               borderRadius: BorderRadius.circular(10),
                               isExpanded: true,
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: "Total",
                                   child: Center(
-                                    child: Text("Total"),
+                                    child: Text(
+                                      "Total",
+                                      style: GoogleFonts.poppins(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 DropdownMenuItem(
                                   value: "BBVA",
                                   child: Center(
-                                    child: Text("BBVA"),
+                                    child: Text(
+                                      "BBVA",
+                                      style: GoogleFonts.poppins(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -208,18 +226,22 @@ class _HomeState extends State<Home> {
                       children: [
                         Text(
                           "Ingresos",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 0.5,
                           ),
                         ),
                         Text(
                           "Egresos",
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             color: Theme.of(context).colorScheme.onBackground,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 0.5,
                           ),
                         )
                       ],
@@ -242,10 +264,11 @@ class _HomeState extends State<Home> {
                                 alignment: Alignment.center,
                                 child: Text(
                                   'No hubo ingresos',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onBackground,
+                                    fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                   ),
                                   overflow: TextOverflow.ellipsis,
