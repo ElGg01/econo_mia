@@ -5,14 +5,13 @@ class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<User?> signUpWithEmailAndPassword(String email, String password) async {
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password
-      );
+          email: email, password: password);
       return credential.user;
-    }on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('The account already exists for that email');
       }
@@ -22,17 +21,16 @@ class FirebaseAuthService {
     return null;
   }
 
-  Future<User?> signInWithEmailAndPassword(String email, String password) async {
+  Future<User?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+          email: email, password: password);
       return credential.user;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found'){
+      if (e.code == 'user-not-found') {
         print('No user found for that email');
-      } else if (e.code == 'wrong-password'){
+      } else if (e.code == 'wrong-password') {
         print('Wrong password');
       }
     } catch (e) {
@@ -44,10 +42,13 @@ class FirebaseAuthService {
   Future<User?> signInWithGoogleService() async {
     try {
       // Trigger the Google sign-in process
-      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+
       if (googleSignInAccount != null) {
         // Obtain the GoogleSignInAuthentication object
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
         // Create a new credential using the Google sign-in authentication
         final AuthCredential credential = GoogleAuthProvider.credential(
@@ -56,7 +57,8 @@ class FirebaseAuthService {
         );
 
         // Sign in to Firebase with the Google credentials
-        final UserCredential authResult = await _auth.signInWithCredential(credential);
+        final UserCredential authResult =
+            await _auth.signInWithCredential(credential);
         return authResult.user;
       }
     } catch (error) {
@@ -72,5 +74,16 @@ class FirebaseAuthService {
     } catch (e) {
       print('Failed to delete account $e');
     }
+  }
+
+  Future<void> reAuthenticateWithEmailAndPassword(
+      String? email, String password) async {
+
+    if (email == null) return;
+    AuthCredential credential = EmailAuthProvider.credential(
+      email: email,
+      password: password
+    );
+    await _auth.currentUser?.reauthenticateWithCredential(credential);
   }
 }
