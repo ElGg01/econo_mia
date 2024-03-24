@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:econo_mia/auth/firebase_auth_services.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +16,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late FirebaseFirestore db;
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -41,7 +45,7 @@ class _HomeState extends State<Home> {
           delay: const Duration(seconds: 1),
           child: Text(
             "EconoMÍA",
-            style: GoogleFonts.roboto(
+            style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
@@ -64,10 +68,12 @@ class _HomeState extends State<Home> {
           filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
           child: ListView(
             children: [
-              Container(
-                child: Image.asset(
-                  "assets/logoAppGastosFixed.png",
-                  height: 150,
+              ZoomIn(
+                child: Container(
+                  child: Image.asset(
+                    "assets/logoAppGastosFixed.png",
+                    height: 180,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -75,29 +81,50 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                 tileColor: Theme.of(context).colorScheme.primaryContainer,
-                title: Text(
-                  "EconoMÍA",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.bold, fontSize: 24),
+                title: ElasticIn(
+                  child: Text(
+                    "EconoMÍA",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              ListTile(
-                title: const Text("Mi cuenta"),
-                leading: const Icon(Icons.person),
-                onTap: () {
-                  Navigator.pushNamed(context, '/user_settings');
-                },
+              ElasticInLeft(
+                child: ListTile(
+                  title: Text(
+                    "Mi cuenta",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  leading: const Icon(Icons.person),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/user_settings');
+                  },
+                ),
               ),
-              ListTile(
-                title: const Text("Cerrar sesión"),
-                leading: const Icon(Icons.logout),
-                onTap: () {
-                  _signOut();
-                },
+              ElasticInLeft(
+                delay: const Duration(milliseconds: 500),
+                child: ListTile(
+                  title: Text(
+                    "Cerrar sesión",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  leading: const Icon(Icons.logout),
+                  onTap: () {
+                    _signOut();
+                  },
+                ),
               ),
             ],
           ),
@@ -107,6 +134,170 @@ class _HomeState extends State<Home> {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
+            FadeInDown(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: Text(
+                  "Hola, ${user?.displayName}.",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Container(
+                alignment: Alignment.topCenter,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.background,
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                              ),
+                              alignment: Alignment.center,
+                              value: "Total",
+                              borderRadius: BorderRadius.circular(10),
+                              isExpanded: true,
+                              items: const [
+                                DropdownMenuItem(
+                                  value: "Total",
+                                  child: Center(
+                                    child: Text("Total"),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: "BBVA",
+                                  child: Center(
+                                    child: Text("BBVA"),
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {},
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "Ingresos",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                          "Egresos",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        )
+                      ],
+                    ),
+                    SfCircularChart(
+                      legend: const Legend(
+                        isVisible: false,
+                      ),
+                      annotations: <CircularChartAnnotation>[
+                        CircularChartAnnotation(
+                          height: '100%',
+                          width: '100%',
+                          widget: Container(
+                            child: PhysicalModel(
+                              shape: BoxShape.circle,
+                              elevation: 10,
+                              shadowColor: Colors.black,
+                              color: Theme.of(context).colorScheme.background,
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'No hubo ingresos',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontSize: 14,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        CircularChartAnnotation(
+                          widget: Container(),
+                        ),
+                      ],
+                      series: <CircularSeries>[
+                        // Renders doughnut chart
+                        DoughnutSeries<ChartData, String>(
+                          dataSource: <ChartData>[
+                            ChartData(
+                              'Efectivo',
+                              150,
+                              Colors.green,
+                            ),
+                            ChartData(
+                              'Mercado Pago',
+                              250,
+                              Colors.lightBlue,
+                            ),
+                            ChartData(
+                              'BBVA',
+                              500,
+                              Colors.blueAccent,
+                            ),
+                            ChartData(
+                              'Claro Pay',
+                              100,
+                              Colors.red,
+                            ),
+                            ChartData(
+                              'Nelo',
+                              350.5,
+                              Colors.purple,
+                            ),
+                          ],
+                          pointColorMapper: (ChartData data, _) => data.color,
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
             ElasticInLeft(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -129,7 +320,7 @@ class _HomeState extends State<Home> {
                       child: Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.cyan.withOpacity(0.3),
+                          color: Colors.cyan.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
                             width: 2,
@@ -142,7 +333,12 @@ class _HomeState extends State<Home> {
                             Container(
                               width: 200,
                               child: SfCircularChart(
-                                title: const ChartTitle(text: "Tus cuentas:"),
+                                title: const ChartTitle(
+                                  text: "Tus cuentas:",
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 legend: const Legend(
                                   isVisible: false,
                                 ),
@@ -283,7 +479,7 @@ class _HomeState extends State<Home> {
                       child: Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.3),
+                          color: Colors.red.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
                             width: 2,
@@ -334,7 +530,7 @@ class _HomeState extends State<Home> {
                       child: Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.3),
+                          color: Colors.green.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
                             width: 2,

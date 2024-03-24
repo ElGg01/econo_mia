@@ -39,52 +39,119 @@ class _BalanceState extends State<Balance> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SfCircularChart(
-              title: const ChartTitle(
-                text: "La distribución de tu dinero:",
-                textStyle: TextStyle(fontWeight: FontWeight.bold),
+            ZoomIn(
+              child: SfCircularChart(
+                title: const ChartTitle(
+                  text: "La distribución de tu dinero:",
+                  textStyle: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                legend: const Legend(
+                  isVisible: true,
+                ),
+                tooltipBehavior: _tooltipBehavior,
+                series: <CircularSeries>[
+                  PieSeries<ChartData, String>(
+                    enableTooltip: true,
+                    //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
+                    dataSource: <ChartData>[
+                      ChartData(
+                        'Efectivo',
+                        150,
+                        Colors.green,
+                      ),
+                      ChartData(
+                        'Mercado Pago',
+                        250,
+                        Colors.lightBlue,
+                      ),
+                      ChartData(
+                        'BBVA',
+                        500,
+                        Colors.blueAccent,
+                      ),
+                      ChartData(
+                        'Claro Pay',
+                        100,
+                        Colors.red,
+                      ),
+                      ChartData(
+                        'Nelo',
+                        350.5,
+                        Colors.purple,
+                      ),
+                    ],
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    radius: '70%',
+                    pointColorMapper: (ChartData data, _) => data.color,
+                    dataLabelSettings: const DataLabelSettings(
+                      isVisible: true,
+                      labelPosition: ChartDataLabelPosition.outside,
+                    ),
+                    animationDuration: 1000,
+                  ),
+                ],
               ),
+            ),
+            SfCircularChart(
               legend: const Legend(
                 isVisible: true,
               ),
-              tooltipBehavior: _tooltipBehavior,
               series: <CircularSeries>[
-                PieSeries<ChartData, String>(
-                  enableTooltip: true,
-                  //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
-                  dataSource: <ChartData>[
-                    ChartData(
-                      'Efectivo',
-                      150,
-                      Colors.green,
-                    ),
-                    ChartData(
-                      'Mercado Pago',
-                      250,
-                      Colors.lightBlue,
-                    ),
-                    ChartData(
-                      'BBVA',
-                      500,
-                      Colors.blueAccent,
-                    ),
-                    ChartData(
-                      'Claro Pay',
-                      100,
-                      Colors.red,
-                    ),
-                  ],
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y,
-                  radius: '70%',
-                  pointColorMapper: (ChartData data, _) => data.color,
-                  dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelPosition: ChartDataLabelPosition.outside,
-                  ),
-                  animationDuration: 2000,
-                ),
+                // Renders doughnut chart
+                DoughnutSeries<ChartData, String>(
+                    dataSource: <ChartData>[
+                      ChartData(
+                        'Efectivo',
+                        150,
+                        Colors.green,
+                      ),
+                      ChartData(
+                        'Mercado Pago',
+                        250,
+                        Colors.lightBlue,
+                      ),
+                      ChartData(
+                        'BBVA',
+                        500,
+                        Colors.blueAccent,
+                      ),
+                      ChartData(
+                        'Claro Pay',
+                        100,
+                        Colors.red,
+                      ),
+                      ChartData(
+                        'Nelo',
+                        350.5,
+                        Colors.purple,
+                      ),
+                    ],
+                    pointColorMapper: (ChartData data, _) => data.color,
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y)
               ],
+            ),
+            FlipInX(
+              child: Container(
+                color: Colors.red,
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: Text(
+                    "DINERO TOTAL: 1000",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             const Text("Historial de tu efectivo:"),
             FadeInLeft(
@@ -98,7 +165,7 @@ class _BalanceState extends State<Balance> {
                     boxShadow: [
                       BoxShadow(
                         color:
-                            Colors.grey.withOpacity(0.3), // Color de la sombra
+                            Colors.black.withOpacity(0.2), // Color de la sombra
                         spreadRadius: 4, // Radio de propagación de la sombra
                         blurRadius: 4, // Radio de desenfoque de la sombra
                         offset:
@@ -140,7 +207,6 @@ class _BalanceState extends State<Balance> {
             ),
             const SizedBox(height: 20),
             const Text("Historial de tu mercado pago:"),
-            const SizedBox(height: 20),
             FadeInLeft(
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -152,7 +218,7 @@ class _BalanceState extends State<Balance> {
                     boxShadow: [
                       BoxShadow(
                         color:
-                            Colors.grey.withOpacity(0.3), // Color de la sombra
+                            Colors.black.withOpacity(0.2), // Color de la sombra
                         spreadRadius: 4, // Radio de propagación de la sombra
                         blurRadius: 4, // Radio de desenfoque de la sombra
                         offset:

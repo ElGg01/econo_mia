@@ -13,52 +13,48 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = true;
 
-
   Future<void> _signIn() async {
-    if (_formKey.currentState!.validate()){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Processing Data'))
-      );
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Processing Data')));
       User? user = await _auth.signInWithEmailAndPassword(
-          _emailController.text,
-          _passwordController.text
-      );
-      if (user != null){
+          _emailController.text, _passwordController.text);
+      if (user != null) {
         print('User is signed in successfully');
         if (!context.mounted) return;
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.dangerous),
-                SizedBox(width: 20,),
-                Expanded(child: Text('Invalid credentials'),),
-              ],
-            ),
-            backgroundColor: Colors.red,
-          )
-        );
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.dangerous),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text('Invalid credentials'),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+        ));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Check the form'))
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Check the form')));
     }
   }
 
   Future<void> _signInWithGoogle() async {
     User? user = await _auth.signInWithGoogleService();
-    if (user != null){
+    if (user != null) {
       print('User is signed in successfully');
       if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
@@ -69,8 +65,12 @@ class _LoginState extends State<Login> {
           content: Row(
             children: <Widget>[
               Icon(Icons.dangerous),
-              SizedBox(width: 20,),
-              Expanded(child: Text('Invalid Google credentials'),),
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text('Invalid Google credentials'),
+              ),
             ],
           ),
           backgroundColor: Colors.red,
@@ -97,12 +97,12 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(milliseconds: 800),
-          child: Text("Login",
+          child: Text(
+            "Login",
             style: GoogleFonts.roboto(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontWeight: FontWeight.bold,
-              fontSize: 24
-            ),
+                color: Theme.of(context).colorScheme.onBackground,
+                fontWeight: FontWeight.bold,
+                fontSize: 24),
           ),
         ),
         centerTitle: true,
@@ -124,7 +124,9 @@ class _LoginState extends State<Login> {
                       width: 200,
                     ),
                   ),
-                  const SizedBox( height: 50, ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   // Email
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
@@ -134,7 +136,7 @@ class _LoginState extends State<Login> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 2,
-                            color: Theme.of(context).colorScheme.onBackground
+                            color: Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                         labelText: "Email",
@@ -142,16 +144,18 @@ class _LoginState extends State<Login> {
                       ),
                       autofocus: false,
                       cursorColor: Colors.black,
-                      validator: (String? value){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
-                        if (!emailValid){
+                      validator: (String? value) {
+                        bool emailValid = RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value!);
+                        if (!emailValid) {
                           return 'Type a correct email';
                         }
                         return null;
                       },
                     ),
                   ),
-                  const SizedBox( height: 20, ),
+                  const SizedBox(height: 20),
                   // Password
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
@@ -160,9 +164,9 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            width: 2,
-                            color: Theme.of(context).colorScheme.onBackground
-                          ),
+                              width: 2,
+                              color:
+                                  Theme.of(context).colorScheme.onBackground),
                         ),
                         labelText: "Password",
                         prefixIcon: const Icon(Icons.password),
@@ -173,7 +177,7 @@ class _LoginState extends State<Login> {
                                 : Icons.visibility,
                             color: Theme.of(context).primaryColor,
                           ),
-                          onPressed: (){
+                          onPressed: () {
                             setState(() {
                               _isPasswordVisible = !_isPasswordVisible;
                             });
@@ -181,7 +185,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       obscureText: _isPasswordVisible,
-                      validator: (String? value){
+                      validator: (String? value) {
                         if (value!.isEmpty || value == "") {
                           return 'Password is empty';
                         }
@@ -189,7 +193,9 @@ class _LoginState extends State<Login> {
                       },
                     ),
                   ),
-                  const SizedBox( height: 20, ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   // Submit
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
@@ -205,8 +211,8 @@ class _LoginState extends State<Login> {
                           Text(
                             "Submit",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.background
-                            ),
+                                color:
+                                    Theme.of(context).colorScheme.background),
                           ),
                         ],
                       ),
@@ -222,10 +228,12 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(MdiIcons.fromString('google')),
-                          const SizedBox(width: 30,),
+                          const SizedBox(
+                            width: 30,
+                          ),
                           const Text('Sign in with Google'),
                         ],
-                      )
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -239,9 +247,9 @@ class _LoginState extends State<Login> {
                       child: const Text(
                         "Don't have an account? Register here",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            decoration: TextDecoration.underline
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
