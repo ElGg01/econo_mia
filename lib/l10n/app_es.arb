@@ -42,7 +42,7 @@
   "title_heading_theme": "Tema",
   "changePassword_GestureDetector": "Cambiar contraseña",
   "chooseTheme_GestureDetector": "Elegir tema",
-  "logOutButton": "Salir de la cuenta",
+  "logOutButton": "Cerrar sesión",
   "deleteAccountButton": "Eliminar cuenta",
   "title_dialog_deleteAccount": "¿Estas seguro de eliminar la cuenta?",
   "subtitle_dialog_deleteAccount": "Esta accion no puede deshacerse",
@@ -51,5 +51,6 @@
   "title_dialog_chooseTheme": "Elegir tema",
   "light_titleRadialButton": "Claro",
   "dark_titleRadialButton": "Oscuro",
-  "systemTheme_titleRadialButton": "Tema del sistema"
+  "systemTheme_titleRadialButton": "Tema del sistema",
+  "myAccount_Drawable": "Mi cuenta"
 }

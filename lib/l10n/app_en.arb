@@ -210,5 +210,9 @@
   "systemTheme_titleRadialButton": "System Theme",
   "@systemTheme_titleRadialButton": {
     "description": "System-theme option in radial button to choose"
+  },
+  "myAccount_Drawable": "My Account",
+  "@myAccount_Drawable": {
+    "description": "Option placed on drawable widget to go on user-settings page"
   }
 }

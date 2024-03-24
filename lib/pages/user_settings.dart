@@ -58,16 +58,19 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context2) {
         return AlertDialog(
-          title: Text('Are you sure to want to delete the account?'),
-          content: const SingleChildScrollView(
+          title: Text(text!.title_dialog_deleteAccount),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This action cannot be undone'),
+                Text(text.subtitle_dialog_deleteAccount),
               ],
             ),
           ),
@@ -76,7 +79,7 @@ class _UserSettingsState extends State<UserSettings> {
               onPressed: (){
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(text.cancelButton_dialog),
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -84,7 +87,7 @@ class _UserSettingsState extends State<UserSettings> {
                 foregroundColor: Colors.white,
               ),
               onPressed: _deleteAccount,
-              child: const Text('Delete'),
+              child: Text(text.deleteButton_dialog),
             ),
           ],
         );
@@ -162,7 +165,7 @@ class _UserSettingsState extends State<UserSettings> {
               ),
             ),
             const SizedBox(height: 20,),
-            Text('Theme',
+            Text(text.title_heading_theme,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 10,),
@@ -233,26 +236,32 @@ class _UserSettingsState extends State<UserSettings> {
                 },
                 child: ListTile(
                   leading: Icon(_icon),
-                  title: const Text('Choose Theme'),
+                  title: Text(text.chooseTheme_GestureDetector),
                   subtitle: Text(
-                      _themeStringOption
+                      _themeStringOption == "Light"
+                          ? text.light_titleRadialButton
+                          : _themeStringOption == "Dark"
+                            ? text.dark_titleRadialButton
+                            : text.systemTheme_titleRadialButton
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 30,),
+            // Log Out
             ElevatedButton(
               onPressed: _signOut,
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: const Text('Log Out',
-                style: TextStyle(
+              child: Text(text.logOutButton,
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
             const SizedBox(height: 10,),
+            // Delete account
             ElevatedButton(
               onPressed: (){
                 _showDeleteConfirmationDialog(context);
@@ -260,8 +269,8 @@ class _UserSettingsState extends State<UserSettings> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: const Text('Delete Account',
-                style: TextStyle(
+              child: Text(text.deleteAccountButton,
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),

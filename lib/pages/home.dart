@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -34,6 +35,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
@@ -86,14 +90,14 @@ class _HomeState extends State<Home> {
                 height: 20,
               ),
               ListTile(
-                title: const Text("Mi cuenta"),
+                title: Text(text!.myAccount_Drawable),
                 leading: const Icon(Icons.person),
                 onTap: () {
                   Navigator.pushNamed(context, '/user_settings');
                 },
               ),
               ListTile(
-                title: const Text("Cerrar sesión"),
+                title: Text(text.logOutButton),
                 leading: const Icon(Icons.logout),
                 onTap: () {
                   _signOut();
