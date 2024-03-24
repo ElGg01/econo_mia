@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
 
   final FirebaseAuthService _auth = FirebaseAuthService();
@@ -38,6 +38,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    TabController _tabController = TabController(length: 2, vsync: this);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
@@ -221,101 +223,189 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          "Ingresos",
-                          style: GoogleFonts.poppins(
-                            color: Theme.of(context).colorScheme.onBackground,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 0.5,
-                          ),
-                        ),
-                        Text(
-                          "Egresos",
-                          style: GoogleFonts.poppins(
-                            color: Theme.of(context).colorScheme.onBackground,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 0.5,
-                          ),
-                        )
-                      ],
-                    ),
-                    SfCircularChart(
-                      legend: const Legend(
-                        isVisible: false,
-                      ),
-                      annotations: <CircularChartAnnotation>[
-                        CircularChartAnnotation(
-                          height: '100%',
-                          width: '100%',
-                          widget: Container(
-                            child: PhysicalModel(
-                              shape: BoxShape.circle,
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              color: Theme.of(context).colorScheme.background,
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'No hubo ingresos',
-                                  style: GoogleFonts.poppins(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                    Container(
+                      child: TabBar(
+                        controller: _tabController,
+                        labelColor: Theme.of(context).colorScheme.onBackground,
+                        unselectedLabelColor: Colors.black54,
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              "Ingresos",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                        ),
-                        CircularChartAnnotation(
-                          widget: Container(),
-                        ),
-                      ],
-                      series: <CircularSeries>[
-                        // Renders doughnut chart
-                        DoughnutSeries<ChartData, String>(
-                          dataSource: <ChartData>[
-                            ChartData(
-                              'Efectivo',
-                              150,
-                              Colors.green,
+                          Tab(
+                            child: Text(
+                              "Egresos",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
                             ),
-                            ChartData(
-                              'Mercado Pago',
-                              250,
-                              Colors.lightBlue,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: double.maxFinite,
+                      height: 300,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          SfCircularChart(
+                            legend: const Legend(
+                              isVisible: false,
                             ),
-                            ChartData(
-                              'BBVA',
-                              500,
-                              Colors.blueAccent,
+                            annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                height: '100%',
+                                width: '100%',
+                                widget: Container(
+                                  child: PhysicalModel(
+                                    shape: BoxShape.circle,
+                                    elevation: 10,
+                                    shadowColor: Colors.black,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'No hubo ingresos',
+                                        style: GoogleFonts.poppins(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              CircularChartAnnotation(
+                                widget: Container(),
+                              ),
+                            ],
+                            series: <CircularSeries>[
+                              // Renders doughnut chart
+                              DoughnutSeries<ChartData, String>(
+                                dataSource: <ChartData>[
+                                  ChartData(
+                                    'Efectivo',
+                                    150,
+                                    Colors.green,
+                                  ),
+                                  ChartData(
+                                    'Mercado Pago',
+                                    250,
+                                    Colors.lightBlue,
+                                  ),
+                                  ChartData(
+                                    'BBVA',
+                                    500,
+                                    Colors.blueAccent,
+                                  ),
+                                  ChartData(
+                                    'Claro Pay',
+                                    100,
+                                    Colors.red,
+                                  ),
+                                  ChartData(
+                                    'Nelo',
+                                    350.5,
+                                    Colors.purple,
+                                  ),
+                                ],
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y,
+                              )
+                            ],
+                          ),
+                          SfCircularChart(
+                            legend: const Legend(
+                              isVisible: false,
                             ),
-                            ChartData(
-                              'Claro Pay',
-                              100,
-                              Colors.red,
-                            ),
-                            ChartData(
-                              'Nelo',
-                              350.5,
-                              Colors.purple,
-                            ),
-                          ],
-                          pointColorMapper: (ChartData data, _) => data.color,
-                          xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y,
-                        )
-                      ],
+                            annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                height: '100%',
+                                width: '100%',
+                                widget: Container(
+                                  child: PhysicalModel(
+                                    shape: BoxShape.circle,
+                                    elevation: 10,
+                                    shadowColor: Colors.black,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'No hubo egresos',
+                                        style: GoogleFonts.poppins(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              CircularChartAnnotation(
+                                widget: Container(),
+                              ),
+                            ],
+                            series: <CircularSeries>[
+                              // Renders doughnut chart
+                              DoughnutSeries<ChartData, String>(
+                                dataSource: <ChartData>[
+                                  ChartData(
+                                    'Efectivo',
+                                    150,
+                                    Colors.yellow,
+                                  ),
+                                  ChartData(
+                                    'Mercado Pago',
+                                    250,
+                                    Colors.brown,
+                                  ),
+                                  ChartData(
+                                    'BBVA',
+                                    500,
+                                    Colors.deepOrange,
+                                  ),
+                                  ChartData(
+                                    'Claro Pay',
+                                    100,
+                                    Colors.indigo,
+                                  ),
+                                  ChartData(
+                                    'Nelo',
+                                    350.5,
+                                    Colors.pink,
+                                  ),
+                                ],
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
