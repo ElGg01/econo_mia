@@ -163,6 +163,10 @@
   "@title_heading_theme": {
     "description": "Title for theme heading to user settings page"
   },
+  "title_heading_language": "Language",
+  "@title_heading_language": {
+    "description": "Title for language heading to user settings page"
+  },
   "changePassword_GestureDetector": "Change password",
   "@changePassword_GestureDetector": {
     "description": "Title for change password gesture detector"
@@ -170,6 +174,10 @@
   "chooseTheme_GestureDetector": "Choose theme",
   "@chooseTheme_GestureDetector": {
     "description": "Title for choose theme gesture detector"
+  },
+  "chooseLanguage_GestureDetector": "Choose your language",
+  "@chooseLanguage_GestureDetector": {
+    "description": "Title for choose-language gesture detector"
   },
   "logOutButton": "Log Out",
   "@logOutButton": {
@@ -210,6 +218,14 @@
   "systemTheme_titleRadialButton": "System Theme",
   "@systemTheme_titleRadialButton": {
     "description": "System-theme option in radial button to choose"
+  },
+  "english_titleRadialButton": "English",
+  "@english_titleRadialButton": {
+    "description": "English language option in radial button to choose"
+  },
+  "spanish_titleRadialButton": "Spanish",
+  "@spanish_titleRadialButton": {
+    "description": "Spanish language option in radial button to choose"
   },
   "myAccount_Drawable": "My Account",
   "@myAccount_Drawable": {

@@ -5,6 +5,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../auth/firebase_auth_services.dart';
 import '../auth/validators.dart';
+import '../widgets/custom_text_form_field.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -135,62 +136,37 @@ class _LoginState extends State<Login> {
                     height: 50,
                   ),
                   // Email
-                  FadeInUpBig(
-                    delay: const Duration(milliseconds: 300),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        labelText: AppLocalizations.of(context)!.emailTextFormField,
-                        prefixIcon: const Icon(Icons.email),
-                      ),
-                      autofocus: false,
-                      cursorColor: Colors.black,
-                      validator: (String? value){
-                        return Validators.validateEmail(value, text);
-                      },
-                    ),
+                  CustomTextFormField(
+                    editingController: _emailController,
+                    icons: Icons.email,
+                    text: text.emailTextFormField,
+                    validatorFunction: (String? value) =>
+                        Validators.validateEmail(value, text),
+                    iconButton: null,
+                    autoValidateMode: AutovalidateMode.disabled,
+                    isObscureText: false
                   ),
                   const SizedBox( height: 20, ),
                   // Password
-                  FadeInUpBig(
-                    delay: const Duration(milliseconds: 300),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 2,
-                            color: Theme.of(context).colorScheme.onBackground
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        labelText: AppLocalizations.of(context)!.passwordTextFormField,
-                        prefixIcon: const Icon(Icons.password),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible;
-                            });
-                          },
-                        ),
+                  CustomTextFormField(
+                    editingController: _passwordController,
+                    icons: Icons.password,
+                    text: text.passwordTextFormField,
+                    validatorFunction: (String? value) => Validators.validatePasswordOnLogin(value, text),
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
-                      obscureText: _isPasswordVisible,
-                      validator: (String? value){
-                        return Validators.validatePasswordOnLogin(value, text);
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
                       },
                     ),
+                    isObscureText: _isPasswordVisible,
+                    autoValidateMode: AutovalidateMode.disabled,
                   ),
                   const SizedBox(
                     height: 20,

@@ -58,15 +58,18 @@ class _ChangePasswordState extends State<ChangePassword> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Password changed'),
-          content: Icon(
-            Icons.check_circle,
-            size: 80,
-            color: Theme.of(context).colorScheme.tertiary,
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Icon(
+              Icons.check_circle,
+              size: 80,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
           ),
           actions: [
             TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Ok')),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Ok'),),
           ],
           elevation: 16.0,
         );

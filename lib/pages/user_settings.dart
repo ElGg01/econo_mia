@@ -1,3 +1,4 @@
+import 'package:econo_mia/ui/language_mode_option.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,24 +25,36 @@ class _UserSettingsState extends State<UserSettings> {
   void initState() {
     super.initState();
     setThemeStringMode();
+    setLanguageStringMode();
   }
 
   late String _themeStringOption;
-  late IconData _icon;
+  late String _languageStringOption;
+  late IconData _iconTheme;
 
 
   void setThemeStringMode(){
     setState(() {
       if (context.read<ThemeProvider>().themeMode == ThemeModeOption.system) {
         _themeStringOption = 'System Default';
-        _icon = Icons.computer;
+        _iconTheme = Icons.computer;
       } else if (context.read<ThemeProvider>().themeMode ==
           ThemeModeOption.light) {
         _themeStringOption = 'Light';
-        _icon = Icons.light_mode;
+        _iconTheme = Icons.light_mode;
       } else {
         _themeStringOption = 'Dark';
-        _icon = Icons.dark_mode;
+        _iconTheme = Icons.dark_mode;
+      }
+    });
+  }
+
+  void setLanguageStringMode(){
+    setState(() {
+      if (context.read<LanguageProvider>().languageMode == LanguageModeOption.english){
+        _languageStringOption = "English";
+      } else {
+        _languageStringOption = "Spanish";
       }
     });
   }
@@ -183,12 +196,11 @@ class _UserSettingsState extends State<UserSettings> {
               ),
             ),
             const SizedBox(height: 20,),
+            // Theme text
             Text(text.title_heading_theme,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10, ),
             Card(
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -264,7 +276,7 @@ class _UserSettingsState extends State<UserSettings> {
                   );
                 },
                 child: ListTile(
-                  leading: Icon(_icon),
+                  leading: Icon(_iconTheme),
                   title: Text(text.chooseTheme_GestureDetector),
                   subtitle: Text(
                       _themeStringOption == "Light"
@@ -272,6 +284,75 @@ class _UserSettingsState extends State<UserSettings> {
                           : _themeStringOption == "Dark"
                             ? text.dark_titleRadialButton
                             : text.systemTheme_titleRadialButton
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+            // Language
+            Text(text.title_heading_language,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 10, ),
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              child: GestureDetector(
+                onTap: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text(text.chooseLanguage_GestureDetector),
+                        content: SizedBox(
+                          width: double.maxFinite,
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: <RadioListTile>[
+                              RadioListTile(
+                                title: Text(text.english_titleRadialButton),
+                                value: LanguageModeOption.english,
+                                groupValue:
+                                context.read<LanguageProvider>().languageMode,
+                                onChanged: (value) {
+                                  context
+                                      .read<LanguageProvider>()
+                                      .setLanguageMode(value!);
+                                  setLanguageStringMode();
+                                  Navigator.of(context).pop();
+                                },
+                                hoverColor: Theme.of(context).shadowColor,
+                              ),
+                              RadioListTile(
+                                title: Text(text.spanish_titleRadialButton),
+                                value: LanguageModeOption.spanish,
+                                groupValue:
+                                context.read<LanguageProvider>().languageMode,
+                                onChanged: (value) {
+                                  context
+                                      .read<LanguageProvider>()
+                                      .setLanguageMode(value!);
+                                  setLanguageStringMode();
+                                  Navigator.of(context).pop();
+                                },
+                                hoverColor: Theme.of(context).shadowColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  );
+                },
+                child: ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(text.chooseLanguage_GestureDetector),
+                  subtitle: Text(
+                      _languageStringOption == "English"
+                          ? text.english_titleRadialButton
+                          : text.spanish_titleRadialButton
                   ),
                 ),
               ),
