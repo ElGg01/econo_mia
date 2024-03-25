@@ -138,9 +138,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           children: <Widget>[
             FadeInDown(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, top: 20),
+                padding: const EdgeInsets.only(left: 30, top: 30),
                 child: Text(
-                  "Hola, ${user?.displayName}.",
+                  "Hola, ${user?.displayName}. 🤑",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 28,
@@ -148,266 +148,359 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Container(
-                alignment: Alignment.topCenter,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+            JelloIn(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30, top: 10),
+                child: Text(
+                  "Saldo total: 1,000 MXN",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).colorScheme.background,
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: DropdownButton(
-                              padding: const EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                              ),
-                              alignment: Alignment.center,
-                              value: "Total",
-                              borderRadius: BorderRadius.circular(10),
-                              isExpanded: true,
-                              items: [
-                                DropdownMenuItem(
-                                  value: "Total",
-                                  child: Center(
-                                    child: Text(
-                                      "Total",
-                                      style: GoogleFonts.poppins(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onBackground,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: "BBVA",
-                                  child: Center(
-                                    child: Text(
-                                      "BBVA",
-                                      style: GoogleFonts.poppins(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onBackground,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              onChanged: (value) {},
-                            ),
-                          ),
-                        ),
-                      ),
+              ),
+            ),
+            ElasticInDown(
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    Container(
-                      child: TabBar(
-                        controller: _tabController,
-                        labelColor: Theme.of(context).colorScheme.onBackground,
-                        unselectedLabelColor: Colors.black54,
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              "Ingresos",
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              "Egresos",
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .shadow
+                            .withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                    ),
-                    Container(
-                      width: double.maxFinite,
-                      height: 300,
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          SfCircularChart(
-                            legend: const Legend(
-                              isVisible: false,
-                            ),
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                height: '100%',
-                                width: '100%',
-                                widget: Container(
-                                  child: PhysicalModel(
-                                    shape: BoxShape.circle,
-                                    elevation: 10,
-                                    shadowColor: Colors.black,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
-                                    child: Container(
-                                      alignment: Alignment.center,
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).colorScheme.background,
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton(
+                                padding: const EdgeInsets.only(
+                                  left: 10,
+                                  right: 10,
+                                ),
+                                alignment: Alignment.center,
+                                value: "Total",
+                                borderRadius: BorderRadius.circular(10),
+                                isExpanded: true,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "Total",
+                                    child: Center(
                                       child: Text(
-                                        'No hubo ingresos',
+                                        "Total",
                                         style: GoogleFonts.poppins(
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onBackground,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 18,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              CircularChartAnnotation(
-                                widget: Container(),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Renders doughnut chart
-                              DoughnutSeries<ChartData, String>(
-                                dataSource: <ChartData>[
-                                  ChartData(
-                                    'Efectivo',
-                                    150,
-                                    Colors.green,
-                                  ),
-                                  ChartData(
-                                    'Mercado Pago',
-                                    250,
-                                    Colors.lightBlue,
-                                  ),
-                                  ChartData(
-                                    'BBVA',
-                                    500,
-                                    Colors.blueAccent,
-                                  ),
-                                  ChartData(
-                                    'Claro Pay',
-                                    100,
-                                    Colors.red,
-                                  ),
-                                  ChartData(
-                                    'Nelo',
-                                    350.5,
-                                    Colors.purple,
-                                  ),
-                                ],
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              )
-                            ],
-                          ),
-                          SfCircularChart(
-                            legend: const Legend(
-                              isVisible: false,
-                            ),
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                height: '100%',
-                                width: '100%',
-                                widget: Container(
-                                  child: PhysicalModel(
-                                    shape: BoxShape.circle,
-                                    elevation: 10,
-                                    shadowColor: Colors.black,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .background,
-                                    child: Container(
-                                      alignment: Alignment.center,
+                                  DropdownMenuItem(
+                                    value: "BBVA",
+                                    child: Center(
                                       child: Text(
-                                        'No hubo egresos',
+                                        "BBVA",
                                         style: GoogleFonts.poppins(
                                           color: Theme.of(context)
                                               .colorScheme
                                               .onBackground,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 18,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              CircularChartAnnotation(
-                                widget: Container(),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Renders doughnut chart
-                              DoughnutSeries<ChartData, String>(
-                                dataSource: <ChartData>[
-                                  ChartData(
-                                    'Efectivo',
-                                    150,
-                                    Colors.yellow,
-                                  ),
-                                  ChartData(
-                                    'Mercado Pago',
-                                    250,
-                                    Colors.brown,
-                                  ),
-                                  ChartData(
-                                    'BBVA',
-                                    500,
-                                    Colors.deepOrange,
-                                  ),
-                                  ChartData(
-                                    'Claro Pay',
-                                    100,
-                                    Colors.indigo,
-                                  ),
-                                  ChartData(
-                                    'Nelo',
-                                    350.5,
-                                    Colors.pink,
+                                  DropdownMenuItem(
+                                    value: "+",
+                                    child: Center(
+                                      child: Text(
+                                        "+ Añadir cuenta",
+                                        style: GoogleFonts.poppins(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              )
-                            ],
+                                onChanged: (value) {},
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        child: TabBar(
+                          controller: _tabController,
+                          labelColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          unselectedLabelColor: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(0.5),
+                          dividerColor:
+                              Theme.of(context).colorScheme.background,
+                          dividerHeight: 5,
+                          indicatorColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          indicatorWeight: 5,
+                          tabs: [
+                            Tab(
+                              child: Text(
+                                "Ingresos",
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                "Egresos",
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: double.maxFinite,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(1),
+                        height: 300,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            Container(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer
+                                  .withOpacity(0.5),
+                              child: ZoomIn(
+                                child: SfCircularChart(
+                                  legend: const Legend(
+                                    isVisible: false,
+                                  ),
+                                  annotations: <CircularChartAnnotation>[
+                                    CircularChartAnnotation(
+                                      height: '100%',
+                                      width: '100%',
+                                      widget: Container(
+                                        child: PhysicalModel(
+                                          shape: BoxShape.circle,
+                                          elevation: 10,
+                                          shadowColor: Colors.black,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'No hubo ingresos',
+                                              style: GoogleFonts.poppins(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onBackground,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    CircularChartAnnotation(
+                                      widget: Container(),
+                                    ),
+                                  ],
+                                  series: <CircularSeries>[
+                                    // Renders doughnut chart
+                                    DoughnutSeries<ChartData, String>(
+                                      dataSource: <ChartData>[
+                                        ChartData(
+                                          'Efectivo',
+                                          150,
+                                          Colors.green,
+                                        ),
+                                        ChartData(
+                                          'Mercado Pago',
+                                          250,
+                                          Colors.lightBlue,
+                                        ),
+                                        ChartData(
+                                          'BBVA',
+                                          500,
+                                          Colors.blueAccent,
+                                        ),
+                                        ChartData(
+                                          'Claro Pay',
+                                          100,
+                                          Colors.red,
+                                        ),
+                                        ChartData(
+                                          'Nelo',
+                                          350.5,
+                                          Colors.purple,
+                                        ),
+                                      ],
+                                      pointColorMapper: (ChartData data, _) =>
+                                          data.color,
+                                      xValueMapper: (ChartData data, _) =>
+                                          data.x,
+                                      yValueMapper: (ChartData data, _) =>
+                                          data.y,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer
+                                  .withOpacity(0.5),
+                              child: ZoomIn(
+                                child: SfCircularChart(
+                                  legend: const Legend(
+                                    isVisible: false,
+                                  ),
+                                  annotations: <CircularChartAnnotation>[
+                                    CircularChartAnnotation(
+                                      height: '100%',
+                                      width: '100%',
+                                      widget: Container(
+                                        child: PhysicalModel(
+                                          shape: BoxShape.circle,
+                                          elevation: 10,
+                                          shadowColor: Colors.black,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              'No hubo egresos',
+                                              style: GoogleFonts.poppins(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onBackground,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    CircularChartAnnotation(
+                                      widget: Container(),
+                                    ),
+                                  ],
+                                  series: <CircularSeries>[
+                                    // Renders doughnut chart
+                                    DoughnutSeries<ChartData, String>(
+                                      dataSource: <ChartData>[
+                                        ChartData(
+                                          'Efectivo',
+                                          150,
+                                          Colors.yellow,
+                                        ),
+                                        ChartData(
+                                          'Mercado Pago',
+                                          250,
+                                          Colors.brown,
+                                        ),
+                                        ChartData(
+                                          'BBVA',
+                                          500,
+                                          Colors.deepOrange,
+                                        ),
+                                        ChartData(
+                                          'Claro Pay',
+                                          100,
+                                          Colors.indigo,
+                                        ),
+                                        ChartData(
+                                          'Nelo',
+                                          350.5,
+                                          Colors.pink,
+                                        ),
+                                      ],
+                                      pointColorMapper: (ChartData data, _) =>
+                                          data.color,
+                                      xValueMapper: (ChartData data, _) =>
+                                          data.x,
+                                      yValueMapper: (ChartData data, _) =>
+                                          data.y,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10, bottom: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.add),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
