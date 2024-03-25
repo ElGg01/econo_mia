@@ -1,3 +1,4 @@
+import 'package:econo_mia/pages/add_balance_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +32,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
@@ -49,18 +48,16 @@ class _AppState extends State<App> {
             theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: lightColorScheme,
-                brightness: Brightness.light
-            ),
+                brightness: Brightness.light),
             darkTheme: ThemeData(
                 useMaterial3: true,
                 colorScheme: darkColorScheme,
-                brightness: Brightness.dark
-            ),
+                brightness: Brightness.dark),
             themeMode: themeProvider.themeMode == ThemeModeOption.system
-              ? ThemeMode.system
-              : themeProvider.themeMode == ThemeModeOption.light
-                ? ThemeMode.light
-                : ThemeMode.dark,
+                ? ThemeMode.system
+                : themeProvider.themeMode == ThemeModeOption.light
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
             routes: {
               '/': (context) => const AuthenticationWrapper(),
               '/login': (context) => const Login(),
@@ -69,8 +66,10 @@ class _AppState extends State<App> {
               '/forgot_password': (context) => const ForgotPassword(),
               '/home': (context) => const Home(),
               '/user_settings': (context) => const UserSettings(),
-              '/user_settings/change_password': (context) => const ChangePassword(),
+              '/user_settings/change_password': (context) =>
+                  const ChangePassword(),
               '/balance': (context) => const Balance(),
+              '/add_balance_account': (context) => const AddBalanceAccount()
             },
             initialRoute: "/",
             localizationsDelegates: AppLocalizations.localizationsDelegates,

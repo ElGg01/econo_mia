@@ -18,6 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
 
+  String dropDownValue = 'Total';
+
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -39,7 +41,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     TabController _tabController = TabController(length: 2, vsync: this);
@@ -211,7 +212,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   right: 10,
                                 ),
                                 alignment: Alignment.center,
-                                value: "Total",
+                                value: dropDownValue,
                                 borderRadius: BorderRadius.circular(10),
                                 isExpanded: true,
                                 items: [
@@ -231,10 +232,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   DropdownMenuItem(
-                                    value: "BBVA",
+                                    value: "Efectivo",
                                     child: Center(
                                       child: Text(
-                                        "BBVA",
+                                        "Efectivo",
                                         style: GoogleFonts.poppins(
                                           color: Theme.of(context)
                                               .colorScheme
@@ -247,15 +248,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   ),
                                   DropdownMenuItem(
                                     value: "+",
-                                    child: Center(
-                                      child: Text(
-                                        "+ Añadir cuenta",
-                                        style: GoogleFonts.poppins(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .error,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, '/add_balance_account');
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          "+ Añadir cuenta",
+                                          style: GoogleFonts.poppins(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
                                         ),
                                       ),
                                     ),
