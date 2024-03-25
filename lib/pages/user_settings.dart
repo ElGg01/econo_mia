@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
+
 
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
@@ -15,6 +16,7 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -27,7 +29,8 @@ class _UserSettingsState extends State<UserSettings> {
   late String _themeStringOption;
   late IconData _icon;
 
-  void setThemeStringMode() {
+
+  void setThemeStringMode(){
     setState(() {
       if (context.read<ThemeProvider>().themeMode == ThemeModeOption.system) {
         _themeStringOption = 'System Default';
@@ -56,49 +59,57 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context2) {
-          return AlertDialog(
-            title: const Text('Are you sure to want to delete the account?'),
-            content: const SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('This action cannot be undone'),
-                ],
-              ),
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context2) {
+        return AlertDialog(
+          title: Text(text!.title_dialog_deleteAccount),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(text.subtitle_dialog_deleteAccount),
+              ],
             ),
-            actions: <TextButton>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Cancel'),
+          ),
+          actions: <TextButton>[
+            TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text(text.cancelButton_dialog),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: _deleteAccount,
-                child: const Text('Delete'),
-              ),
-            ],
-          );
-        });
+              onPressed: _deleteAccount,
+              child: Text(text.deleteButton_dialog),
+            ),
+          ],
+        );
+      }
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
-          child: Text(
-            "User settings",
-            style:
-                GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 24),
+          child: Text(text!.appbar_userSettings,
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              fontSize: 24
+            ),
           ),
         ),
         centerTitle: true,
@@ -142,19 +153,9 @@ class _UserSettingsState extends State<UserSettings> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              'Account',
-              style: (Theme.of(context).textTheme.headlineSmall ??
-                      const TextStyle())
-                  .merge(
-                GoogleFonts.poppins(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            const SizedBox(height: 30,),
+            Text(text.title_heading_account,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(
               height: 10,
@@ -174,26 +175,16 @@ class _UserSettingsState extends State<UserSettings> {
                     },
                     child: ListTile(
                       leading: const Icon(Icons.password),
-                      title: const Text('Change Password'),
-                      trailing: Icon(MdiIcons.fromString('greater-than')),
+                      title: Text(text.changePassword_GestureDetector),
+                      trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Theme',
-              style: (Theme.of(context).textTheme.headlineSmall ??
-                      const TextStyle())
-                  .merge(
-                GoogleFonts.poppins(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            const SizedBox(height: 20,),
+            Text(text.title_heading_theme,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(
               height: 10,
@@ -209,37 +200,14 @@ class _UserSettingsState extends State<UserSettings> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text(
-                          'Choose Theme',
-                          style: (Theme.of(context).textTheme.headlineSmall ??
-                                  const TextStyle())
-                              .merge(
-                            GoogleFonts.poppins(
-                              color: Theme.of(context).colorScheme.onBackground,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                        title: Text(text.chooseTheme_GestureDetector),
                         content: SizedBox(
                           width: double.maxFinite,
                           child: ListView(
                             shrinkWrap: true,
                             children: <RadioListTile>[
                               RadioListTile(
-                                title: Text(
-                                  'Light',
-                                  style:
-                                      (Theme.of(context).textTheme.bodyLarge ??
-                                              const TextStyle())
-                                          .merge(
-                                    GoogleFonts.poppins(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
+                                title: Text(text.light_titleRadialButton),
                                 value: ThemeModeOption.light,
                                 groupValue:
                                     context.read<ThemeProvider>().themeMode,
@@ -253,20 +221,7 @@ class _UserSettingsState extends State<UserSettings> {
                                 hoverColor: Theme.of(context).shadowColor,
                               ),
                               RadioListTile(
-                                title: Text(
-                                  'Dark',
-                                  style:
-                                      (Theme.of(context).textTheme.bodyLarge ??
-                                              const TextStyle())
-                                          .merge(
-                                    GoogleFonts.poppins(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
+                                title: Text(text.dark_titleRadialButton),
                                 value: ThemeModeOption.dark,
                                 groupValue:
                                     context.read<ThemeProvider>().themeMode,
@@ -280,20 +235,7 @@ class _UserSettingsState extends State<UserSettings> {
                                 hoverColor: Theme.of(context).shadowColor,
                               ),
                               RadioListTile(
-                                title: Text(
-                                  'System Default',
-                                  style:
-                                      (Theme.of(context).textTheme.bodyLarge ??
-                                              const TextStyle())
-                                          .merge(
-                                    GoogleFonts.poppins(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
+                                title: Text(text.systemTheme_titleRadialButton),
                                 value: ThemeModeOption.system,
                                 groupValue:
                                     context.read<ThemeProvider>().themeMode,
@@ -314,7 +256,7 @@ class _UserSettingsState extends State<UserSettings> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: const Text('Cancel'),
+                            child: Text(text.cancelButton_dialog),
                           ),
                         ],
                       );
@@ -323,29 +265,32 @@ class _UserSettingsState extends State<UserSettings> {
                 },
                 child: ListTile(
                   leading: Icon(_icon),
-                  title: const Text('Choose Theme'),
-                  subtitle: Text(_themeStringOption),
+                  title: Text(text.chooseTheme_GestureDetector),
+                  subtitle: Text(
+                      _themeStringOption == "Light"
+                          ? text.light_titleRadialButton
+                          : _themeStringOption == "Dark"
+                            ? text.dark_titleRadialButton
+                            : text.systemTheme_titleRadialButton
+                  ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30,),
+            // Log Out
             ElevatedButton(
               onPressed: _signOut,
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: const Text(
-                'Log Out',
-                style: TextStyle(
+              child: Text(text.logOutButton,
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10,),
+            // Delete account
             ElevatedButton(
               onPressed: () {
                 _showDeleteConfirmationDialog(context);
@@ -353,9 +298,8 @@ class _UserSettingsState extends State<UserSettings> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: const Text(
-                'Delete Account',
-                style: TextStyle(
+              child: Text(text.deleteAccountButton,
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),

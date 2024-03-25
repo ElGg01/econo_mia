@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:econo_mia/auth/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +71,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+
+    final AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(milliseconds: 800),
-          child: Text("Password Forgotten",
+          child: Text(text!.appbar_password_forgotten,
             style: GoogleFonts.roboto(
               color: Theme.of(context).colorScheme.onBackground,
               fontWeight: FontWeight.bold,
@@ -101,9 +105,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                 ),
                 const SizedBox(height: 200,),
-                const Text('Enter your email and we will send you a password reset link',
+                Text(text.title_password_forgotten,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                   ),
                 ),
@@ -122,13 +126,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             ),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          labelText: "Email",
+                          labelText: text.emailTextFormField,
                           prefixIcon: const Icon(Icons.email),
                         ),
                         autofocus: false,
                         cursorColor: Colors.black,
                         validator: (String? value){
-                          return Validators.validateEmail(value);
+                          return Validators.validateEmail(value, text);
                         },
                       ),
                     ),
@@ -146,7 +150,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Reset Password",
+                              text.resetPasswordButton,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.background,
                                 fontSize: 18,

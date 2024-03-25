@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -13,42 +14,46 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = true;
 
+
   Future<void> _signIn() async {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Processing Data')));
+    if (_formKey.currentState!.validate()){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Processing Data'))
+      );
       User? user = await _auth.signInWithEmailAndPassword(
-          _emailController.text, _passwordController.text);
-      if (user != null) {
+          _emailController.text,
+          _passwordController.text
+      );
+      if (user != null){
         print('User is signed in successfully');
         if (!context.mounted) return;
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Row(
-            children: [
-              Icon(Icons.dangerous),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Text('Invalid credentials'),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.red,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.dangerous),
+                const SizedBox(width: 20,),
+                Expanded(child: Text('Invalid credentials', style: TextStyle(color: Theme.of(context).colorScheme.onBackground),)),
+              ],
+            ),
+            backgroundColor: Colors.red,
+          )
+        );
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Check the form')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Check the form'))
+      );
     }
   }
 
@@ -93,6 +98,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -110,23 +118,17 @@ class _LoginState extends State<Login> {
                       width: 200,
                     ),
                   ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  const Text(
-                    'HELLO AGAIN',
-                    style: TextStyle(
+                  const SizedBox( height: 100, ),
+                  Text(text!.loginTitle,
+                    style: const TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "Welcome back, you've been missed",
-                    style: TextStyle(
-                      fontSize: 24,
+                  const SizedBox( height: 20, ),
+                  Text(text.loginSubtitle,
+                    style: const TextStyle(
+                        fontSize: 24,
                     ),
                   ),
                   const SizedBox(
@@ -145,17 +147,17 @@ class _LoginState extends State<Login> {
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Email",
+                        labelText: AppLocalizations.of(context)!.emailTextFormField,
                         prefixIcon: const Icon(Icons.email),
                       ),
                       autofocus: false,
                       cursorColor: Colors.black,
-                      validator: (String? value) {
-                        return Validators.validateEmail(value);
+                      validator: (String? value){
+                        return Validators.validateEmail(value, text);
                       },
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox( height: 20, ),
                   // Password
                   FadeInUpBig(
                     delay: const Duration(milliseconds: 300),
@@ -164,19 +166,18 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              width: 2,
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
+                            width: 2,
+                            color: Theme.of(context).colorScheme.onBackground
+                          ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Password",
+                        labelText: AppLocalizations.of(context)!.passwordTextFormField,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isPasswordVisible
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: Theme.of(context).primaryColor,
                           ),
                           onPressed: () {
                             setState(() {
@@ -186,11 +187,8 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       obscureText: _isPasswordVisible,
-                      validator: (String? value) {
-                        if (value!.isEmpty || value == "") {
-                          return 'Password is empty';
-                        }
-                        return null;
+                      validator: (String? value){
+                        return Validators.validatePasswordOnLogin(value, text);
                       },
                     ),
                   ),
@@ -209,8 +207,7 @@ class _LoginState extends State<Login> {
                             onTap: () {
                               Navigator.pushNamed(context, "/forgot_password");
                             },
-                            child: Text(
-                              'Forgot Password?',
+                            child: Text(text.forgotPasswordLink,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.tertiary,
                                 fontWeight: FontWeight.bold,
@@ -239,7 +236,7 @@ class _LoginState extends State<Login> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Submit",
+                            text.submitButton,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.background,
                               fontSize: 18,
@@ -265,12 +262,9 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(MdiIcons.fromString('google')),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          const Text(
-                            'Sign in with Google',
-                            style: TextStyle(
+                          const SizedBox(width: 30,),
+                          Text(text.submitWithGoogleButton,
+                            style: const TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -285,9 +279,9 @@ class _LoginState extends State<Login> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Not a member? ",
-                          style: TextStyle(
+                        Text(
+                          text.helperMessageToRegister,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -297,7 +291,7 @@ class _LoginState extends State<Login> {
                             Navigator.pushNamed(context, "/register");
                           },
                           child: Text(
-                            "Register now",
+                            text.registerNowLink,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.tertiary,
                               fontWeight: FontWeight.bold,

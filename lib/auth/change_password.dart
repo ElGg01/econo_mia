@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -113,18 +114,21 @@ class _ChangePasswordState extends State<ChangePassword> {
         showSnackBar(defaultError);
       }
     } catch (e) {
-      print(e);
+      showSnackBar('Something went wrong');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(milliseconds: 800),
           child: Text(
-            "Change Password",
+            text!.appbarChangePassword,
             style: GoogleFonts.roboto(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontWeight: FontWeight.bold,
@@ -135,7 +139,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Center(
             child: Form(
@@ -146,9 +150,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                   const SizedBox(
                     height: 200,
                   ),
-                  const Text(
-                    'Change Password',
-                    style: TextStyle(
+                  Text(
+                    text.title_ChangePassword,
+                    style: const TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                     ),
@@ -156,11 +160,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Fill the form to change your password",
-                    style: TextStyle(
+                  Text(
+                    text.subtitle_ChangePassword,
+                    style: const TextStyle(
                       fontSize: 24,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(
                     height: 100,
@@ -178,7 +183,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   Theme.of(context).colorScheme.onBackground),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Old Password",
+                        labelText: text.oldPasswordTextFormField,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -214,7 +219,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                     Theme.of(context).colorScheme.onBackground),
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          labelText: "New Password",
+                          labelText: text.newPasswordTextFormField,
                           prefixIcon: const Icon(Icons.password),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -233,7 +238,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         autofocus: false,
                         obscureText: _isNewPasswordVisible,
                         validator: (String? value) {
-                          return Validators.validatePassword(value);
+                          return Validators.validatePassword(value, text);
                         }),
                   ),
                   const SizedBox(
@@ -252,7 +257,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   Theme.of(context).colorScheme.onBackground),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        labelText: "Confirm Password",
+                        labelText: text.confirmPasswordTextFormField,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -276,13 +281,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                         String? result = _confirmPassword.text ==
                                 _newPassword.text
                             ? null
-                            : 'The confirm password does not match with the new password';
+                            : text.validatorMsg_confirmPassword;
                         return result;
                       },
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   // Submit button
                   FadeInUpBig(
@@ -298,7 +303,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Change password",
+                            text.changePasswordButton,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.background,
                               fontSize: 18,
