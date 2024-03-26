@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui';
@@ -7,6 +8,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import "dart:math";
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -52,7 +54,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
-
     TabController _tabController = TabController(length: 2, vsync: this);
 
     return Scaffold(
@@ -411,6 +412,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Container(
+                                    height: 300,
                                     child: ZoomIn(
                                       child: SfCircularChart(
                                         legend: const Legend(
@@ -493,17 +495,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                     ),
                                   ),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
-                                  Text("xd"),
+                                  const Column(
+                                    children: [
+                                      TransactionItemRow(
+                                        icon: Icons.gamepad,
+                                        name: "Resident evil 4",
+                                        amount: 100,
+                                      ),
+                                      TransactionItemRow(
+                                        icon: Icons.abc,
+                                        name: "GTA V",
+                                        amount: 1200,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                 ],
                               ),
                             ),
@@ -512,83 +520,164 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   .colorScheme
                                   .primaryContainer
                                   .withOpacity(0.5),
-                              child: ZoomIn(
-                                child: SfCircularChart(
-                                  legend: const Legend(
-                                    isVisible: false,
-                                  ),
-                                  annotations: <CircularChartAnnotation>[
-                                    CircularChartAnnotation(
-                                      height: '100%',
-                                      width: '100%',
-                                      widget: Container(
-                                        child: PhysicalModel(
-                                          shape: BoxShape.circle,
-                                          elevation: 10,
-                                          shadowColor: Colors.black,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .background,
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              'No hubo egresos',
-                                              style: GoogleFonts.poppins(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onBackground,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                              child: ListView(
+                                children: [
+                                  Container(
+                                    width: double.maxFinite,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background,
+                                      ),
+                                      child: ToggleButtons(
+                                        borderRadius: BorderRadius.circular(10),
+                                        fillColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        highlightColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        borderColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        borderWidth: 5,
+                                        selectedBorderColor: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        selectedColor: Theme.of(context)
+                                            .colorScheme
+                                            .background,
+                                        isSelected: _isSelected,
+                                        onPressed: (int index) {
+                                          _selectIndex(index);
+                                        },
+                                        children: [
+                                          Text(
+                                            "Día",
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        ),
+                                          Text(
+                                            "Mes",
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Año",
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    CircularChartAnnotation(
-                                      widget: Container(),
+                                  ),
+                                  Container(
+                                    height: 300,
+                                    child: ZoomIn(
+                                      child: SfCircularChart(
+                                        legend: const Legend(
+                                          isVisible: false,
+                                        ),
+                                        annotations: <CircularChartAnnotation>[
+                                          CircularChartAnnotation(
+                                            height: '100%',
+                                            width: '100%',
+                                            widget: Container(
+                                              child: PhysicalModel(
+                                                shape: BoxShape.circle,
+                                                elevation: 10,
+                                                shadowColor: Colors.black,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .background,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    'No hubo egresos',
+                                                    style: GoogleFonts.poppins(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onBackground,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          CircularChartAnnotation(
+                                            widget: Container(),
+                                          ),
+                                        ],
+                                        series: <CircularSeries>[
+                                          // Renders doughnut chart
+                                          DoughnutSeries<ChartData, String>(
+                                            dataSource: <ChartData>[
+                                              ChartData(
+                                                'Efectivo',
+                                                150,
+                                                Colors.green,
+                                              ),
+                                              ChartData(
+                                                'Mercado Pago',
+                                                250,
+                                                Colors.lightBlue,
+                                              ),
+                                              ChartData(
+                                                'BBVA',
+                                                500,
+                                                Colors.blueAccent,
+                                              ),
+                                              ChartData(
+                                                'Claro Pay',
+                                                100,
+                                                Colors.red,
+                                              ),
+                                              ChartData(
+                                                'Nelo',
+                                                350.5,
+                                                Colors.purple,
+                                              ),
+                                            ],
+                                            pointColorMapper:
+                                                (ChartData data, _) =>
+                                                    data.color,
+                                            xValueMapper: (ChartData data, _) =>
+                                                data.x,
+                                            yValueMapper: (ChartData data, _) =>
+                                                data.y,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                  series: <CircularSeries>[
-                                    // Renders doughnut chart
-                                    DoughnutSeries<ChartData, String>(
-                                      dataSource: <ChartData>[
-                                        ChartData(
-                                          'Efectivo',
-                                          150,
-                                          Colors.yellow,
-                                        ),
-                                        ChartData(
-                                          'Mercado Pago',
-                                          250,
-                                          Colors.brown,
-                                        ),
-                                        ChartData(
-                                          'BBVA',
-                                          500,
-                                          Colors.deepOrange,
-                                        ),
-                                        ChartData(
-                                          'Claro Pay',
-                                          100,
-                                          Colors.indigo,
-                                        ),
-                                        ChartData(
-                                          'Nelo',
-                                          350.5,
-                                          Colors.pink,
-                                        ),
-                                      ],
-                                      pointColorMapper: (ChartData data, _) =>
-                                          data.color,
-                                      xValueMapper: (ChartData data, _) =>
-                                          data.x,
-                                      yValueMapper: (ChartData data, _) =>
-                                          data.y,
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  const Column(
+                                    children: [
+                                      TransactionItemRow(
+                                        icon: Icons.boy,
+                                        name: "Bebé",
+                                        amount: -250,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -614,277 +703,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       ),
                     ],
                   ),
-                ),
-              ),
-            ),
-            ElasticInLeft(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  right: 20,
-                  bottom: 20,
-                  left: 20,
-                ),
-                child: InkWell(
-                  onTapUp: (details) {
-                    Navigator.pushNamed(context, '/balance');
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 15,
-                        sigmaY: 15,
-                      ),
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.cyan.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            width: 2,
-                            color: (Colors.cyanAccent),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              width: 200,
-                              child: SfCircularChart(
-                                title: const ChartTitle(
-                                  text: "Tus cuentas:",
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                legend: const Legend(
-                                  isVisible: false,
-                                ),
-                                series: <CircularSeries>[
-                                  PieSeries<ChartData, String>(
-                                    //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
-                                    dataSource: <ChartData>[
-                                      ChartData(
-                                        'Efectivo',
-                                        150,
-                                        Colors.green,
-                                      ),
-                                      ChartData(
-                                        'Mercado Pago',
-                                        250,
-                                        Colors.lightBlue,
-                                      ),
-                                      ChartData(
-                                        'BBVA',
-                                        500,
-                                        Colors.blueAccent,
-                                      ),
-                                      ChartData(
-                                        'Claro Pay',
-                                        100,
-                                        Colors.red,
-                                      ),
-                                    ],
-                                    xValueMapper: (ChartData data, _) => data.x,
-                                    yValueMapper: (ChartData data, _) => data.y,
-                                    radius: '70%',
-                                    pointColorMapper: (ChartData data, _) =>
-                                        data.color,
-                                    dataLabelSettings: const DataLabelSettings(
-                                      isVisible: true,
-                                      labelPosition:
-                                          ChartDataLabelPosition.outside,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                //SOLO MOSTRAR LOS 5 PRIMEROS CON MAS VALOR
-                                const Text(
-                                  "RESUMEN:",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: Colors.green,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text("Efectivo"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: Colors.lightBlue,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text("Mercado Pago"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: Colors.blueAccent,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text("BBVA"),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: Colors.red,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Text("Claro Pay"),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Container(
-                                      color: Colors.red,
-                                      child: const Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                        ),
-                                        child: Text(
-                                          "TOTAL: 1000",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    print("Presiono el widget");
-                  },
-                ),
-              ),
-            ),
-            ElasticInLeft(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, right: 20, bottom: 20, left: 20),
-                child: InkWell(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            width: 2,
-                            color: (Colors.redAccent),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Image.asset(
-                              "assets/logoAppGastosFixed.png",
-                              width: 150,
-                            ),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Text>[
-                                Text(
-                                  "RESUMEN:",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text("Gasto 1"),
-                                Text("Gasto 2"),
-                                Text("Gasto 3"),
-                                Text("Gasto 4"),
-                                Text("Gasto 5"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    print("Presiono el widget");
-                  },
-                ),
-              ),
-            ),
-            ElasticInLeft(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, right: 20, bottom: 20, left: 20),
-                child: InkWell(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            width: 2,
-                            color: (Colors.greenAccent),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Image.asset(
-                              "assets/logoAppGastosFixed.png",
-                              width: 150,
-                            ),
-                            const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Text>[
-                                Text(
-                                  "RESUMEN:",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text("Gasto 1"),
-                                Text("Gasto 2"),
-                                Text("Gasto 3"),
-                                Text("Gasto 4"),
-                                Text("Gasto 5"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    print("Presiono el widget");
-                  },
                 ),
               ),
             ),
