@@ -1,4 +1,7 @@
 import 'package:econo_mia/ui/language_mode_option.dart';
+import 'package:econo_mia/widgets/custom_language_alert_dialog.dart';
+import 'package:econo_mia/widgets/custom_settings_section.dart';
+import 'package:econo_mia/widgets/custom_theme_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -167,195 +170,50 @@ class _UserSettingsState extends State<UserSettings> {
               ],
             ),
             const SizedBox(height: 30,),
-            Text(text.title_heading_account,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // Account settings
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              color: Theme.of(context).colorScheme.surfaceVariant,
-              child: Column(
-                children: <GestureDetector>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, '/user_settings/change_password');
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.password),
-                      title: Text(text.changePassword_GestureDetector),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                    ),
-                  ),
-                ],
-              ),
+            // Change password
+            CustomSettingsSection(
+              headingText: text.title_heading_account,
+              gestureDetectorTitle: text.changePassword_GestureDetector,
+              leadingIcon: const Icon(Icons.password),
+              trailingIcon: const Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                Navigator.pushNamed(context, '/user_settings/change_password');
+              },
             ),
             const SizedBox(height: 20,),
             // Theme text
-            Text(text.title_heading_theme,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 10, ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+            CustomSettingsSection(
+              headingText: text.title_heading_theme,
+              gestureDetectorTitle: text.chooseTheme_GestureDetector,
+              gestureDetectorSubTitle: Text(_themeStringOption == "Light"
+                  ? text.light_titleRadialButton
+                  : _themeStringOption == "Dark"
+                    ? text.dark_titleRadialButton
+                    : text.systemTheme_titleRadialButton
               ),
-              color: Theme.of(context).colorScheme.surfaceVariant,
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(text.chooseTheme_GestureDetector),
-                        content: SizedBox(
-                          width: double.maxFinite,
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: <RadioListTile>[
-                              RadioListTile(
-                                title: Text(text.light_titleRadialButton),
-                                value: ThemeModeOption.light,
-                                groupValue:
-                                    context.read<ThemeProvider>().themeMode,
-                                onChanged: (value) {
-                                  context
-                                      .read<ThemeProvider>()
-                                      .setThemeMode(value!);
-                                  setThemeStringMode();
-                                  Navigator.of(context).pop();
-                                },
-                                hoverColor: Theme.of(context).shadowColor,
-                              ),
-                              RadioListTile(
-                                title: Text(text.dark_titleRadialButton),
-                                value: ThemeModeOption.dark,
-                                groupValue:
-                                    context.read<ThemeProvider>().themeMode,
-                                onChanged: (value) {
-                                  context
-                                      .read<ThemeProvider>()
-                                      .setThemeMode(value!);
-                                  setThemeStringMode();
-                                  Navigator.of(context).pop();
-                                },
-                                hoverColor: Theme.of(context).shadowColor,
-                              ),
-                              RadioListTile(
-                                title: Text(text.systemTheme_titleRadialButton),
-                                value: ThemeModeOption.system,
-                                groupValue:
-                                    context.read<ThemeProvider>().themeMode,
-                                onChanged: (value) {
-                                  context
-                                      .read<ThemeProvider>()
-                                      .setThemeMode(value!);
-                                  setThemeStringMode();
-                                  Navigator.of(context).pop();
-                                },
-                                hoverColor: Theme.of(context).shadowColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(text.cancelButton_dialog),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: ListTile(
-                  leading: Icon(_iconTheme),
-                  title: Text(text.chooseTheme_GestureDetector),
-                  subtitle: Text(
-                      _themeStringOption == "Light"
-                          ? text.light_titleRadialButton
-                          : _themeStringOption == "Dark"
-                            ? text.dark_titleRadialButton
-                            : text.systemTheme_titleRadialButton
-                  ),
-                ),
-              ),
+              leadingIcon: Icon(_iconTheme),
+              onTap: (){
+                showDialog(context: context, builder: (BuildContext context){
+                  return CustomThemeAlertDialog(setThemeStringMode: setThemeStringMode);
+                });
+              },
             ),
             const SizedBox(height: 20,),
             // Language
-            Text(text.title_heading_language,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 10, ),
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+            CustomSettingsSection(
+              headingText: text.title_heading_language,
+              leadingIcon: const Icon(Icons.language),
+              gestureDetectorTitle: text.chooseLanguage_GestureDetector,
+              gestureDetectorSubTitle: Text(
+                _languageStringOption == "English"
+                    ? text.english_titleRadialButton
+                    : text.spanish_titleRadialButton
               ),
-              color: Theme.of(context).colorScheme.surfaceVariant,
-              child: GestureDetector(
-                onTap: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context){
-                      return AlertDialog(
-                        title: Text(text.chooseLanguage_GestureDetector),
-                        content: SizedBox(
-                          width: double.maxFinite,
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: <RadioListTile>[
-                              RadioListTile(
-                                title: Text(text.english_titleRadialButton),
-                                value: LanguageModeOption.english,
-                                groupValue:
-                                context.read<LanguageProvider>().languageMode,
-                                onChanged: (value) {
-                                  context
-                                      .read<LanguageProvider>()
-                                      .setLanguageMode(value!);
-                                  setLanguageStringMode();
-                                  Navigator.of(context).pop();
-                                },
-                                hoverColor: Theme.of(context).shadowColor,
-                              ),
-                              RadioListTile(
-                                title: Text(text.spanish_titleRadialButton),
-                                value: LanguageModeOption.spanish,
-                                groupValue:
-                                context.read<LanguageProvider>().languageMode,
-                                onChanged: (value) {
-                                  context
-                                      .read<LanguageProvider>()
-                                      .setLanguageMode(value!);
-                                  setLanguageStringMode();
-                                  Navigator.of(context).pop();
-                                },
-                                hoverColor: Theme.of(context).shadowColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                  );
-                },
-                child: ListTile(
-                  leading: const Icon(Icons.language),
-                  title: Text(text.chooseLanguage_GestureDetector),
-                  subtitle: Text(
-                      _languageStringOption == "English"
-                          ? text.english_titleRadialButton
-                          : text.spanish_titleRadialButton
-                  ),
-                ),
-              ),
+              onTap: (){
+                showDialog(context: context, builder: (BuildContext context){
+                  return CustomLanguageAlertDialog(setLanguageStringMode: setLanguageStringMode);
+                });
+              },
             ),
             const SizedBox(height: 30,),
             // Log Out
