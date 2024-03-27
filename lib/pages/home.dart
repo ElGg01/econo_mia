@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:econo_mia/widgets/chart_transaction.dart';
 import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
-import "dart:math";
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -116,7 +115,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ElasticInLeft(
                 child: ListTile(
                   title: Text(
-                    "Mi cuenta",
+                    text!.myAccount_Drawable,
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -132,7 +131,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 delay: const Duration(milliseconds: 500),
                 child: ListTile(
                   title: Text(
-                    "Cerrar sesión",
+                    text!.logOutButton,
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -156,7 +155,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(left: 30, top: 30),
                 child: Text(
-                  "Hola, ${user?.displayName}. 🤑",
+                  "${text!.hello_homePage}, ${user?.displayName}. 🤑",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 28,
@@ -319,7 +318,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           tabs: [
                             Tab(
                               child: Text(
-                                "Ingresos",
+                                text!.earnings,
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -414,82 +413,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   Container(
                                     height: 300,
                                     child: ZoomIn(
-                                      child: SfCircularChart(
-                                        legend: const Legend(
-                                          isVisible: false,
-                                        ),
-                                        annotations: <CircularChartAnnotation>[
-                                          CircularChartAnnotation(
-                                            height: '100%',
-                                            width: '100%',
-                                            widget: Container(
-                                              child: PhysicalModel(
-                                                shape: BoxShape.circle,
-                                                elevation: 10,
-                                                shadowColor: Colors.black,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .background,
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'No hubo ingresos',
-                                                    style: GoogleFonts.poppins(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onBackground,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 14,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          CircularChartAnnotation(
-                                            widget: Container(),
-                                          ),
-                                        ],
-                                        series: <CircularSeries>[
-                                          // Renders doughnut chart
-                                          DoughnutSeries<ChartData, String>(
-                                            dataSource: <ChartData>[
-                                              ChartData(
-                                                'Efectivo',
-                                                150,
-                                                Colors.green,
-                                              ),
-                                              ChartData(
-                                                'Mercado Pago',
-                                                250,
-                                                Colors.lightBlue,
-                                              ),
-                                              ChartData(
-                                                'BBVA',
-                                                500,
-                                                Colors.blueAccent,
-                                              ),
-                                              ChartData(
-                                                'Claro Pay',
-                                                100,
-                                                Colors.red,
-                                              ),
-                                              ChartData(
-                                                'Nelo',
-                                                350.5,
-                                                Colors.purple,
-                                              ),
-                                            ],
-                                            pointColorMapper:
-                                                (ChartData data, _) =>
-                                                    data.color,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.x,
-                                            yValueMapper: (ChartData data, _) =>
-                                                data.y,
+                                      child: ChartTransaction(
+                                        text: '5,500 MXN',
+                                        data: [
+                                          ChartData(
+                                            "BBVA",
+                                            100,
+                                            Colors.red,
                                           )
                                         ],
                                       ),
@@ -584,83 +514,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   Container(
                                     height: 300,
                                     child: ZoomIn(
-                                      child: SfCircularChart(
-                                        legend: const Legend(
-                                          isVisible: false,
-                                        ),
-                                        annotations: <CircularChartAnnotation>[
-                                          CircularChartAnnotation(
-                                            height: '100%',
-                                            width: '100%',
-                                            widget: Container(
-                                              child: PhysicalModel(
-                                                shape: BoxShape.circle,
-                                                elevation: 10,
-                                                shadowColor: Colors.black,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .background,
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'No hubo egresos',
-                                                    style: GoogleFonts.poppins(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .onBackground,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 14,
-                                                    ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                      child: ChartTransaction(
+                                        text: "No hubo egresos",
+                                        data: [
+                                          ChartData(
+                                            "x",
+                                            100,
+                                            Colors.green,
                                           ),
-                                          CircularChartAnnotation(
-                                            widget: Container(),
-                                          ),
-                                        ],
-                                        series: <CircularSeries>[
-                                          // Renders doughnut chart
-                                          DoughnutSeries<ChartData, String>(
-                                            dataSource: <ChartData>[
-                                              ChartData(
-                                                'Efectivo',
-                                                150,
-                                                Colors.green,
-                                              ),
-                                              ChartData(
-                                                'Mercado Pago',
-                                                250,
-                                                Colors.lightBlue,
-                                              ),
-                                              ChartData(
-                                                'BBVA',
-                                                500,
-                                                Colors.blueAccent,
-                                              ),
-                                              ChartData(
-                                                'Claro Pay',
-                                                100,
-                                                Colors.red,
-                                              ),
-                                              ChartData(
-                                                'Nelo',
-                                                350.5,
-                                                Colors.purple,
-                                              ),
-                                            ],
-                                            pointColorMapper:
-                                                (ChartData data, _) =>
-                                                    data.color,
-                                            xValueMapper: (ChartData data, _) =>
-                                                data.x,
-                                            yValueMapper: (ChartData data, _) =>
-                                                data.y,
-                                          )
                                         ],
                                       ),
                                     ),
@@ -713,9 +574,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 }
 
-class ChartData {
+/* class ChartData {
   ChartData(this.x, this.y, this.color);
   final String x;
   final double y;
   final Color color;
-}
+} */

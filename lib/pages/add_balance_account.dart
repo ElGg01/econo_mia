@@ -49,6 +49,10 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                 children: [
                   Container(
                     alignment: Alignment.center,
+                    padding: EdgeInsets.only(
+                      left: 40,
+                      right: 40,
+                    ),
                     child: Row(
                       children: [
                         Flexible(

@@ -230,5 +230,13 @@
   "myAccount_Drawable": "My Account",
   "@myAccount_Drawable": {
     "description": "Option placed on drawable widget to go on user-settings page"
+  },
+  "hello_homePage": "Hello",
+  "@hello_homePage": {
+    "description": "Greenting from the home page"
+  },
+  "earnings": "Earnings",
+  "@earings": {
+    "description": "Word earnings for all the app"
   }
 }

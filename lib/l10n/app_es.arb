@@ -56,5 +56,7 @@
   "systemTheme_titleRadialButton": "Tema del sistema",
   "myAccount_Drawable": "Mi cuenta",
   "english_titleRadialButton": "Inglés",
-  "spanish_titleRadialButton": "Español"
+  "spanish_titleRadialButton": "Español",
+  "hello_homePage": "Hola",
+  "earnings": "Ingresos"
 }
