@@ -47,7 +47,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<void> loadData() async {
-    await db.collection('financial').get().then((value) {});
+    await db.collection('users').get().then((value) {});
   }
 
   @override
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(left: 30, top: 10),
                 child: Text(
-                  "Saldo total: 1,000 MXN",
+                  "${text!.totalBalance}: 1,000 MXN",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -291,7 +291,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             color: Theme.of(context).colorScheme.background,
                           ),
                           label: Text(
-                            "Añadir cuenta",
+                            text!.addAccount_button,
                             style: GoogleFonts.poppins(
                               color: Theme.of(context).colorScheme.background,
                               fontWeight: FontWeight.bold,
@@ -327,7 +327,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             ),
                             Tab(
                               child: Text(
-                                "Egresos",
+                                text!.expenses,
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,

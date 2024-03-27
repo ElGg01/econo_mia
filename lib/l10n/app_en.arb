@@ -236,7 +236,19 @@
     "description": "Greenting from the home page"
   },
   "earnings": "Earnings",
-  "@earings": {
+  "@earnings": {
     "description": "Word earnings for all the app"
+  },
+  "expenses": "Expenses",
+  "@expenses": {
+    "description": "Word expenses for all the app"
+  },
+  "totalBalance": "Total balance",
+  "@totalBalance": {
+    "description": "Words to show the total balance of the user"
+  },
+  "addAccount_button": "Add account",
+  "@addAcount_button": {
+    "description": "Text for button to add account of balance"
   }
 }

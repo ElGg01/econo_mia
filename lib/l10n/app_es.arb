@@ -58,5 +58,8 @@
   "english_titleRadialButton": "Inglés",
   "spanish_titleRadialButton": "Español",
   "hello_homePage": "Hola",
-  "earnings": "Ingresos"
+  "earnings": "Ingresos",
+  "expenses": "Egresos",
+  "totalBalance": "Saldo total",
+  "addAccount_button": "Añadir cuenta"
 }
