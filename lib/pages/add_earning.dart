@@ -61,8 +61,8 @@ class _AddEarningState extends State<AddEarning> {
                   Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(
-                      left: 60,
-                      top: 10,
+                      left: 40,
+                      top: 20,
                     ),
                     child: Row(
                       children: [
@@ -92,10 +92,6 @@ class _AddEarningState extends State<AddEarning> {
                             child: ButtonTheme(
                               alignedDropdown: true,
                               child: DropdownButton(
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                  right: 10,
-                                ),
                                 alignment: Alignment.center,
                                 value: dropDownValue,
                                 borderRadius: BorderRadius.circular(10),
@@ -152,6 +148,200 @@ class _AddEarningState extends State<AddEarning> {
                   ),
                   const SizedBox(
                     height: 20,
+                  ),
+                  Container(
+                    height: 200,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.ac_unit),
+                              ),
+                              Text(
+                                "Categoria 1",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

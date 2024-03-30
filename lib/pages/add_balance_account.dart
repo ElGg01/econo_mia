@@ -83,7 +83,7 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                                 alignment: Alignment.center,
                                 value: dropDownValue,
                                 borderRadius: BorderRadius.circular(10),
-                                isExpanded: false,
+                                isExpanded: true,
                                 items: [
                                   DropdownMenuItem(
                                     value: "MXN",
