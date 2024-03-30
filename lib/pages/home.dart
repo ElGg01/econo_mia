@@ -20,7 +20,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
 
   String dropDownValue = 'Total';
-  late List<bool> _isSelected;
+
+  late TabController _tabController;
+  late List<bool> _earningsSelected;
+  late List<bool> _expensesSelected;
 
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
@@ -29,13 +32,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     db = FirebaseFirestore.instance;
-    _isSelected = [true, false, false];
+    _tabController = TabController(length: 2, vsync: this);
+    _earningsSelected = [true, false, false];
+    _expensesSelected = [true, false, false];
   }
 
-  void _selectIndex(int index) {
+  void _selectIndex(int index, List<bool> list) {
     setState(() {
-      for (int i = 0; i < _isSelected.length; i++) {
-        _isSelected[i] = (i == index);
+      for (int i = 0; i < list.length; i++) {
+        list[i] = (i == index);
       }
     });
   }
@@ -53,8 +58,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
-    TabController _tabController = TabController(length: 2, vsync: this);
-
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
@@ -340,7 +343,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       Container(
                         width: double.maxFinite,
                         color: Theme.of(context).colorScheme.background,
-                        height: 388,
+                        height: 350,
                         child: TabBarView(
                           controller: _tabController,
                           children: [
@@ -383,9 +386,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         selectedColor: Theme.of(context)
                                             .colorScheme
                                             .background,
-                                        isSelected: _isSelected,
+                                        isSelected: _earningsSelected,
                                         onPressed: (int index) {
-                                          _selectIndex(index);
+                                          _selectIndex(
+                                              index, _earningsSelected);
                                         },
                                         children: [
                                           Text(
@@ -484,9 +488,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                         selectedColor: Theme.of(context)
                                             .colorScheme
                                             .background,
-                                        isSelected: _isSelected,
+                                        isSelected: _expensesSelected,
                                         onPressed: (int index) {
-                                          _selectIndex(index);
+                                          _selectIndex(
+                                              index, _expensesSelected);
                                         },
                                         children: [
                                           Text(
