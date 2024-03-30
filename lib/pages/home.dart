@@ -415,7 +415,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Container(
-                                    height: 300,
+                                    height: 250,
                                     child: ZoomIn(
                                       child: ChartTransaction(
                                         text: '5,500 MXN',
@@ -424,7 +424,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             "BBVA",
                                             100,
                                             Colors.red,
-                                          )
+                                          ),
+                                          ChartData(
+                                            "BBVA",
+                                            100,
+                                            Colors.blue,
+                                          ),
+                                          ChartData(
+                                            "BBVA",
+                                            100,
+                                            Colors.purple,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -517,7 +527,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Container(
-                                    height: 300,
+                                    height: 250,
                                     child: ZoomIn(
                                       child: ChartTransaction(
                                         text: "No hubo egresos",
@@ -560,7 +570,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               color: Theme.of(context).colorScheme.tertiary,
                             ),
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_tabController.index == 0) {
+                                  Navigator.pushNamed(context, '/add_earning');
+                                } else {
+                                  Navigator.pushNamed(context, '/add_expense');
+                                }
+                              },
                               icon: const Icon(Icons.add),
                               color: Theme.of(context).colorScheme.background,
                             ),
@@ -578,10 +594,3 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 }
-
-/* class ChartData {
-  ChartData(this.x, this.y, this.color);
-  final String x;
-  final double y;
-  final Color color;
-} */

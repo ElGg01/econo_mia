@@ -1,4 +1,6 @@
 import 'package:econo_mia/pages/add_balance_account.dart';
+import 'package:econo_mia/pages/add_earning.dart';
+import 'package:econo_mia/pages/add_expense.dart';
 import 'package:econo_mia/ui/language_mode_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -77,7 +79,9 @@ class _AppState extends State<App> {
             '/user_settings/change_password': (context) =>
                 const ChangePassword(),
             '/balance': (context) => const Balance(),
-            '/add_balance_account': (context) => const AddBalanceAccount()
+            '/add_balance_account': (context) => const AddBalanceAccount(),
+            '/add_earning': (context) => const AddEarning(),
+            '/add_expense': (context) => const AddExpense(),
           },
           initialRoute: "/",
           localizationsDelegates: AppLocalizations.localizationsDelegates,

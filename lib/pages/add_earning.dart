@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/services.dart';
 
-class AddBalanceAccount extends StatefulWidget {
-  const AddBalanceAccount({super.key});
+class AddEarning extends StatefulWidget {
+  const AddEarning({super.key});
 
   @override
-  State<AddBalanceAccount> createState() => _AddBalanceAccountState();
+  State<AddEarning> createState() => _AddEarningState();
 }
 
-class _AddBalanceAccountState extends State<AddBalanceAccount> {
-  TextEditingController _balanceAccountName = TextEditingController();
-  String dropDownValue = 'MXN';
+class _AddEarningState extends State<AddEarning> {
   final _formKey = GlobalKey<FormState>();
-
+  String dropDownValue = 'MXN';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +20,7 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "Añade una cuenta",
+            "Añade un ingreso",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -47,10 +45,24 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
               key: _formKey,
               child: Column(
                 children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.account_balance),
+                      labelText: "Concepto del ingreso",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, ingresa al menos una letra.';
+                      }
+                      return null; // Retorna null si la validación es exitosa
+                    },
+                  ),
                   Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(
-                      left: 40,
+                      left: 60,
+                      top: 10,
                     ),
                     child: Row(
                       children: [
@@ -58,7 +70,7 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                           fit: FlexFit.tight,
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: 'Saldo inicial',
+                              labelText: 'Monto',
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -80,10 +92,14 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                             child: ButtonTheme(
                               alignedDropdown: true,
                               child: DropdownButton(
+                                padding: const EdgeInsets.only(
+                                  left: 10,
+                                  right: 10,
+                                ),
                                 alignment: Alignment.center,
                                 value: dropDownValue,
                                 borderRadius: BorderRadius.circular(10),
-                                isExpanded: false,
+                                isExpanded: true,
                                 items: [
                                   DropdownMenuItem(
                                     value: "MXN",
@@ -136,19 +152,6 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.account_balance),
-                      labelText: "Nombre de la cuenta",
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, ingresa al menos una letra.';
-                      }
-                      return null; // Retorna null si la validación es exitosa
-                    },
                   ),
                   const SizedBox(
                     height: 20,
