@@ -15,46 +15,45 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = true;
 
-
   Future<void> _signIn() async {
-    if (_formKey.currentState!.validate()){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Processing Data'))
-      );
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Processing Data')));
       User? user = await _auth.signInWithEmailAndPassword(
-          _emailController.text,
-          _passwordController.text
-      );
-      if (user != null){
+          _emailController.text, _passwordController.text);
+      if (user != null) {
         print('User is signed in successfully');
         if (!context.mounted) return;
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(Icons.dangerous),
-                const SizedBox(width: 20,),
-                Expanded(child: Text('Invalid credentials', style: TextStyle(color: Theme.of(context).colorScheme.onBackground),)),
-              ],
-            ),
-            backgroundColor: Colors.red,
-          )
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.dangerous),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: Text(
+                'Invalid credentials',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground),
+              )),
+            ],
+          ),
+          backgroundColor: Colors.red,
+        ));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Check the form'))
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Check the form')));
     }
   }
 
@@ -99,7 +98,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return Scaffold(
@@ -112,24 +110,30 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 50),
                   ZoomIn(
                     child: Image.asset(
                       "assets/logoAppGastosFixed.png",
-                      width: 200,
+                      width: 150,
                     ),
                   ),
-                  const SizedBox( height: 100, ),
-                  Text(text!.loginTitle,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    text!.loginTitle,
                     style: const TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox( height: 20, ),
-                  Text(text.loginSubtitle,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    text.loginSubtitle,
                     style: const TextStyle(
-                        fontSize: 24,
+                      fontSize: 24,
                     ),
                   ),
                   const SizedBox(
@@ -137,22 +141,24 @@ class _LoginState extends State<Login> {
                   ),
                   // Email
                   CustomTextFormField(
-                    editingController: _emailController,
-                    icons: Icons.email,
-                    text: text.emailTextFormField,
-                    validatorFunction: (String? value) =>
-                        Validators.validateEmail(value, text),
-                    iconButton: null,
-                    autoValidateMode: AutovalidateMode.disabled,
-                    isObscureText: false
+                      editingController: _emailController,
+                      icons: Icons.email,
+                      text: text.emailTextFormField,
+                      validatorFunction: (String? value) =>
+                          Validators.validateEmail(value, text),
+                      iconButton: null,
+                      autoValidateMode: AutovalidateMode.disabled,
+                      isObscureText: false),
+                  const SizedBox(
+                    height: 20,
                   ),
-                  const SizedBox( height: 20, ),
                   // Password
                   CustomTextFormField(
                     editingController: _passwordController,
                     icons: Icons.password,
                     text: text.passwordTextFormField,
-                    validatorFunction: (String? value) => Validators.validatePasswordOnLogin(value, text),
+                    validatorFunction: (String? value) =>
+                        Validators.validatePasswordOnLogin(value, text),
                     iconButton: IconButton(
                       icon: Icon(
                         _isPasswordVisible
@@ -183,7 +189,8 @@ class _LoginState extends State<Login> {
                             onTap: () {
                               Navigator.pushNamed(context, "/forgot_password");
                             },
-                            child: Text(text.forgotPasswordLink,
+                            child: Text(
+                              text.forgotPasswordLink,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.tertiary,
                                 fontWeight: FontWeight.bold,
@@ -238,8 +245,11 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(MdiIcons.fromString('google')),
-                          const SizedBox(width: 30,),
-                          Text(text.submitWithGoogleButton,
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          Text(
+                            text.submitWithGoogleButton,
                             style: const TextStyle(
                               fontSize: 18,
                             ),

@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
                     fontSize: 24)),
           ),
           centerTitle: true,
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -91,19 +91,21 @@ class _RegisterState extends State<Register> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      const SizedBox(height: 60),
+                      const SizedBox(height: 20),
                       ZoomIn(
                           child: Image.asset(
                         "assets/logoAppGastosFixed.png",
-                        width: 200,
+                        width: 150,
                       )),
                       const SizedBox(
-                        height: 100,
+                        height: 20,
                       ),
                       Text(
                         text.titleRegisterPage,
                         style: const TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
@@ -116,7 +118,7 @@ class _RegisterState extends State<Register> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
                       // Name
                       FadeInUpBig(

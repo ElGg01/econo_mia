@@ -343,7 +343,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       Container(
                         width: double.maxFinite,
                         color: Theme.of(context).colorScheme.background,
-                        height: 350,
+                        height: 340,
                         child: TabBarView(
                           controller: _tabController,
                           children: [
@@ -584,6 +584,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+            ),
+            FadeInUp(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  "© 2024 Los Truchis. Todos los derechos reservados.",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
                 ),
               ),

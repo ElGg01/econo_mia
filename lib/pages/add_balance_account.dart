@@ -1,3 +1,4 @@
+import 'package:econo_mia/widgets/custom_drop_down_button.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,106 +42,34 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(
-                      left: 40,
-                    ),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Saldo inicial',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Introduce un valor";
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*\.?\d{0,2}$'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: DropdownButtonHideUnderline(
-                            child: ButtonTheme(
-                              alignedDropdown: true,
-                              child: DropdownButton(
-                                alignment: Alignment.center,
-                                value: dropDownValue,
-                                borderRadius: BorderRadius.circular(10),
-                                isExpanded: true,
-                                items: [
-                                  DropdownMenuItem(
-                                    value: "MXN",
-                                    onTap: () {
-                                      setState(() {
-                                        dropDownValue = "MXN";
-                                      });
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        "MXN",
-                                        style: GoogleFonts.poppins(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onBackground,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "USD",
-                                    onTap: () {
-                                      setState(() {
-                                        dropDownValue = "USD";
-                                      });
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        "USD",
-                                        style: GoogleFonts.poppins(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onBackground,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                                onChanged: (value) {},
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  width: double.maxFinite,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    "Nombre de la cuenta:",
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
                   ),
-                  TextFormField(
+                  child: TextFormField(
                     decoration: const InputDecoration(
                       icon: Icon(Icons.account_balance),
-                      labelText: "Nombre de la cuenta",
+                      labelText: "Nombre",
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
@@ -150,24 +79,131 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                       return null; // Retorna null si la validación es exitosa
                     },
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Cuenta guardada correctamente"),
+                  child: Text(
+                    "Saldo inicial de la cuenta:",
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Flexible(
+                        flex: 1,
+                        child: Icon(Icons.monetization_on),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Cantidad',
                           ),
-                        );
-                      }
-                    },
-                    icon: Icon(Icons.save),
-                    label: Text("Guardar cuenta"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Introduce un valor";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d*\.?\d{0,2}$'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        child: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton(
+                              alignment: Alignment.center,
+                              value: dropDownValue,
+                              borderRadius: BorderRadius.circular(10),
+                              isExpanded: true,
+                              items: [
+                                DropdownMenuItem(
+                                  value: "MXN",
+                                  onTap: () {
+                                    setState(() {
+                                      dropDownValue = "MXN";
+                                    });
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      "MXN",
+                                      style: GoogleFonts.poppins(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: "USD",
+                                  onTap: () {
+                                    setState(() {
+                                      dropDownValue = "USD";
+                                    });
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      "USD",
+                                      style: GoogleFonts.poppins(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onBackground,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              onChanged: (value) {},
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Cuenta guardada correctamente"),
+                        ),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.save),
+                  label: Text("Guardar cuenta"),
+                ),
+              ],
             ),
           ),
         ),
