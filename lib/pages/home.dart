@@ -28,6 +28,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
 
+  late double balance = 0;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _tabController = TabController(length: 2, vsync: this);
     _earningsSelected = [true, false, false];
     _expensesSelected = [true, false, false];
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    await db.collection('users').doc(user!.uid).get().then((data) {
+      setState(() {
+        balance = data.data()!['saldo'];
+      });
+      print("El balance es: ${balance}");
+    });
   }
 
   void _selectIndex(int index, List<bool> list) {
@@ -51,9 +63,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
-  Future<void> loadData() async {
-    await db.collection('users').get().then((value) {});
-  }
+  // Future<void> loadData() async {
+  //   await db.collection('users').get().then((value) {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +182,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Padding(
                 padding: const EdgeInsets.only(left: 30, top: 10),
                 child: Text(
-                  "${text!.totalBalance}: 1,000 MXN",
+                  "${text!.totalBalance}: ${balance} MXN",
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

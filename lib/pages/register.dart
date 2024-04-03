@@ -45,9 +45,35 @@ class _RegisterState extends State<Register> {
           .signUpWithEmailAndPassword(
               _emailController.text, _passwordController.text)
           .then((credential) {
-        db.collection("users").doc(credential!.uid).set({
-          "ID": credential.uid,
-        });
+        //Inicialización de subcolección
+        //Es una inicialización de campos vacios solo para que se genere el usuario sin campos
+        final datos = <String, dynamic>{
+          "monto": 0.0,
+          "fecha": DateTime.now(),
+        };
+        //Subcoleccion de ingresos
+        //!!!!!!!!!!!!!!CAMBIAR EL USUARIO AL ACTIVO
+        final refIngresos = db
+            .collection('users')
+            .doc(credential!.uid)
+            .collection('ingresos')
+            .doc();
+        //Generación de subcoleccion de ingresos
+        refIngresos.set(datos);
+        //Subcoleccion de egresos
+        //!!!!!!!!!!!!!!CAMBIAR EL USUARIO AL ACTIVO
+        final refEgresos = db
+            .collection('users')
+            .doc(credential!.uid)
+            .collection('egresos')
+            .doc();
+        //Generación de subcoleccion de ingresos
+        refEgresos.set(datos);
+
+        //Generación de campo SALDO, este cambiara con cada ingreso y egreso
+        final refUsuario = db.collection('users').doc(credential!.uid);
+        refUsuario.set({"saldo": 0.0});
+
         return credential;
       });
       if (user != null) {
