@@ -1,3 +1,4 @@
+import 'package:econo_mia/pages/email_verification.dart';
 import 'package:econo_mia/pages/home.dart';
 import 'package:econo_mia/pages/login.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class AuthenticationWrapper extends StatelessWidget {
           return const CircularProgressIndicator();
         } else {
           if (snapshot.hasData && snapshot.data != null){
-            return const Home();
+            return snapshot.data!.emailVerified
+                ? const Home()
+                : const EmailVerification();
           } else {
             return const Login();
           }

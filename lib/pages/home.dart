@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:econo_mia/widgets/chart_transaction.dart';
 import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,6 +30,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late List<bool> _expensesSelected;
 
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final List<String> _offlineData = [];
   User? user = FirebaseAuth.instance.currentUser;
 
   late double balance = 0;
@@ -33,11 +38,47 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    StreamSubscription<List<ConnectivityResult>> subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result){
+      // TODO: Make a listen change
+    });
     db = FirebaseFirestore.instance;
     _tabController = TabController(length: 2, vsync: this);
     _earningsSelected = [true, false, false];
     _expensesSelected = [true, false, false];
     _loadData();
+  }
+
+  Future<bool> _checkInternetAvailable() async {
+    final List<ConnectivityResult> result = await Connectivity().checkConnectivity();
+    if (result.contains(ConnectivityResult.mobile)){
+      return false;
+    } else if (result.contains(ConnectivityResult.wifi)){
+      return true;
+    } else if (result.contains(ConnectivityResult.ethernet)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Future<void> _syncData() async {
+  //   bool result = await _checkInternetAvailable();
+  //   if (!result) return;
+  //   _offlineData.forEach((element) {
+  //     db.collection(user!.uid).
+  //   });
+  //   db.collection("users").add(user).then((DocumentReference doc) =>
+  //       print('DocumentSnapshot added with ID: ${doc.id}'));
+  //   await db.collection("users").doc(user!.uid).set(user.toJSON)
+  // }
+
+  //Clear locally saved offline data
+  Future<void> _clearLocalData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('offlineData');
+    setState(() {
+      _offlineData.clear();
+    });
   }
 
   Future<void> _loadData() async {
@@ -63,9 +104,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
-  // Future<void> loadData() async {
-  //   await db.collection('users').get().then((value) {});
-  // }
 
   @override
   Widget build(BuildContext context) {

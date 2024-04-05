@@ -69,11 +69,7 @@ class FirebaseAuthService {
   }
 
   Future<void> deleteAccount() async {
-    try {
-      await _auth.currentUser!.delete();
-    } catch (e) {
-      print('Failed to delete account $e');
-    }
+    await _auth.currentUser!.delete();
   }
 
   Future<void> reAuthenticateWithEmailAndPassword(

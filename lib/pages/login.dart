@@ -272,6 +272,7 @@ class _LoginState extends State<Login> {
                             fontSize: 18,
                           ),
                         ),
+                        const SizedBox(width: 10,),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, "/register");

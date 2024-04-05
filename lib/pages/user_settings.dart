@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:econo_mia/ui/language_mode_option.dart';
 import 'package:econo_mia/widgets/custom_language_alert_dialog.dart';
 import 'package:econo_mia/widgets/custom_settings_section.dart';
@@ -10,6 +12,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class UserSettings extends StatefulWidget {
@@ -24,16 +27,16 @@ class _UserSettingsState extends State<UserSettings> {
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
 
+  late String _themeStringOption;
+  late String _languageStringOption;
+  late IconData _iconTheme;
+
   @override
   void initState() {
     super.initState();
     setThemeStringMode();
     setLanguageStringMode();
   }
-
-  late String _themeStringOption;
-  late String _languageStringOption;
-  late IconData _iconTheme;
 
 
   void setThemeStringMode(){
@@ -69,9 +72,34 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future<void> _deleteAccount() async {
-    await _auth.deleteAccount();
-    if (!context.mounted) return;
-    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    try{
+      await _auth.deleteAccount();
+      if (!context.mounted) return;
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    } on FirebaseAuthException catch(e){
+      if (e.code == "requires-recent-login"){
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.dangerous),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text(
+                  'Requires recent login',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+        ));
+      }
+    }
   }
 
   Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
@@ -103,7 +131,10 @@ class _UserSettingsState extends State<UserSettings> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              onPressed: _deleteAccount,
+              onPressed: (){
+                Navigator.of(context).pop();
+                _deleteAccount();
+              },
               child: Text(text.deleteButton_dialog),
             ),
           ],
@@ -111,6 +142,7 @@ class _UserSettingsState extends State<UserSettings> {
       }
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

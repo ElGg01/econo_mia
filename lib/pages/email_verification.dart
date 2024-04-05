@@ -27,6 +27,8 @@ class _EmailVerificationState extends State<EmailVerification> {
     if (!_isEmailVerified) {
       timer = Timer.periodic(
           const Duration(seconds: 3), (_) => checkEmailVerified());
+    } else {
+      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 
