@@ -229,7 +229,7 @@ class _AddEarningState extends State<AddEarning> {
                       InkWell(
                         onTap: () {
                           setState(() {
-                            bgColorSelected = Colors.yellow;
+                            bgColorSelected = Colors.grey;
                           });
                         },
                         child: Container(
@@ -247,267 +247,293 @@ class _AddEarningState extends State<AddEarning> {
                                 ),
                                 padding: EdgeInsets.all(5),
                                 margin: EdgeInsets.all(5),
-                                child: Icon(Icons.ac_unit),
+                                child: Icon(Icons.health_and_safety_outlined),
                               ),
                               Text(
-                                "Categoria 1",
+                                "Salud",
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.house_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Hogar",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.coffee_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Café",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.pinkAccent,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.book_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Educación",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blueGrey,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.star_border_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Ragalos",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.lightBlueAccent,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.fastfood_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Alimentación",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.family_restroom_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Familia",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.lightGreenAccent,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.more_time_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Ejercicio",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.emoji_transportation_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                              Text(
+                                "Transporte",
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            bgColorSelected = Colors.grey;
+                          });
+                        },
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          color: bgColorSelected,
+                          margin: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
+                                child: Icon(Icons.question_mark_outlined),
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
+                              Text(
+                                "Otros",
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              padding: EdgeInsets.all(5),
-                              margin: EdgeInsets.all(5),
-                              child: Icon(Icons.ac_unit),
-                            ),
-                            Text(
-                              "Categoria 1",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -521,13 +547,13 @@ class _AddEarningState extends State<AddEarning> {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Cuenta guardada correctamente"),
+                          content: Text("Ingreso guardado correctamente"),
                         ),
                       );
                     }
                   },
                   icon: Icon(Icons.save),
-                  label: Text("Guardar cuenta"),
+                  label: Text("Guardar ingreso"),
                 ),
               ],
             ),
