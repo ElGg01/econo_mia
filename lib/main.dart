@@ -1,3 +1,4 @@
+import 'package:econo_mia/pages/about.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -72,6 +73,7 @@ class _AppState extends State<App> {
             '/': (context) => const AuthenticationWrapper(),
             '/login': (context) => const Login(),
             '/register': (context) => const Register(),
+            '/about': (context) => const About(),
             '/email_verification': (context) => const EmailVerification(),
             '/forgot_password': (context) => const ForgotPassword(),
             '/home': (context) => const Home(),

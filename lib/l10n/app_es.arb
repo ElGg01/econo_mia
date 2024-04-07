@@ -17,6 +17,7 @@
   "helperMessageToRegister": "¿No eres un miembro? ",
   "registerNowLink": "Registrate ahora",
   "appbar_password_forgotten": "Recuperar Contraseña",
+  "appbar_about": "Acerca de nosotros",
   "title_password_forgotten": "Digita tu dirección de correo y te enviaremos un enlace de restablecimiento de contraeña",
   "resetPasswordButton": "Restablecer contraseña",
   "appbar_register_page": "Registro",
@@ -55,11 +56,14 @@
   "dark_titleRadialButton": "Oscuro",
   "systemTheme_titleRadialButton": "Tema del sistema",
   "myAccount_Drawable": "Mi cuenta",
+  "about_Drawable": "Acerca de",
   "english_titleRadialButton": "Inglés",
   "spanish_titleRadialButton": "Español",
   "hello_homePage": "Hola",
   "earnings": "Ingresos",
   "expenses": "Egresos",
   "totalBalance": "Saldo total",
-  "addAccount_button": "Añadir cuenta"
+  "addAccount_button": "Añadir cuenta",
+  "rights_reserved": "© 2024 Los Truchis. Todos los derechos reservados",
+  "title_aboutPage": "Esta es una simple aplicación, esperamos mejorar la aplicación para publicarla en Play Store"
 }

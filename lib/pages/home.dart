@@ -181,6 +181,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
               ),
               ElasticInLeft(
+                child: ListTile(
+                  title: Text(
+                    text.about_Drawable,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  leading: const Icon(Icons.info),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                  },
+                ),
+              ),
+              ElasticInLeft(
                 delay: const Duration(milliseconds: 500),
                 child: ListTile(
                   title: Text(
@@ -634,20 +649,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-            ),
-            FadeInUp(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: Text(
-                  "© 2024 Los Truchis. Todos los derechos reservados.",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
                   ),
                 ),
               ),

@@ -71,6 +71,10 @@
   "@appbar_password_forgotten": {
     "description": "Title for appbar to password forgotten page"
   },
+  "appbar_about": "About us",
+  "@appbar_about": {
+    "description": "Title for appbar to about page"
+  },
   "title_password_forgotten": "Enter your email and we will send you a password reset link",
   "@title_password_forgotten": {
     "description": "Title for Password forgotten screen"
@@ -231,6 +235,10 @@
   "@myAccount_Drawable": {
     "description": "Option placed on drawable widget to go on user-settings page"
   },
+  "about_Drawable": "About us",
+  "@about_Drawable": {
+    "description": "Option placed on drawable widget to go on about page"
+  },
   "hello_homePage": "Hello",
   "@hello_homePage": {
     "description": "Greenting from the home page"
@@ -250,5 +258,13 @@
   "addAccount_button": "Add account",
   "@addAcount_button": {
     "description": "Text for button to add account of balance"
+  },
+  "rights_reserved": "© 2024 Los Truchis. All rights reserved",
+  "@rights_reserved": {
+    "description": "Message for all rights reserved"
+  },
+  "title_aboutPage": "This is a simple app, We hope improving this app for publishing in Google Play Store",
+  "@title_aboutPage": {
+    "description": "Message for the mision team"
   }
 }
