@@ -278,5 +278,17 @@
   "month_toggleButton": "Month",
   "@month_toggleButton": {
     "description": "Option month for the toggleButton in time"
+  },
+  "processingData_showSnackBar": "Processing Data",
+  "@processingData_showSnackBar": {
+    "description": "Message in SnackBar for displaying processing data"
+  },
+  "checkForm_showSnackBar": "Check the form",
+  "@checkForm_showSnackBar": {
+    "description": "Message in SnackBar for checking the form"
+  },
+  "invaldGoogle_showSnackBar": "Invalid Google creentials",
+  "@checkForm_showSnackBar": {
+    "description": "Message in SnackBar for checking the form"
   }
 }

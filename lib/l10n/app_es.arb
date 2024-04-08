@@ -68,5 +68,8 @@
   "title_aboutPage": "Esta es una simple aplicación, esperamos mejorar la aplicación para publicarla en Play Store",
   "day_toggleButton": "Día",
   "week_toggleButton": "Semana",
-  "month_toggleButton": "Mes"
+  "month_toggleButton": "Mes",
+  "processingData_showSnackBar": "Procesando datos",
+  "checkForm_showSnackBar": "Verifica el formulario",
+  "invaldGoogle_showSnackBar": "Credenciales de Google no válidas"
 }

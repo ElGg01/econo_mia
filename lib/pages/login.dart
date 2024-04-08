@@ -1,3 +1,4 @@
+import 'package:econo_mia/function_widgets/func_show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,65 +23,32 @@ class _LoginState extends State<Login> {
   bool _isPasswordVisible = true;
 
   Future<void> _signIn() async {
+    AppLocalizations? text = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Processing Data')));
+      FuncSnackBar.showSnackBar(context, text!.processingData_showSnackBar, false);
       User? user = await _auth.signInWithEmailAndPassword(
           _emailController.text, _passwordController.text);
       if (user != null) {
-        print('User is signed in successfully');
         if (!context.mounted) return;
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Row(
-            children: [
-              const Icon(Icons.dangerous),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                  child: Text(
-                'Invalid credentials',
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground),
-              )),
-            ],
-          ),
-          backgroundColor: Colors.red,
-        ));
+        FuncSnackBar.showSnackBar(context, text.invaldGoogle_showSnackBar, true);
       }
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Check the form')));
+      FuncSnackBar.showSnackBar(context, text!.checkForm_showSnackBar, false);
     }
   }
 
   Future<void> _signInWithGoogle() async {
+    AppLocalizations? text = AppLocalizations.of(context);
     User? user = await _auth.signInWithGoogleService();
     if (user != null) {
-      print('User is signed in successfully');
       if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     } else {
       if (!context.mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Row(
-            children: <Widget>[
-              Icon(Icons.dangerous),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Text('Invalid Google credentials'),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
+        FuncSnackBar.showSnackBar(context, text!.invaldGoogle_showSnackBar, true);
     }
   }
 
