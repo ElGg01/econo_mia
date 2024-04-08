@@ -65,5 +65,8 @@
   "totalBalance": "Saldo total",
   "addAccount_button": "Añadir cuenta",
   "rights_reserved": "© 2024 Los Truchis. Todos los derechos reservados",
-  "title_aboutPage": "Esta es una simple aplicación, esperamos mejorar la aplicación para publicarla en Play Store"
+  "title_aboutPage": "Esta es una simple aplicación, esperamos mejorar la aplicación para publicarla en Play Store",
+  "day_toggleButton": "Día",
+  "week_toggleButton": "Semana",
+  "month_toggleButton": "Mes"
 }

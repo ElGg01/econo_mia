@@ -266,5 +266,17 @@
   "title_aboutPage": "This is a simple app, We hope improving this app for publishing in Google Play Store",
   "@title_aboutPage": {
     "description": "Message for the mision team"
+  },
+  "day_toggleButton": "Day",
+  "@day_toggleButton": {
+    "description": "Option day for the toggleButton in time"
+  },
+  "week_toggleButton": "Week",
+  "@week_toggleButton": {
+    "description": "Option week for the toggleButton in time"
+  },
+  "month_toggleButton": "Month",
+  "@month_toggleButton": {
+    "description": "Option month for the toggleButton in time"
   }
 }
