@@ -146,6 +146,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
+                  color: Theme.of(context).colorScheme.onBackground
                 ),
               ),
             ),
@@ -340,7 +341,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Navigator.pushNamed(context, '/add_expense');
           }
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add,
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
       ),
     );
   }

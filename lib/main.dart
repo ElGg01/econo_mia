@@ -1,5 +1,6 @@
 import 'package:econo_mia/pages/about.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,11 +59,17 @@ class _AppState extends State<App> {
             useMaterial3: true,
             colorScheme: lightColorScheme,
             brightness: Brightness.light,
+            textTheme: GoogleFonts.poppinsTextTheme(
+              Theme.of(context).textTheme
+            ),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
             colorScheme: darkColorScheme,
             brightness: Brightness.dark,
+            textTheme: GoogleFonts.poppinsTextTheme(
+                Theme.of(context).textTheme
+            ),
           ),
           themeMode: themeProvider.themeMode == ThemeModeOption.system
               ? ThemeMode.system
