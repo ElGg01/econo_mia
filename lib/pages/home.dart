@@ -213,9 +213,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     color: Theme.of(context).colorScheme.onBackground),
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
             JelloIn(
               child: Text(
-                "${text!.totalBalance}: ${balance} MXN",
+                textAlign: TextAlign.center,
+                "${balance} MXN",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+            JelloIn(
+              child: Text(
+                textAlign: TextAlign.center,
+                "${text!.totalBalance}",
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
