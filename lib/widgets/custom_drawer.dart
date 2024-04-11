@@ -74,7 +74,7 @@ class CustomDrawer extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                leading: const Icon(Icons.trending_down),
+                leading: const Icon(Icons.monetization_on),
                 onTap: () {
                   Navigator.pushNamed(context, '/about');
                 },

@@ -244,81 +244,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ],
           ),
           Divider(),
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 50,
-            color: Theme.of(context).colorScheme.primary,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white,
-                  ),
-                  height: 40,
-                  width: 40,
-                  child: Icon(
-                    Icons.sell,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Text("Concepto"),
-                ),
-                Text("-100"),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Fecha"),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
+          TransactionItemRow(
+            icon: Icons.abc,
+            name: 'Concepto',
+            amount: 100,
+            date: '15/05/24',
           ),
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 50,
-            color: Theme.of(context).colorScheme.primary,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white,
-                  ),
-                  height: 40,
-                  width: 40,
-                  child: Icon(
-                    Icons.sell,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Text("Concepto"),
-                ),
-                Text("-100"),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Fecha"),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
+          TransactionItemRow(
+            icon: Icons.access_alarm,
+            name: 'Concepto',
+            amount: 100,
+            date: '16/04/24',
+          ),
+          TransactionItemRow(
+            icon: Icons.access_alarm,
+            name: 'Concepto',
+            amount: -100,
+            date: '01/01/24',
           ),
         ],
       ),

@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'chart_transaction.dart';
 
-
 class TabBarItemView extends StatefulWidget {
   const TabBarItemView({super.key});
 
@@ -14,9 +13,7 @@ class TabBarItemView extends StatefulWidget {
   State<TabBarItemView> createState() => _TabBarItemViewState();
 }
 
-
 class _TabBarItemViewState extends State<TabBarItemView> {
-
   late List<bool> _timeSelected;
 
   @override
@@ -36,14 +33,10 @@ class _TabBarItemViewState extends State<TabBarItemView> {
 
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return Container(
-      color: Theme.of(context)
-          .colorScheme
-          .primaryContainer
-          .withOpacity(0.5),
+      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
       child: ListView(
         children: [
           Container(
@@ -53,9 +46,7 @@ class _TabBarItemViewState extends State<TabBarItemView> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Theme.of(context)
-                    .colorScheme
-                    .background,
+                color: Theme.of(context).colorScheme.background,
               ),
               child: ToggleButtons(
                 constraints: const BoxConstraints(
@@ -63,29 +54,16 @@ class _TabBarItemViewState extends State<TabBarItemView> {
                   minHeight: 40,
                 ),
                 borderRadius: BorderRadius.circular(8),
-                fillColor: Theme.of(context)
-                    .colorScheme
-                    .tertiary,
-                highlightColor: Theme.of(context)
-                    .colorScheme
-                    .tertiary,
-                borderColor: Theme.of(context)
-                    .colorScheme
-                    .tertiary,
+                fillColor: Theme.of(context).colorScheme.tertiary,
+                highlightColor: Theme.of(context).colorScheme.tertiary,
+                borderColor: Theme.of(context).colorScheme.tertiary,
                 borderWidth: 3,
-                selectedBorderColor: Theme.of(context)
-                    .colorScheme
-                    .onBackground,
-                color: Theme.of(context)
-                    .colorScheme
-                    .onBackground,
-                selectedColor: Theme.of(context)
-                    .colorScheme
-                    .background,
+                selectedBorderColor: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onBackground,
+                selectedColor: Theme.of(context).colorScheme.background,
                 isSelected: _timeSelected,
                 onPressed: (int index) {
-                  _selectIndex(
-                      index, _timeSelected);
+                  _selectIndex(index, _timeSelected);
                 },
                 children: [
                   Text(
@@ -136,18 +114,7 @@ class _TabBarItemViewState extends State<TabBarItemView> {
             ),
           ),
           const Column(
-            children: [
-              TransactionItemRow(
-                icon: Icons.gamepad,
-                name: "Resident evil 4",
-                amount: 100,
-              ),
-              TransactionItemRow(
-                icon: Icons.abc,
-                name: "GTA V",
-                amount: 1200,
-              ),
-            ],
+            children: [],
           ),
         ],
       ),
