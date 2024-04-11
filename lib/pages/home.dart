@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:econo_mia/widgets/chart_transaction.dart';
 import 'package:econo_mia/widgets/custom_drawer.dart';
+import 'package:econo_mia/widgets/custom_page_view.dart';
 import 'package:econo_mia/widgets/tab_bar_view_item.dart';
 import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
 
   late TabController _tabController;
-  late List<bool> _earningsSelected;
-  late List<bool> _expensesSelected;
 
   late PageController _controllerPageView;
+  late PageController _controllerPageViewVertical;
   int currentPageView = 0;
+  int currentPageViewVertical = 0;
 
   final FirebaseAuthService _auth = FirebaseAuthService();
   final List<String> _offlineData = [];
@@ -46,6 +47,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       initialPage: currentPageView,
       viewportFraction: 0.4,
     );
+    _controllerPageViewVertical = PageController(
+      initialPage: currentPageViewVertical,
+      viewportFraction: 0.5,
+    );
 
     StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
         .onConnectivityChanged
@@ -53,9 +58,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       // TODO: Make a listen change
     });
     db = FirebaseFirestore.instance;
-    _tabController = TabController(length: 2, vsync: this);
-    _earningsSelected = [true, false, false];
-    _expensesSelected = [true, false, false];
     _loadData();
   }
 
@@ -91,48 +93,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     });
   }
 
-  void _selectIndex(int index, List<bool> list) {
-    setState(() {
-      for (int i = 0; i < list.length; i++) {
-        list[i] = (i == index);
-      }
-    });
-  }
-
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
     if (!context.mounted) return;
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-  }
-
-  Widget _pageItem(String name, int position) {
-    var _alignment;
-    final selected = TextStyle(
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,
-      color: Colors.blueGrey,
-    );
-    final unselected = TextStyle(
-      fontSize: 20.0,
-      fontWeight: FontWeight.normal,
-      color: Colors.blueGrey.withOpacity(0.4),
-    );
-
-    if (position == currentPageView) {
-      _alignment = Alignment.center;
-    } else if (position > currentPageView) {
-      _alignment = Alignment.centerRight;
-    } else {
-      _alignment = Alignment.centerLeft;
-    }
-
-    return Align(
-      alignment: _alignment,
-      child: Text(
-        name,
-        style: position == currentPageView ? selected : unselected,
-      ),
-    );
   }
 
   @override
@@ -239,42 +203,22 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 10,
             ),
-            Container(
-              alignment: Alignment.center,
-              child: const Text(
-                "2024",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey,
-                ),
+            SizedBox.fromSize(
+              size: Size.fromHeight(70),
+              child: CustomPageView(
+                currentPageView: currentPageViewVertical,
+                controllerPageView: _controllerPageViewVertical,
+                isHorizontal: false,
               ),
             ),
             SizedBox.fromSize(
               size: Size.fromHeight(70),
-              child: PageView(
-                onPageChanged: (newPage) {
-                  setState(() {
-                    currentPageView = newPage;
-                  });
-                },
-                controller: _controllerPageView,
-                children: [
-                  _pageItem("Enero", 0),
-                  _pageItem("Febrero", 1),
-                  _pageItem("Marzo", 2),
-                  _pageItem("Abril", 3),
-                  _pageItem("Mayo", 4),
-                  _pageItem("Junio", 5),
-                  _pageItem("Julio", 6),
-                  _pageItem("Agosto", 7),
-                  _pageItem("Septiembre", 8),
-                  _pageItem("Octubre", 9),
-                  _pageItem("Noviembre", 10),
-                  _pageItem("Diciembre", 11),
-                ],
+              child: CustomPageView(
+                currentPageView: currentPageView,
+                controllerPageView: _controllerPageView,
+                isHorizontal: true,
               ),
             ),
             SfCartesianChart(series: <CartesianSeries>[
