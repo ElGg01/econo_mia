@@ -40,7 +40,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    StreamSubscription<List<ConnectivityResult>> subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result){
+    StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
       // TODO: Make a listen change
     });
     db = FirebaseFirestore.instance;
@@ -51,12 +53,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<bool> _checkInternetAvailable() async {
-    final List<ConnectivityResult> result = await Connectivity().checkConnectivity();
-    if (result.contains(ConnectivityResult.mobile)){
+    final List<ConnectivityResult> result =
+        await Connectivity().checkConnectivity();
+    if (result.contains(ConnectivityResult.mobile)) {
       return false;
-    } else if (result.contains(ConnectivityResult.wifi)){
+    } else if (result.contains(ConnectivityResult.wifi)) {
       return true;
-    } else if (result.contains(ConnectivityResult.ethernet)){
+    } else if (result.contains(ConnectivityResult.ethernet)) {
       return true;
     } else {
       return false;
@@ -106,7 +109,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
-
   @override
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
@@ -139,15 +141,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: <Widget>[
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             FadeInDown(
               child: Text(
                 "${text!.hello_homePage}, ${user?.displayName}. 🤑",
                 style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  color: Theme.of(context).colorScheme.onBackground
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    color: Theme.of(context).colorScheme.onBackground),
               ),
             ),
             JelloIn(
@@ -160,7 +163,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             ElasticInDown(
               child: Container(
                 alignment: Alignment.topCenter,
@@ -171,10 +176,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .shadow
-                          .withOpacity(0.5),
+                      color:
+                          Theme.of(context).colorScheme.shadow.withOpacity(0.5),
                       spreadRadius: 3,
                       blurRadius: 5,
                       offset: Offset(0, 3), // changes position of shadow
@@ -226,15 +229,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 DropdownMenuItem(
-                                  value: "Efectivo",
+                                  value: text!.cash,
                                   onTap: () {
                                     setState(() {
-                                      dropDownValue = "Efectivo";
+                                      dropDownValue = text!.cash;
                                     });
                                   },
                                   child: Center(
                                     child: Text(
-                                      "Efectivo",
+                                      text!.cash,
                                       style: GoogleFonts.poppins(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -262,8 +265,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(
-                              context, '/add_balance_account');
+                          Navigator.pushNamed(context, '/add_balance_account');
                         },
                         icon: Icon(
                           Icons.add,
@@ -281,14 +283,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ),
                     TabBar(
                       controller: _tabController,
-                      labelColor:
-                          Theme.of(context).colorScheme.onBackground,
+                      labelColor: Theme.of(context).colorScheme.onBackground,
                       unselectedLabelColor: Theme.of(context)
                           .colorScheme
                           .onBackground
                           .withOpacity(0.5),
-                      dividerColor:
-                          Theme.of(context).colorScheme.background,
+                      dividerColor: Theme.of(context).colorScheme.background,
                       dividerHeight: 5,
                       indicatorColor:
                           Theme.of(context).colorScheme.onBackground,
@@ -341,7 +341,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Navigator.pushNamed(context, '/add_expense');
           }
         },
-        child: Icon(Icons.add,
+        child: Icon(
+          Icons.add,
           color: Theme.of(context).colorScheme.onBackground,
         ),
       ),

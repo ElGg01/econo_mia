@@ -290,5 +290,10 @@
   "invaldGoogle_showSnackBar": "Invalid Google creentials",
   "@checkForm_showSnackBar": {
     "description": "Message in SnackBar for checking the form"
+  },
+  "cash": "Cash",
+  "@cash": {
+    "description": "Message in Cash"
   }
+ 
 }

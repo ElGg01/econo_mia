@@ -71,5 +71,6 @@
   "month_toggleButton": "Mes",
   "processingData_showSnackBar": "Procesando datos",
   "checkForm_showSnackBar": "Verifica el formulario",
-  "invaldGoogle_showSnackBar": "Credenciales de Google no válidas"
+  "invaldGoogle_showSnackBar": "Credenciales de Google no válidas",
+  "cash": "Efectivo"
 }

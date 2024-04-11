@@ -59,17 +59,15 @@ class _AppState extends State<App> {
             useMaterial3: true,
             colorScheme: lightColorScheme,
             brightness: Brightness.light,
-            textTheme: GoogleFonts.poppinsTextTheme(
-              Theme.of(context).textTheme
-            ),
+            textTheme:
+                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
             colorScheme: darkColorScheme,
             brightness: Brightness.dark,
-            textTheme: GoogleFonts.poppinsTextTheme(
-                Theme.of(context).textTheme
-            ),
+            textTheme:
+                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           ),
           themeMode: themeProvider.themeMode == ThemeModeOption.system
               ? ThemeMode.system
