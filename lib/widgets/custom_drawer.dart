@@ -9,11 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-
     Future<void> signOut() async {
       await FirebaseAuth.instance.signOut();
       if (!context.mounted) return;
@@ -23,8 +20,7 @@ class CustomDrawer extends StatelessWidget {
     AppLocalizations? text = AppLocalizations.of(context);
 
     return Drawer(
-      backgroundColor:
-      Theme.of(context).colorScheme.background.withOpacity(1),
+      backgroundColor: Theme.of(context).colorScheme.background.withOpacity(1),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
         child: ListView(
@@ -66,6 +62,21 @@ class CustomDrawer extends StatelessWidget {
                 leading: const Icon(Icons.person),
                 onTap: () {
                   Navigator.pushNamed(context, '/user_settings');
+                },
+              ),
+            ),
+            ElasticInLeft(
+              child: ListTile(
+                title: Text(
+                  "Suposición de gastos",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                leading: const Icon(Icons.trending_down),
+                onTap: () {
+                  Navigator.pushNamed(context, '/about');
                 },
               ),
             ),

@@ -14,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -26,8 +27,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
-
-  late TabController _tabController;
 
   late PageController _controllerPageView;
   late PageController _controllerPageViewVertical;
@@ -131,7 +130,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       ChartData(25, 31),
       ChartData(26, 37),
       ChartData(27, 29),
-      ChartData(28, 35),
+      ChartData(28, -50),
       ChartData(29, 5),
       ChartData(30, 40),
       ChartData(31, 32),
@@ -160,84 +159,172 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       drawer: const CustomDrawer(),
-      body: Padding(
+      body: ListView(
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(16),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          children: <Widget>[
-            const SizedBox(
-              height: 20,
-            ),
-            FadeInDown(
-              child: Text(
-                "${text!.hello_homePage}, ${user?.displayName}. 🤑",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28,
-                    color: Theme.of(context).colorScheme.onBackground),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            JelloIn(
-              child: Text(
-                textAlign: TextAlign.center,
-                "${balance} MXN",
-                style: GoogleFonts.poppins(
+        children: <Widget>[
+          const SizedBox(
+            height: 20,
+          ),
+          FadeInDown(
+            child: Text(
+              "${text!.hello_homePage}, ${user?.displayName}. 🤑",
+              style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                  fontSize: 28,
+                  color: Theme.of(context).colorScheme.onBackground),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          JelloIn(
+            child: Text(
+              textAlign: TextAlign.center,
+              "${text!.totalBalance}:",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
-            JelloIn(
-              child: Text(
-                textAlign: TextAlign.center,
-                "${text!.totalBalance}",
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+          ),
+          JelloIn(
+            child: Text(
+              textAlign: TextAlign.center,
+              "${balance} MXN",
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
-            const SizedBox(
-              height: 10,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Divider(),
+          SizedBox.fromSize(
+            size: Size.fromHeight(70),
+            child: CustomPageView(
+              currentPageView: currentPageViewVertical,
+              controllerPageView: _controllerPageViewVertical,
+              isHorizontal: false,
             ),
-            SizedBox.fromSize(
-              size: Size.fromHeight(70),
-              child: CustomPageView(
-                currentPageView: currentPageViewVertical,
-                controllerPageView: _controllerPageViewVertical,
-                isHorizontal: false,
+          ),
+          Divider(),
+          SizedBox.fromSize(
+            size: Size.fromHeight(70),
+            child: CustomPageView(
+              currentPageView: currentPageView,
+              controllerPageView: _controllerPageView,
+              isHorizontal: true,
+            ),
+          ),
+          Divider(),
+          SfCartesianChart(
+            primaryXAxis: NumericAxis(
+              interval: 7,
+              minimum: 0,
+              maximum: 31,
+            ),
+            primaryYAxis: NumericAxis(
+              numberFormat: NumberFormat.currency(
+                symbol: "\$",
               ),
             ),
-            SizedBox.fromSize(
-              size: Size.fromHeight(70),
-              child: CustomPageView(
-                currentPageView: currentPageView,
-                controllerPageView: _controllerPageView,
-                isHorizontal: true,
-              ),
-            ),
-            SfCartesianChart(series: <CartesianSeries>[
+            series: <CartesianSeries>[
               // Renders line chart
               LineSeries<ChartData, int>(
-                  dataSource: chartData,
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y)
-            ]),
-          ],
-        ),
+                dataSource: chartData,
+                color: Theme.of(context).colorScheme.primary,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.y,
+              ),
+            ],
+          ),
+          Divider(),
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 50,
+            color: Theme.of(context).colorScheme.primary,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                  ),
+                  height: 40,
+                  width: 40,
+                  child: Icon(
+                    Icons.sell,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Text("Concepto"),
+                ),
+                Text("-100"),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Fecha"),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 50,
+            color: Theme.of(context).colorScheme.primary,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                  ),
+                  height: 40,
+                  width: 40,
+                  child: Icon(
+                    Icons.sell,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Text("Concepto"),
+                ),
+                Text("-100"),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Fecha"),
+                SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_tabController.index == 0) {
-            Navigator.pushNamed(context, '/add_earning');
-          } else {
-            Navigator.pushNamed(context, '/add_expense');
-          }
+          Navigator.pushNamed(context, '/add_earning');
         },
         child: Icon(
           Icons.add,
