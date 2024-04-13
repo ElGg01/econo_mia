@@ -2,14 +2,11 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:econo_mia/widgets/chart_transaction.dart';
 import 'package:econo_mia/widgets/custom_drawer.dart';
 import 'package:econo_mia/widgets/custom_page_view.dart';
-import 'package:econo_mia/widgets/tab_bar_view_item.dart';
 import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,6 +35,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   User? user = FirebaseAuth.instance.currentUser;
 
   late double balance = 0;
+  List<int> years = [];
 
   @override
   void initState() {
@@ -58,6 +56,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     });
     db = FirebaseFirestore.instance;
     _loadData();
+    fetchYears();
   }
 
   Future<bool> _checkInternetAvailable() async {
@@ -71,6 +70,38 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<void> fetchYears() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('ingresos')
+          .get();
+
+      List<int> uniqueYears = [];
+      // Recorre los documentos obtenidos
+      querySnapshot.docs.forEach((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        DateTime date = data["fecha"].toDate();
+        int year = date.year;
+        if (!uniqueYears.contains(year)) {
+          uniqueYears.add(year);
+        }
+      });
+
+      uniqueYears.sort();
+
+      // Actualiza el estado del widget con los nuevos datos
+      setState(() {
+        years = uniqueYears;
+        print(years);
+      });
+    } catch (e) {
+      // Manejar cualquier error que pueda ocurrir
+      print('Error fetching assumptions: $e');
     }
   }
 
@@ -210,6 +241,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               currentPageView: currentPageViewVertical,
               controllerPageView: _controllerPageViewVertical,
               isHorizontal: false,
+              years: years,
             ),
           ),
           Divider(),

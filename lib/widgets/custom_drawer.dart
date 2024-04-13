@@ -76,7 +76,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 leading: const Icon(Icons.monetization_on),
                 onTap: () {
-                  Navigator.pushNamed(context, '/about');
+                  Navigator.pushNamed(context, '/expense_assumption');
                 },
               ),
             ),

@@ -6,11 +6,13 @@ class CustomPageView extends StatefulWidget {
     required this.currentPageView,
     required this.controllerPageView,
     required this.isHorizontal,
+    this.years,
   });
 
   int currentPageView;
   PageController controllerPageView;
   bool isHorizontal;
+  List<int>? years;
 
   @override
   State<CustomPageView> createState() => _CustomPageViewState();
@@ -54,11 +56,16 @@ class _CustomPageViewState extends State<CustomPageView> {
       _pageItem("Noviembre", 10),
       _pageItem("Diciembre", 11),
     ];
-    List<Widget> pagesItemsVertical = [
-      _pageItem("2024", 0),
-      _pageItem("2025", 1),
-      _pageItem("2026", 2),
-    ];
+    List<Widget> pagesItemsVertical = [];
+
+    if (widget.years != null) {
+      pagesItemsVertical = widget.years!.asMap().entries.map<Widget>((entry) {
+        final year = entry.value;
+        final index = entry.key;
+        return _pageItem(year.toString(), index);
+      }).toList();
+    }
+
     return PageView(
       scrollDirection:
           widget.isHorizontal == true ? Axis.horizontal : Axis.vertical,
