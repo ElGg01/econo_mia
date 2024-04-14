@@ -241,7 +241,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     }
                   },
                   icon: Icon(Icons.save),
-                  label: Text("Guardar ingreso"),
+                  label: Text("Guardar suposición"),
                 ),
               ],
             ),
