@@ -1,4 +1,5 @@
 import 'package:econo_mia/pages/about.dart';
+import 'package:econo_mia/pages/add_assumption.dart';
 import 'package:econo_mia/pages/expense_assumption.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,6 +92,7 @@ class _AppState extends State<App> {
             '/add_earning': (context) => const AddEarning(),
             '/add_expense': (context) => const AddExpense(),
             '/expense_assumption': (context) => const ExpenseAssumption(),
+            '/add_assumption': (context) => const AddAssumption(),
           },
           initialRoute: "/",
           localizationsDelegates: AppLocalizations.localizationsDelegates,

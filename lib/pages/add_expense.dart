@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:econo_mia/widgets/custom_drop_down_button.dart';
 import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,9 @@ class _AddExpenseState extends State<AddExpense> {
   final _formKey = GlobalKey<FormState>();
   String dropDownValue = 'MXN';
   Color bgColorSelected = Colors.white;
+
+  late String concept;
+  late Timestamp date;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +97,7 @@ class _AddExpenseState extends State<AddExpense> {
                     horizontal: 32,
                     vertical: 8,
                   ),
-                  child: const CustomIconTextFormField(
+                  child: CustomIconTextFormField(
                     icon: Icons.money,
                     label: "Concepto:",
                   ),
@@ -496,7 +500,8 @@ class _AddExpenseState extends State<AddExpense> {
                                 ),
                                 padding: EdgeInsets.all(5),
                                 margin: EdgeInsets.all(5),
-                                child: Icon(Icons.emoji_transportation_outlined),
+                                child:
+                                    Icon(Icons.emoji_transportation_outlined),
                               ),
                               Text(
                                 "Transporte",
@@ -559,24 +564,22 @@ class _AddExpenseState extends State<AddExpense> {
                   onTap: () {
                     DatePicker.showDateTimePicker(context,
                         showTitleActions: true,
-                        locale: LocaleType.es, onChanged: (dateTime) {
-                        }, onConfirm: (dateTime) {
-                        }, currentTime: DateTime.now());
+                        locale: LocaleType.es,
+                        onChanged: (dateTime) {},
+                        onConfirm: (dateTime) {},
+                        currentTime: DateTime.now());
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 32,
                       vertical: 8,
                     ),
-                    child: const CustomIconTextFormField(
+                    child: CustomIconTextFormField(
                       icon: Icons.calendar_month_outlined,
                       label: "Seleccione la fecha",
                     ),
                   ),
                 ),
-
-
-
                 const SizedBox(
                   height: 20,
                 ),

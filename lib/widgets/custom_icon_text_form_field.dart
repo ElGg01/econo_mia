@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomIconTextFormField extends StatefulWidget {
-  const CustomIconTextFormField(
-      {super.key, required this.icon, required this.label});
+  const CustomIconTextFormField({
+    super.key,
+    required this.icon,
+    required this.label,
+  });
 
   final IconData icon;
   final String label;

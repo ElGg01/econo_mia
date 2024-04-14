@@ -17,6 +17,8 @@ class _AddEarningState extends State<AddEarning> {
   String dropDownValue = 'MXN';
   Color bgColorSelected = Colors.green;
 
+  late String concept;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +94,7 @@ class _AddEarningState extends State<AddEarning> {
                     horizontal: 32,
                     vertical: 8,
                   ),
-                  child: const CustomIconTextFormField(
+                  child: CustomIconTextFormField(
                     icon: Icons.money,
                     label: "Concepto:",
                   ),
@@ -495,7 +497,8 @@ class _AddEarningState extends State<AddEarning> {
                                 ),
                                 padding: EdgeInsets.all(5),
                                 margin: EdgeInsets.all(5),
-                                child: Icon(Icons.emoji_transportation_outlined),
+                                child:
+                                    Icon(Icons.emoji_transportation_outlined),
                               ),
                               Text(
                                 "Transporte",

@@ -16,6 +16,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
   User? user = FirebaseAuth.instance.currentUser;
   List<Map<String, dynamic>> assumptionData = [];
   late double balance = 0;
+  late double totalSumExpenses = 0;
 
   @override
   void initState() {
@@ -23,6 +24,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
     db = FirebaseFirestore.instance;
     fetchUserTotalBalance();
     fetchAssumptionsForUser();
+    fetchTotalExpenses();
   }
 
   Future<void> fetchUserTotalBalance() async {
@@ -32,6 +34,28 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
       });
       print("El balance es: ${balance}");
     });
+  }
+
+  Future<void> fetchTotalExpenses() async {
+    double totalExpenses = 0;
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('assumption')
+          .get();
+
+      querySnapshot.docs.forEach((doc) {
+        totalExpenses += doc['expense'] ?? 0; // Sumar los valores de 'expense'
+      });
+
+      setState(() {
+        totalSumExpenses = totalExpenses;
+      });
+    } catch (e) {
+      // Manejar cualquier error que pueda ocurrir
+      print('Error fetching total expenses: $e');
+    }
   }
 
   Future<void> fetchAssumptionsForUser() async {
@@ -48,6 +72,8 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         newData.add(data);
       });
+
+      newData.sort((a, b) => b['expense'].compareTo(a['expense']));
 
       // Actualiza el estado del widget con los nuevos datos
       setState(() {
@@ -95,19 +121,74 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               title: Text(data[
                   'name']), // Suponiendo que haya una clave 'title' en tus datos
               subtitle: Text(
-                "${data['expense']} MXN",
+                "- ${data['expense']} MXN",
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Te quedarian:"),
+                  const Text("Te quedarian:"),
                   Text(
                     "${balance - data['expense']} MXN",
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ), // Suponiendo que haya una clave 'description' en tus datos
             );
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.pushNamed(context, '/add_assumption');
+          if (result == true) {
+            fetchAssumptionsForUser();
+            fetchTotalExpenses();
+          }
+        },
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                const Text("Total de los gastos: "),
+                Text(
+                  totalSumExpenses.toString(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 30,
+            ),
+            Column(
+              children: [
+                Text("Te quedarian en total: "),
+                Text(
+                  "${balance - totalSumExpenses}",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
