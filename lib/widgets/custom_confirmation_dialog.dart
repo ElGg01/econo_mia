@@ -12,14 +12,13 @@ class CustomConfirmationDialog extends StatelessWidget {
     required this.deleteFunction,
   });
 
-
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return AlertDialog(
-      title: Text(titleDialog,
+      title: Text(
+        titleDialog,
         style: TextStyle(
           color: Theme.of(context).colorScheme.onBackground,
         ),
@@ -27,7 +26,8 @@ class CustomConfirmationDialog extends StatelessWidget {
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text(contentDialog,
+            Text(
+              contentDialog,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -44,11 +44,10 @@ class CustomConfirmationDialog extends StatelessWidget {
         ),
         TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Theme.of(context).colorScheme.error,
-            foregroundColor: Theme.of(context).colorScheme.background
-          ),
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.background),
           onPressed: () {
-            deleteFunction;
+            deleteFunction!();
           },
           child: Text(text.deleteButton_dialog),
         ),

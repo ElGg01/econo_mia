@@ -1,4 +1,3 @@
-import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -101,11 +100,10 @@ class _AddAssumptionState extends State<AddAssumption> {
                       icon: const Icon(Icons.abc),
                       labelText: "Concepto",
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        )
-                      ),
+                          borderSide: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      )),
                     ),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground,

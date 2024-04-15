@@ -98,20 +98,23 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
 
     // Delete each document
     try {
-      for (int i = 0; i < querySnapshot.docs.length; i++){
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        print(i);
         await querySnapshot.docs[i].reference.delete();
       }
-    } catch (e){
+    } catch (e) {
       print(e);
     }
     await fetchAssumptionsForUser();
+    setState(() {
+      totalSumExpenses = 0;
+    });
     if (!context.mounted) return;
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return Scaffold(
@@ -157,7 +160,10 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Remanentes", textAlign: TextAlign.start,),
+                  const Text(
+                    "Remanentes",
+                    textAlign: TextAlign.start,
+                  ),
                   Text(
                     "${balance - data['expense']} MXN",
                     style: const TextStyle(
@@ -176,7 +182,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (BuildContext context2){
+                builder: (BuildContext context2) {
                   return CustomConfirmationDialog(
                     titleDialog: text!.title_deleteAll_Dialog,
                     contentDialog: text.content_delete_dialog,
@@ -193,10 +199,13 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               color: Theme.of(context).colorScheme.background,
             ),
           ),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           FloatingActionButton(
             onPressed: () async {
-              final result = await Navigator.pushNamed(context, '/add_assumption');
+              final result =
+                  await Navigator.pushNamed(context, '/add_assumption');
               if (result == true) {
                 fetchAssumptionsForUser();
                 fetchTotalExpenses();
@@ -216,7 +225,8 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
           children: [
             Column(
               children: [
-                Text("Gastos totales",
+                Text(
+                  "Gastos totales",
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,
@@ -234,7 +244,8 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             ),
             Column(
               children: [
-                Text("Remanentes totales",
+                Text(
+                  "Remanentes totales",
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,
