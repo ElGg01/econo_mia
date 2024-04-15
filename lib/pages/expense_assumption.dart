@@ -106,11 +106,16 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
       print(e);
     }
     await fetchAssumptionsForUser();
-    setState(() {
-      totalSumExpenses = 0;
-    });
+    await fetchTotalExpenses();
     if (!context.mounted) return;
     Navigator.of(context).pop();
+  }
+
+  Future<void> deleteAssumptionItem(int index) async {
+    // TODO: Delete item on Firebase Firestore
+    setState(() {
+      assumptionData.removeAt(index);
+    });
   }
 
   @override
@@ -147,32 +152,56 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               ),
           itemBuilder: (context, index) {
             Map<String, dynamic> data = assumptionData[index];
-            return ListTile(
-              title: Text(data[
-                  'name']), // Suponiendo que haya una clave 'title' en tus datos
-              subtitle: Text(
-                "- ${data['expense']} MXN",
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+            // TODO: Add a header that indicates the expenses and remaining
+            return Dismissible(
+              key: UniqueKey(),
+              background: Container(
+                color: Theme.of(context).colorScheme.error,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 10),
+                child: Icon(Icons.delete_outline,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 32,
                 ),
               ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Remanentes",
-                    textAlign: TextAlign.start,
-                  ),
-                  Text(
-                    "${balance - data['expense']} MXN",
+              onDismissed: ( direction ){
+                if (direction == DismissDirection.startToEnd){
+                  // TODO: Call deleteItem function
+                  deleteAllAssumptions();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                child: ListTile(
+                  title: Text(data[
+                      'name'],
                     style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
+                  ), // Suponiendo que haya una clave 'title' en tus datos
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "- ${data['expense']} MXN",
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "${balance - data['expense']} MXN",
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ), // Suponiendo que haya una clave 'description' en tus datos
+                ),
+              ),
             );
           }),
       floatingActionButton: Column(
