@@ -1,3 +1,4 @@
+import 'package:econo_mia/widgets/custom_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -155,9 +156,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   Text(
                     text.title_ChangePassword,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
                   const SizedBox(
@@ -165,8 +167,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   Text(
                     text.subtitle_ChangePassword,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 24,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -174,120 +177,76 @@ class _ChangePasswordState extends State<ChangePassword> {
                     height: 100,
                   ),
                   // Old Password
-                  FadeInUpBig(
-                    delay: const Duration(milliseconds: 100),
-                    child: TextFormField(
-                      controller: _oldPassword,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        labelText: text.oldPasswordTextFormField,
-                        prefixIcon: const Icon(Icons.password),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isOldPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isOldPasswordVisible = !_isOldPasswordVisible;
-                            });
-                          },
-                        ),
+                  CustomTextFormField(
+                    autoValidateMode: AutovalidateMode.disabled,
+                    isObscureText: _isOldPasswordVisible,
+                    validatorFunction: null,
+                    editingController: _oldPassword,
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isOldPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
-                      autofocus: false,
-                      obscureText: _isOldPasswordVisible,
+                      onPressed: () {
+                        setState(() {
+                          _isOldPasswordVisible = !_isOldPasswordVisible;
+                        });
+                      },
                     ),
+                    icons: Icons.password,
+                    text: text.oldPasswordTextFormField,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   // New password
-                  FadeInUpBig(
-                    delay: const Duration(milliseconds: 100),
-                    child: TextFormField(
-                        controller: _newPassword,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 2,
-                                color:
-                                    Theme.of(context).colorScheme.onBackground),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          labelText: text.newPasswordTextFormField,
-                          prefixIcon: const Icon(Icons.password),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isNewPasswordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isNewPasswordVisible = !_isNewPasswordVisible;
-                              });
-                            },
-                          ),
-                        ),
-                        autofocus: false,
-                        obscureText: _isNewPasswordVisible,
-                        validator: (String? value) {
-                          return Validators.validatePassword(value, text);
-                        }),
+                  CustomTextFormField(
+                    autoValidateMode: AutovalidateMode.disabled,
+                    isObscureText: _isNewPasswordVisible,
+                    validatorFunction: (String? value) => Validators.validatePassword(value, text),
+                    editingController: _newPassword,
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isNewPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isNewPasswordVisible = !_isNewPasswordVisible;
+                        });
+                      },
+                    ),
+                    icons: Icons.password,
+                    text: text.newPasswordTextFormField,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   // Confirm New Password
-                  FadeInUpBig(
-                    delay: const Duration(milliseconds: 100),
-                    child: TextFormField(
-                      controller: _confirmPassword,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 2,
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        labelText: text.confirmPasswordTextFormField,
-                        prefixIcon: const Icon(Icons.password),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isConfirmPasswordVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isConfirmPasswordVisible =
-                                  !_isConfirmPasswordVisible;
-                            });
-                          },
-                        ),
+                  CustomTextFormField(
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    isObscureText: _isConfirmPasswordVisible,
+                    validatorFunction: (String? value) => Validators.validateConfirmPassword(_newPassword.text, _confirmPassword.text, text),
+                    editingController: _confirmPassword,
+                    iconButton: IconButton(
+                      icon: Icon(
+                        _isConfirmPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
-                      autofocus: false,
-                      obscureText: _isConfirmPasswordVisible,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        String? result = _confirmPassword.text ==
-                                _newPassword.text
-                            ? null
-                            : text.validatorMsg_confirmPassword;
-                        return result;
+                      onPressed: () {
+                        setState(() {
+                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                        });
                       },
                     ),
+                    icons: Icons.password,
+                    text: text.confirmPasswordTextFormField,
                   ),
                   const SizedBox(
                     height: 30,

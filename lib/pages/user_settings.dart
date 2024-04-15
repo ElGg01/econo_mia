@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:econo_mia/ui/language_mode_option.dart';
 import 'package:econo_mia/widgets/custom_language_alert_dialog.dart';
 import 'package:econo_mia/widgets/custom_settings_section.dart';
@@ -12,7 +10,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class UserSettings extends StatefulWidget {

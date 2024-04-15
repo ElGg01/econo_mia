@@ -97,10 +97,18 @@ class _AddAssumptionState extends State<AddAssumption> {
                     vertical: 8,
                   ),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.abc),
+                    decoration: InputDecoration(
+                      icon: const Icon(Icons.abc),
                       labelText: "Concepto",
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        )
+                      ),
+                    ),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                     onChanged: (value) {
                       assumptionName = value;
@@ -156,6 +164,9 @@ class _AddAssumptionState extends State<AddAssumption> {
                           onChanged: (value) {
                             assumptionAmount = double.parse(value);
                           },
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(

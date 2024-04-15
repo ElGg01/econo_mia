@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       } else {
         if (!context.mounted) return;
-        FuncSnackBar.showSnackBar(context, text.invaldGoogle_showSnackBar, true);
+        FuncSnackBar.showSnackBar(context, text.invalidGoogle_showSnackBar, true);
       }
     } else {
       FuncSnackBar.showSnackBar(context, text!.checkForm_showSnackBar, false);
@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     } else {
       if (!context.mounted) return;
-        FuncSnackBar.showSnackBar(context, text!.invaldGoogle_showSnackBar, true);
+        FuncSnackBar.showSnackBar(context, text!.invalidGoogle_showSnackBar, true);
     }
   }
 

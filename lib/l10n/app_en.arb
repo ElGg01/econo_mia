@@ -287,13 +287,20 @@
   "@checkForm_showSnackBar": {
     "description": "Message in SnackBar for checking the form"
   },
-  "invaldGoogle_showSnackBar": "Invalid Google creentials",
-  "@checkForm_showSnackBar": {
+  "invalidGoogle_showSnackBar": "Invalid Google creentials",
+  "@invalidGoogle_showSnackBar": {
     "description": "Message in SnackBar for checking the form"
   },
   "cash": "Cash",
   "@cash": {
     "description": "Message in Cash"
+  },
+  "title_deleteAll_Dialog": "Delete all items",
+  "@title_deleteAll_Dialog": {
+    "description": "Title for deleting all items into an alert dialog"
+  },
+  "content_delete_dialog": "Are you sure want to delete all these items?",
+  "@content_delete_dialog": {
+    "description": "Content for deleting all items into an alert dialog"
   }
- 
 }

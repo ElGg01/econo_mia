@@ -1,4 +1,6 @@
+import 'package:econo_mia/widgets/custom_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -85,14 +87,39 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
     }
   }
 
+  Future<void> deleteAllAssumptions() async {
+    // Get a reference to the collection
+    CollectionReference collectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('assumption');
+    // Get all documents in the collection
+    QuerySnapshot querySnapshot = await collectionRef.get();
+
+    // Delete each document
+    try {
+      for (int i = 0; i < querySnapshot.docs.length; i++){
+        await querySnapshot.docs[i].reference.delete();
+      }
+    } catch (e){
+      print(e);
+    }
+    await fetchAssumptionsForUser();
+    if (!context.mounted) return;
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "EconoMÍA",
+            "Suposicion de gastos",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -130,7 +157,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Te quedarian:"),
+                  const Text("Remanentes", textAlign: TextAlign.start,),
                   Text(
                     "${balance - data['expense']} MXN",
                     style: const TextStyle(
@@ -142,45 +169,82 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               ), // Suponiendo que haya una clave 'description' en tus datos
             );
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.pushNamed(context, '/add_assumption');
-          if (result == true) {
-            fetchAssumptionsForUser();
-            fetchTotalExpenses();
-          }
-        },
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onBackground,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context2){
+                  return CustomConfirmationDialog(
+                    titleDialog: text!.title_deleteAll_Dialog,
+                    contentDialog: text.content_delete_dialog,
+                    deleteFunction: deleteAllAssumptions,
+                  );
+                },
+                barrierDismissible: false,
+              );
+            },
+            heroTag: "fab2",
+            backgroundColor: Theme.of(context).colorScheme.error,
+            child: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.background,
+            ),
+          ),
+          const SizedBox(height: 20,),
+          FloatingActionButton(
+            onPressed: () async {
+              final result = await Navigator.pushNamed(context, '/add_assumption');
+              if (result == true) {
+                fetchAssumptionsForUser();
+                fetchTotalExpenses();
+              }
+            },
+            heroTag: "fab1",
+            child: Icon(
+              Icons.add,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(
               children: [
-                const Text("Total de los gastos: "),
+                Text("Gastos totales",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
                 Text(
                   totalSumExpenses.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              width: 30,
-            ),
             Column(
               children: [
-                Text("Te quedarian en total: "),
+                Text("Remanentes totales",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
                 Text(
                   "${balance - totalSumExpenses}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.green,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

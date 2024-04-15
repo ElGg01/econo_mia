@@ -39,6 +39,9 @@ class CustomTextFormField extends StatelessWidget {
           prefixIcon: Icon(icons),
           suffixIcon: iconButton,
         ),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
         autofocus: false,
         obscureText: isObscureText,
         autovalidateMode: autoValidateMode,

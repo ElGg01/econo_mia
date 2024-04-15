@@ -42,4 +42,12 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateConfirmPassword(String? newPassword, String? confirmPassword, AppLocalizations? text){
+    String? result = confirmPassword ==
+        newPassword
+        ? null
+        : text!.validatorMsg_confirmPassword;
+    return result;
+  }
 }

@@ -71,6 +71,8 @@
   "month_toggleButton": "Mes",
   "processingData_showSnackBar": "Procesando datos",
   "checkForm_showSnackBar": "Verifica el formulario",
-  "invaldGoogle_showSnackBar": "Credenciales de Google no válidas",
-  "cash": "Efectivo"
+  "invalidGoogle_showSnackBar": "Credenciales de Google no válidas",
+  "cash": "Efectivo",
+  "title_deleteAll_Dialog": "Borrar todos los items",
+  "content_delete_dialog": "¿Estas seguro de eliminar todos los items?"
 }
