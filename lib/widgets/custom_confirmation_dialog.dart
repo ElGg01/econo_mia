@@ -48,7 +48,7 @@ class CustomConfirmationDialog extends StatelessWidget {
             foregroundColor: Theme.of(context).colorScheme.background
           ),
           onPressed: () {
-            deleteFunction;
+            deleteFunction!();
           },
           child: Text(text.deleteButton_dialog),
         ),
