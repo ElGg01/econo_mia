@@ -14,7 +14,6 @@ import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
 
@@ -23,7 +22,6 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
-
   final FirebaseAuthService _auth = FirebaseAuthService();
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -38,8 +36,7 @@ class _UserSettingsState extends State<UserSettings> {
     setLanguageStringMode();
   }
 
-
-  void setThemeStringMode(){
+  void setThemeStringMode() {
     setState(() {
       if (context.read<ThemeProvider>().themeMode == ThemeModeOption.system) {
         _themeStringOption = 'System Default';
@@ -55,9 +52,10 @@ class _UserSettingsState extends State<UserSettings> {
     });
   }
 
-  void setLanguageStringMode(){
+  void setLanguageStringMode() {
     setState(() {
-      if (context.read<LanguageProvider>().languageMode == LanguageModeOption.english){
+      if (context.read<LanguageProvider>().languageMode ==
+          LanguageModeOption.english) {
         _languageStringOption = "English";
       } else {
         _languageStringOption = "Spanish";
@@ -72,12 +70,12 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future<void> _deleteAccount() async {
-    try{
+    try {
       await _auth.deleteAccount();
       if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    } on FirebaseAuthException catch(e){
-      if (e.code == "requires-recent-login"){
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Row(
@@ -103,61 +101,56 @@ class _UserSettingsState extends State<UserSettings> {
   }
 
   Future<void> _showDeleteConfirmationDialog(BuildContext context) async {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context2) {
-        return AlertDialog(
-          title: Text(text!.title_dialog_deleteAccount),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(text.subtitle_dialog_deleteAccount),
-              ],
-            ),
-          ),
-          actions: <TextButton>[
-            TextButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              child: Text(text.cancelButton_dialog),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context2) {
+          return AlertDialog(
+            title: Text(text!.title_dialog_deleteAccount),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(text.subtitle_dialog_deleteAccount),
+                ],
               ),
-              onPressed: (){
-                Navigator.of(context).pop();
-                _deleteAccount();
-              },
-              child: Text(text.deleteButton_dialog),
             ),
-          ],
-        );
-      }
-    );
+            actions: <TextButton>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(text.cancelButton_dialog),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _deleteAccount();
+                },
+                child: Text(text.deleteButton_dialog),
+              ),
+            ],
+          );
+        });
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     AppLocalizations? text = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
-          child: Text(text!.appbar_userSettings,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
-              fontSize: 24
-            ),
+          child: Text(
+            text!.appbar_userSettings,
+            style:
+                GoogleFonts.roboto(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),
         centerTitle: true,
@@ -201,18 +194,22 @@ class _UserSettingsState extends State<UserSettings> {
                 ),
               ],
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             // Change password
             CustomSettingsSection(
               headingText: text.title_heading_account,
               gestureDetectorTitle: text.changePassword_GestureDetector,
               leadingIcon: const Icon(Icons.password),
               trailingIcon: const Icon(Icons.arrow_forward_ios),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, '/user_settings/change_password');
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             // Theme text
             CustomSettingsSection(
               headingText: text.title_heading_theme,
@@ -220,47 +217,57 @@ class _UserSettingsState extends State<UserSettings> {
               gestureDetectorSubTitle: Text(_themeStringOption == "Light"
                   ? text.light_titleRadialButton
                   : _themeStringOption == "Dark"
-                    ? text.dark_titleRadialButton
-                    : text.systemTheme_titleRadialButton
-              ),
+                      ? text.dark_titleRadialButton
+                      : text.systemTheme_titleRadialButton),
               leadingIcon: Icon(_iconTheme),
-              onTap: (){
-                showDialog(context: context, builder: (BuildContext context){
-                  return CustomThemeAlertDialog(setThemeStringMode: setThemeStringMode);
-                });
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomThemeAlertDialog(
+                          setThemeStringMode: setThemeStringMode);
+                    });
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             // Language
             CustomSettingsSection(
               headingText: text.title_heading_language,
               leadingIcon: const Icon(Icons.language),
               gestureDetectorTitle: text.chooseLanguage_GestureDetector,
-              gestureDetectorSubTitle: Text(
-                _languageStringOption == "English"
-                    ? text.english_titleRadialButton
-                    : text.spanish_titleRadialButton
-              ),
-              onTap: (){
-                showDialog(context: context, builder: (BuildContext context){
-                  return CustomLanguageAlertDialog(setLanguageStringMode: setLanguageStringMode);
-                });
+              gestureDetectorSubTitle: Text(_languageStringOption == "English"
+                  ? text.english_titleRadialButton
+                  : text.spanish_titleRadialButton),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomLanguageAlertDialog(
+                          setLanguageStringMode: setLanguageStringMode);
+                    });
               },
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             // Log Out
             ElevatedButton(
               onPressed: _signOut,
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: Text(text.logOutButton,
+              child: Text(
+                text.logOutButton,
                 style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             // Delete account
             ElevatedButton(
               onPressed: () {
@@ -269,7 +276,8 @@ class _UserSettingsState extends State<UserSettings> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: ThemeData().colorScheme.error,
               ),
-              child: Text(text.deleteAccountButton,
+              child: Text(
+                text.deleteAccountButton,
                 style: const TextStyle(
                   color: Colors.white,
                 ),
