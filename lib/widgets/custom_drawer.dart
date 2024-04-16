@@ -68,7 +68,7 @@ class CustomDrawer extends StatelessWidget {
             ElasticInLeft(
               child: ListTile(
                 title: Text(
-                  "Suposición de gastos",
+                  text!.expense_assumption,
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
