@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomPageView extends StatefulWidget {
   CustomPageView({
@@ -40,19 +41,20 @@ class _CustomPageViewState extends State<CustomPageView> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? text = AppLocalizations.of(context);
     List<Widget> pagesItemsHorizontal = [
-      _pageItem("Enero", 0),
-      _pageItem("Febrero", 1),
-      _pageItem("Marzo", 2),
-      _pageItem("Abril", 3),
-      _pageItem("Mayo", 4),
-      _pageItem("Junio", 5),
-      _pageItem("Julio", 6),
-      _pageItem("Agosto", 7),
-      _pageItem("Septiembre", 8),
-      _pageItem("Octubre", 9),
-      _pageItem("Noviembre", 10),
-      _pageItem("Diciembre", 11),
+      _pageItem(text!.january, 0),
+      _pageItem(text!.february, 1),
+      _pageItem(text!.march, 2),
+      _pageItem(text!.april, 3),
+      _pageItem(text!.may, 4),
+      _pageItem(text!.june, 5),
+      _pageItem(text!.july, 6),
+      _pageItem(text!.august, 7),
+      _pageItem(text!.september, 8),
+      _pageItem(text!.october, 9),
+      _pageItem(text!.november, 10),
+      _pageItem(text!.december, 11),
     ];
     List<Widget> pagesItemsVertical = [
       _pageItem("2024", 0),

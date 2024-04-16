@@ -294,6 +294,57 @@
   "cash": "Cash",
   "@cash": {
     "description": "Message in Cash"
-  }
- 
+  },
+  "expense_assumption": "Expense Assumption",
+  "@expense_assumption": {
+    "description": "Message in assumption"
+  },
+  "january": "January",
+  "@january": {
+    "description": "Month January"
+  },
+  "february": "February",
+  "@february": {
+    "description": "Month February"
+},
+"march": "March",
+"@march": {
+"description": "Month March"
+},
+"april": "April",
+"@april": {
+"description": "Month April"
+},
+"may": "May",
+"@may": {
+"description": "Month May"
+},
+"june": "June",
+"@june": {
+"description": "Month June"
+},
+"july": "July",
+"@july": {
+"description": "Month July"
+},
+"august": "August",
+"@august": {
+"description": "Month August"
+},
+"september": "September",
+"@september": {
+"description": "Month September"
+},
+"october": "October",
+"@october": {
+"description": "Month October"
+},
+"november": "November",
+"@november": {
+"description": "Month November"
+},
+"december": "December",
+"@december": {
+"description": "Month December"
+}
 }

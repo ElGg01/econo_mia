@@ -72,5 +72,18 @@
   "processingData_showSnackBar": "Procesando datos",
   "checkForm_showSnackBar": "Verifica el formulario",
   "invaldGoogle_showSnackBar": "Credenciales de Google no válidas",
-  "cash": "Efectivo"
+  "cash": "Efectivo",
+  "expense_assumption": "Suposición De Gastos",
+  "january": "Enero",
+  "february": "Febrero",
+  "march": "Marzo",
+  "april": "Abril",
+  "may": "Mayo",
+  "june": "Junio",
+  "july": "Julio",
+  "august": "Agosto",
+  "september": "Septiembre",
+  "october": "Octubre",
+  "november": "Noviembre",
+  "december": "Diciembre"
 }
