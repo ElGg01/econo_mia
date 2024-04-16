@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -18,8 +20,10 @@ class _AddAssumptionState extends State<AddAssumption> {
   Color bgColorSelected = Colors.green;
   User? user = FirebaseAuth.instance.currentUser;
 
-  late String assumptionName = '';
-  late double assumptionAmount = 0;
+  //late String assumptionName = '';
+  TextEditingController assumptionName = TextEditingController();
+  TextEditingController assumptionMont = TextEditingController();
+  //late double assumptionAmount = 0;
 
   // Función para escribir el documento en Firestore
   void escribirDocumento(String name, double amount) {
@@ -96,6 +100,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     vertical: 8,
                   ),
                   child: TextFormField(
+                    controller: assumptionName,
                     decoration: InputDecoration(
                       icon: const Icon(Icons.abc),
                       labelText: "Concepto",
@@ -108,9 +113,6 @@ class _AddAssumptionState extends State<AddAssumption> {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
-                    onChanged: (value) {
-                      assumptionName = value;
-                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor, ingresa al menos una letra.';
@@ -150,6 +152,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                       Flexible(
                         flex: 2,
                         child: TextFormField(
+                          controller: assumptionMont,
                           decoration: const InputDecoration(
                             labelText: 'Cantidad',
                           ),
@@ -158,9 +161,6 @@ class _AddAssumptionState extends State<AddAssumption> {
                               return "Introduce un valor";
                             }
                             return null;
-                          },
-                          onChanged: (value) {
-                            assumptionAmount = double.parse(value);
                           },
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onBackground,
@@ -238,7 +238,8 @@ class _AddAssumptionState extends State<AddAssumption> {
                 ElevatedButton.icon(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      escribirDocumento(assumptionName, assumptionAmount);
+                      escribirDocumento(assumptionName.text,
+                          double.parse(assumptionMont.text));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(

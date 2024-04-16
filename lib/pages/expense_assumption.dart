@@ -127,7 +127,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "Suposicion de gastos",
+            text!.expense_assumption,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -159,22 +159,24 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                 color: Theme.of(context).colorScheme.error,
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 10),
-                child: Icon(Icons.delete_outline,
+                child: Icon(
+                  Icons.delete_outline,
                   color: Theme.of(context).colorScheme.background,
                   size: 32,
                 ),
               ),
-              onDismissed: ( direction ){
-                if (direction == DismissDirection.startToEnd){
+              onDismissed: (direction) {
+                if (direction == DismissDirection.startToEnd) {
                   // TODO: Call deleteItem function
                   deleteAllAssumptions();
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                 child: ListTile(
-                  title: Text(data[
-                      'name'],
+                  title: Text(
+                    data['name'],
                     style: const TextStyle(
                       fontSize: 20,
                     ),
