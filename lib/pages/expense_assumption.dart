@@ -264,7 +264,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                   ),
                 ),
                 Text(
-                  totalSumExpenses.toString(),
+                  totalSumExpenses.toStringAsFixed(2),
                   style: const TextStyle(
                     color: Colors.red,
                     fontSize: 20,
@@ -283,7 +283,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                   ),
                 ),
                 Text(
-                  "${balance - totalSumExpenses}",
+                  (balance - totalSumExpenses).toStringAsFixed(2),
                   style: const TextStyle(
                     color: Colors.green,
                     fontSize: 20,

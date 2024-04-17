@@ -22,7 +22,7 @@ class _AddAssumptionState extends State<AddAssumption> {
 
   //late String assumptionName = '';
   TextEditingController assumptionName = TextEditingController();
-  TextEditingController assumptionMont = TextEditingController();
+  TextEditingController assumptionAmount = TextEditingController();
   //late double assumptionAmount = 0;
 
   // Función para escribir el documento en Firestore
@@ -33,14 +33,14 @@ class _AddAssumptionState extends State<AddAssumption> {
         .doc(user!.uid) // Documento 'usuario1'
         .collection('assumption') // Subcolección 'assumption'
         .doc(); // Crear un nuevo documento con ID automático
-    print("Funcion ejecutada");
+    // Obtener el ID del documento generado automáticamente
+    String documentId = documentReference.id;
     // Datos a escribir
     Map<String, dynamic> datos = {
+      'id': documentId, // ID del documento
       'expense': amount, // Número de gasto
       'name': name, // Nombre del gasto
     };
-
-    print("Funcion ejecutada");
 
     // Escribir los datos en el documento
     documentReference
@@ -153,7 +153,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                       Flexible(
                         flex: 2,
                         child: TextFormField(
-                          controller: assumptionMont,
+                          controller: assumptionAmount,
                           decoration: InputDecoration(
                             labelText: text!.amount,
                           ),
@@ -240,7 +240,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       escribirDocumento(assumptionName.text,
-                          double.parse(assumptionMont.text));
+                          double.parse(assumptionAmount.text));
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
