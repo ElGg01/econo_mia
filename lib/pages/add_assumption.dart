@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -51,12 +51,13 @@ class _AddAssumptionState extends State<AddAssumption> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? text = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "Asume un gasto",
+            text!.assume_expense,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -86,7 +87,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Nombre del gasto:",
+                    text!.expense_name,
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -103,7 +104,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     controller: assumptionName,
                     decoration: InputDecoration(
                       icon: const Icon(Icons.abc),
-                      labelText: "Concepto",
+                      labelText: text!.concept,
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                         width: 2,
@@ -115,7 +116,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Por favor, ingresa al menos una letra.';
+                        return text!.please_enter_oneletter;
                       }
                       return null; // Retorna null si la validación es exitosa
                     },
@@ -128,7 +129,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Monto del gasto:",
+                    text!.amount_expense,
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -153,12 +154,12 @@ class _AddAssumptionState extends State<AddAssumption> {
                         flex: 2,
                         child: TextFormField(
                           controller: assumptionMont,
-                          decoration: const InputDecoration(
-                            labelText: 'Cantidad',
+                          decoration: InputDecoration(
+                            labelText: text!.amount,
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Introduce un valor";
+                              return text!.enter_value;
                             }
                             return null;
                           },
@@ -241,9 +242,9 @@ class _AddAssumptionState extends State<AddAssumption> {
                       escribirDocumento(assumptionName.text,
                           double.parse(assumptionMont.text));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
-                            "Suposición de gasto guardado correctamente",
+                            text!.correctly_saved_assumption,
                           ),
                         ),
                       );
@@ -251,7 +252,7 @@ class _AddAssumptionState extends State<AddAssumption> {
                     }
                   },
                   icon: Icon(Icons.save),
-                  label: Text("Guardar suposición"),
+                  label: Text(text!.save_assumption),
                 ),
               ],
             ),

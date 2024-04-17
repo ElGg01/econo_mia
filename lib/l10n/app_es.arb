@@ -88,5 +88,16 @@
   "september": "Septiembre",
   "october": "Octubre",
   "november": "Noviembre",
-  "december": "Diciembre"
+  "december": "Diciembre",
+  "total_expenses": "Gastos Totales",
+  "total_remainders": "Remanentes Totales",
+  "assume_expense": "Asume Un Gasto",
+  "expense_name": "Nombre del Gasto:",
+  "amount_expense": "Monto del Gasto:",
+  "save_assumption": "Guardar Suposición",
+  "correctly_saved_assumption": "Suposición de Gasto Guardado Correctamente",
+  "please_enter_oneletter": "Por favor, ingresa al menos una letra.",
+  "concept": "Concepto",
+  "amount": "Cantidad",
+  "enter_value": "Introduce un valor"
 }

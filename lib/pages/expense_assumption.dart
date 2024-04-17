@@ -257,7 +257,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             Column(
               children: [
                 Text(
-                  "Gastos totales",
+                  text!.total_expenses,
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,
@@ -276,7 +276,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             Column(
               children: [
                 Text(
-                  "Remanentes totales",
+                  text!.total_remainders,
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,

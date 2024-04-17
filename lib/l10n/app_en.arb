@@ -354,5 +354,49 @@
   "december": "December",
   "@december": {
   "description": "Month December"
-  }
+  },
+  "total_expenses": "Total Expenses",
+  "@total_expenses": {
+  "description": "total expenses"
+  },
+  "total_remainders": "Total Remainders",
+  "@total_remainders": {
+  "description": "remanentes"
+  },
+  "assume_expense": "Assume An Expense",
+  "@assume_expense": {
+  "description": "Assume"
+  },
+  "expense_name": "Expense Name",
+  "@expense_name": {
+  "description": "Name for the expense"
+  },
+  "amount_expense": "Amount of Expense",
+  "@amount_expense": {
+  "description": "Monto del gasto"
+  },
+  "save_assumption": "Save Assumption",
+  "@save_assumption": {
+  "description": "Guardar Suposición"
+  },
+  "correctly_saved_assumption": "Correctly Saved Expense Assumption",
+  "@correctly_saved_assumption": {
+  "description": "Suposición de gasto guardado correctamente"
+  },
+  "please_enter_oneletter": "Please enter at least one letter.",
+  "@please_enter_oneletter": {
+  "description": "Por favor, ingresa al menos una letra"
+  },
+  "concept": "Concept",
+  "@concept": {
+  "description": "concept"
+  },
+  "amount": "Amount",
+  "@amount": {
+  "description": "cantidad"
+  },
+  "enter_value": "Enter a Value",
+  "@enter_value": {
+  "description": "Introduce un valor"
+  } 
 }
