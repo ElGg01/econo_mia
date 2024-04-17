@@ -111,11 +111,21 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
     Navigator.of(context).pop();
   }
 
-  Future<void> deleteAssumptionItem(int index) async {
-    // TODO: Delete item on Firebase Firestore
-    setState(() {
-      assumptionData.removeAt(index);
-    });
+  Future<void> deleteAssumptionItem(int index, String id) async {
+    try {
+      QuerySnapshot querySnapshot = await db
+          .collection('users')
+          .doc(user!.uid)
+          .collection('assumption')
+          .get();
+
+      await querySnapshot.docs[index].reference.delete();
+      setState(() {
+        assumptionData.removeAt(index);
+      });
+    } catch (e){
+      print(e);
+    }
   }
 
   @override
@@ -165,10 +175,20 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                   size: 32,
                 ),
               ),
+              secondaryBackground: Container(
+                color: Theme.of(context).colorScheme.tertiary,
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.only(right: 10),
+                child: Icon(
+                  Icons.edit,
+                  color: Theme.of(context).colorScheme.background,
+                  size: 32,
+                ),
+              ),
               onDismissed: (direction) {
                 if (direction == DismissDirection.startToEnd) {
                   // TODO: Call deleteItem function
-                  deleteAllAssumptions();
+                  deleteAssumptionItem(index, data['id']);
                 }
               },
               child: Padding(
@@ -193,7 +213,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                         ),
                       ),
                       Text(
-                        "${balance - data['expense']} MXN",
+                        "${(balance - data['expense']).toStringAsFixed(2)} MXN",
                         style: const TextStyle(
                           color: Colors.green,
                           fontSize: 18,
