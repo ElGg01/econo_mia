@@ -8,12 +8,15 @@ class CustomPageView extends StatefulWidget {
     required this.controllerPageView,
     required this.isHorizontal,
     this.years,
+    required this.onChange,
   });
 
   int currentPageView;
   PageController controllerPageView;
   bool isHorizontal;
   List<int>? years;
+
+  final void Function(int, int) onChange;
 
   @override
   State<CustomPageView> createState() => _CustomPageViewState();
@@ -74,6 +77,11 @@ class _CustomPageViewState extends State<CustomPageView> {
       onPageChanged: (newPage) {
         setState(() {
           widget.currentPageView = newPage;
+          if (widget.isHorizontal) {
+            widget.onChange(newPage, newPage);
+          } else {
+            widget.onChange(widget.years![newPage], newPage);
+          }
         });
       },
       controller: widget.controllerPageView,

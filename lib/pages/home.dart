@@ -35,7 +35,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   User? user = FirebaseAuth.instance.currentUser;
 
   late double balance = 0;
-  List<int> years = [];
+  late List<int> years = [];
+  late int year = years[0];
+  late int month = 1;
+
+  late List<ChartData> movements = [];
 
   @override
   void initState() {
@@ -57,6 +61,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     db = FirebaseFirestore.instance;
     _loadData();
     fetchYears();
+    updateChart();
   }
 
   Future<bool> _checkInternetAvailable() async {
@@ -73,12 +78,82 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
+  void updateYear(int newYear, int index) {
+    print("Año actualizado");
+    year = newYear;
+    print(year);
+    fillMonthMovements();
+    setState(() {
+      currentPageViewVertical = index;
+    });
+  }
+
+  void updateMonth(int newMonth, int index) {
+    print("Mes actualizado");
+    month = newMonth + 1;
+    print(month);
+    fillMonthMovements();
+    setState(() {
+      currentPageView = index;
+    });
+  }
+
+  void updateChart() {
+    setState(() {
+      movements = movements;
+    });
+  }
+
+  Future<void> fillMonthMovements() async {
+    CollectionReference collectionReference =
+        db.collection('users').doc(user!.uid).collection("transactions");
+    QuerySnapshot querySnapshot = await collectionReference
+        .where(
+          'fecha',
+          isGreaterThanOrEqualTo: DateTime(year, month, 1),
+        )
+        .where(
+          'fecha',
+          isLessThan: DateTime(year, month + 1, 1),
+        )
+        .get();
+
+    // Mapa para almacenar datos resumidos por día del mes
+    Map<int, double> dailySummary = {};
+
+    // Recorremos la lista de documentos
+    querySnapshot.docs.forEach((documento) {
+      // Accedemos a los datos de cada documento y los convertimos en un Map<String, dynamic>
+      Map<String, dynamic> datos = documento.data() as Map<String, dynamic>;
+
+      // Obtenemos la fecha del documento
+      DateTime fechaDocumento = datos['fecha'].toDate();
+
+      // Resumimos la transacción por día
+      int dia = fechaDocumento.day;
+      double monto = datos['monto'];
+      dailySummary.update(dia, (value) => value + monto, ifAbsent: () => monto);
+    });
+
+    setState(() {
+      // Convertimos el mapa en una lista de objetos ChartData
+      movements = dailySummary.entries.map((entry) {
+        return ChartData(entry.key, entry.value);
+      }).toList();
+    });
+
+    // Imprimimos o hacemos lo que necesites con los datos resumidos
+    movements.forEach((movement) {
+      print('Día: ${movement.x}, Monto: ${movement.y}');
+    });
+  }
+
   Future<void> fetchYears() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
-          .collection('ingresos')
+          .collection('transactions')
           .get();
 
       List<int> uniqueYears = [];
@@ -99,6 +174,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         years = uniqueYears;
         print(years);
       });
+      fillMonthMovements();
     } catch (e) {
       // Manejar cualquier error que pueda ocurrir
       print('Error fetching assumptions: $e');
@@ -242,6 +318,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               controllerPageView: _controllerPageViewVertical,
               isHorizontal: false,
               years: years,
+              onChange: updateYear,
             ),
           ),
           Divider(),
@@ -251,13 +328,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               currentPageView: currentPageView,
               controllerPageView: _controllerPageView,
               isHorizontal: true,
+              onChange: updateMonth,
             ),
           ),
           Divider(),
           SfCartesianChart(
             primaryXAxis: NumericAxis(
               interval: 7,
-              minimum: 0,
+              minimum: 1,
               maximum: 31,
             ),
             primaryYAxis: NumericAxis(
@@ -268,7 +346,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             series: <CartesianSeries>[
               // Renders line chart
               LineSeries<ChartData, int>(
-                dataSource: chartData,
+                dataSource: movements,
                 color: Theme.of(context).colorScheme.primary,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.y,
