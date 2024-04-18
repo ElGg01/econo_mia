@@ -61,6 +61,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 leading: const Icon(Icons.person),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/user_settings');
                 },
               ),
@@ -76,6 +77,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 leading: const Icon(Icons.monetization_on),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/expense_assumption');
                 },
               ),
@@ -91,6 +93,7 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 leading: const Icon(Icons.info),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/about');
                 },
               ),

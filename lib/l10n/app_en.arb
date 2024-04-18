@@ -123,6 +123,10 @@
   "@resendEmailButton": {
     "description": "Re-send button to re-send email verification"
   },
+  "backToLoginPageButton": "Back to Login",
+  "@backToLoginPageButton": {
+    "description": "back button to navigate on login page"
+  },
   "appbarChangePassword": "Change Password",
   "@appbarChangePassword": {
     "description": "Appbar title to change-password screen"
@@ -289,6 +293,10 @@
   },
   "invalidGoogle_showSnackBar": "Invalid Google creentials",
   "@invalidGoogle_showSnackBar": {
+    "description": "Message in SnackBar for checking the form"
+  },
+  "invalidcredential_showSnackBar": "Invalid creentials",
+  "@invalidcredential_showSnackBar": {
     "description": "Message in SnackBar for checking the form"
   },
   "cash": "Cash",

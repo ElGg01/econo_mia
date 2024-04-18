@@ -44,6 +44,12 @@ class _EmailVerificationState extends State<EmailVerification> {
     await user?.sendEmailVerification();
   }
 
+  Future<void> _backToLoginPage() async {
+    await user?.delete();
+    if (!context.mounted) return;
+    Navigator.popAndPushNamed(context, '/login');
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -98,7 +104,14 @@ class _EmailVerificationState extends State<EmailVerification> {
                 ElevatedButton(
                   onPressed: _sendEmailVerification,
                   child: Text(text.resendEmailButton),
-                )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: _backToLoginPage,
+                  child: Text(text.backToLoginPageButton),
+                ),
               ],
             ),
           ),

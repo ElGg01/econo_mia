@@ -91,7 +91,7 @@ class _UserSettingsState extends State<UserSettings> {
               ),
             ],
           ),
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).colorScheme.error,
         ));
       }
     }

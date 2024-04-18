@@ -259,39 +259,46 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           const SizedBox(
             height: 20,
           ),
-          FadeInDown(
-            child: Text(
-              "${text!.hello_homePage}, ${user?.displayName}. 🤑",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  color: Theme.of(context).colorScheme.onBackground),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          JelloIn(
-            child: Text(
-              textAlign: TextAlign.center,
-              "${text!.totalBalance}:",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Theme.of(context).colorScheme.primary,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FadeInDown(
+                child: Text(
+                  "${text!.hello_homePage}, ${user?.displayName}",
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
               ),
-            ),
-          ),
-          JelloIn(
-            child: Text(
-              textAlign: TextAlign.center,
-              "${balance} MXN",
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                color: Theme.of(context).colorScheme.primary,
+              Column(
+                children: [
+
+                  JelloIn(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      text.totalBalance,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  JelloIn(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "${balance} MXN",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
           const SizedBox(
             height: 10,
