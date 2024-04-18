@@ -119,9 +119,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         .get();
 
     // Mapa para almacenar datos resumidos por día del mes
-    Map<int, double> dailySummary = {};
+    // Mapas para almacenar los montos positivos y negativos por día
+    Map<int, double> positiveSummary = {};
+    Map<int, double> negativeSummary = {};
 
-    // Recorremos la lista de documentos
+// Recorremos la lista de documentos
     querySnapshot.docs.forEach((documento) {
       // Accedemos a los datos de cada documento y los convertimos en un Map<String, dynamic>
       Map<String, dynamic> datos = documento.data() as Map<String, dynamic>;
@@ -131,20 +133,37 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       // Resumimos la transacción por día
       int dia = fechaDocumento.day;
-      double monto = datos['monto'];
-      dailySummary.update(dia, (value) => value + monto, ifAbsent: () => monto);
+      double monto = datos['monto'].toDouble();
+      int tipo = datos["categoria"];
+      print(dia);
+
+      // Verificamos si el monto es positivo o negativo y lo almacenamos en el mapa correspondiente
+      if (tipo == 1) {
+        positiveSummary.update(dia, (value) => value + monto,
+            ifAbsent: () => monto);
+      } else {
+        negativeSummary.update(dia, (value) => value + monto,
+            ifAbsent: () => monto);
+      }
     });
 
     setState(() {
-      // Convertimos el mapa en una lista de objetos ChartData
-      movements = dailySummary.entries.map((entry) {
-        return ChartData(entry.key, entry.value);
-      }).toList();
+      movements = [];
+      // Iteramos sobre los días del mes
+      for (int day = 1; day <= DateTime(year, month + 1, 0).day; day++) {
+        // Obtenemos los montos de ingresos y egresos para el día actual
+        double earnings = positiveSummary[day] ?? 0.0;
+        double expenses = negativeSummary[day] ?? 0.0;
+
+        // Agregamos los datos a movements
+        movements.add(ChartData(day, earnings, expenses));
+      }
     });
 
     // Imprimimos o hacemos lo que necesites con los datos resumidos
     movements.forEach((movement) {
-      print('Día: ${movement.x}, Monto: ${movement.y}');
+      print(
+          'Día: ${movement.x}, ingreso: ${movement.y}, egreso: ${movement.z}');
     });
   }
 
@@ -208,40 +227,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
-    final List<ChartData> chartData = [
-      ChartData(0, 0),
-      ChartData(1, 10),
-      ChartData(2, 20),
-      ChartData(3, 30),
-      ChartData(4, 40),
-      ChartData(5, 29),
-      ChartData(6, 33),
-      ChartData(7, 31),
-      ChartData(8, 37),
-      ChartData(9, 30),
-      ChartData(10, 23),
-      ChartData(11, 31),
-      ChartData(12, 38),
-      ChartData(13, 29),
-      ChartData(14, 35),
-      ChartData(15, 33),
-      ChartData(16, 39),
-      ChartData(17, 32),
-      ChartData(18, 36),
-      ChartData(19, 30),
-      ChartData(20, 38),
-      ChartData(21, 28),
-      ChartData(22, 34),
-      ChartData(23, 17),
-      ChartData(24, 39),
-      ChartData(25, 31),
-      ChartData(26, 37),
-      ChartData(27, 29),
-      ChartData(28, -50),
-      ChartData(29, 5),
-      ChartData(30, 40),
-      ChartData(31, 32),
-    ];
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
@@ -333,10 +319,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           ),
           Divider(),
           SfCartesianChart(
+            enableSideBySideSeriesPlacement: false,
             primaryXAxis: NumericAxis(
               interval: 7,
               minimum: 1,
-              maximum: 31,
+              maximum: movements.length.toDouble(),
             ),
             primaryYAxis: NumericAxis(
               numberFormat: NumberFormat.currency(
@@ -345,11 +332,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
             series: <CartesianSeries>[
               // Renders line chart
-              LineSeries<ChartData, int>(
+              ColumnSeries<ChartData, int>(
                 dataSource: movements,
                 color: Theme.of(context).colorScheme.primary,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.y,
+              ),
+              ColumnSeries<ChartData, int>(
+                opacity: 0.9,
+                width: 0.4,
+                color: Theme.of(context).colorScheme.error,
+                dataSource: movements,
+                xValueMapper: (ChartData data, _) => data.x,
+                yValueMapper: (ChartData data, _) => data.z,
               ),
             ],
           ),
@@ -388,7 +383,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 }
 
 class ChartData {
-  ChartData(this.x, this.y);
+  ChartData(this.x, this.y, this.z);
   final int x;
   final double y;
+  final double z;
 }
