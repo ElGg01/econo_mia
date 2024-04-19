@@ -2,7 +2,6 @@ import 'package:econo_mia/pages/about.dart';
 import 'package:econo_mia/pages/add_assumption.dart';
 import 'package:econo_mia/pages/expense_assumption.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';

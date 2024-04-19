@@ -273,7 +273,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
               Column(
                 children: [
-
                   JelloIn(
                     child: Text(
                       textAlign: TextAlign.center,
@@ -348,7 +347,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ColumnSeries<ChartData, int>(
                 opacity: 0.9,
                 width: 0.4,
-                color: Theme.of(context).colorScheme.error,
+                color: Theme.of(context).colorScheme.errorContainer,
                 dataSource: movements,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.z,
