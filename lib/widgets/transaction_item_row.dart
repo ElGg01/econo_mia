@@ -4,13 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 class TransactionItemRow extends StatefulWidget {
   const TransactionItemRow({
     super.key,
-    required this.icon,
     required this.name,
     required this.amount,
     required this.date,
   });
 
-  final IconData icon;
   final String name;
   final double amount;
   final String date;

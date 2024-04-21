@@ -40,6 +40,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late int month = 1;
 
   late List<ChartData> movements = [];
+  List<Map<String, dynamic>> descriptionMovements = [];
 
   @override
   void initState() {
@@ -61,7 +62,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     db = FirebaseFirestore.instance;
     _loadData();
     fetchYears();
-    updateChart();
   }
 
   Future<bool> _checkInternetAvailable() async {
@@ -98,12 +98,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     });
   }
 
-  void updateChart() {
-    setState(() {
-      movements = movements;
-    });
-  }
-
   Future<void> fillMonthMovements() async {
     CollectionReference collectionReference =
         db.collection('users').doc(user!.uid).collection("transactions");
@@ -122,6 +116,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // Mapas para almacenar los montos positivos y negativos por día
     Map<int, double> positiveSummary = {};
     Map<int, double> negativeSummary = {};
+    descriptionMovements = [];
 
 // Recorremos la lista de documentos
     querySnapshot.docs.forEach((documento) {
@@ -133,17 +128,32 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       // Resumimos la transacción por día
       int dia = fechaDocumento.day;
+      int mes = fechaDocumento.month;
+      int anio = fechaDocumento.year;
       double monto = datos['monto'].toDouble();
       int tipo = datos["categoria"];
+      String concepto = datos["concepto"];
       print(dia);
 
       // Verificamos si el monto es positivo o negativo y lo almacenamos en el mapa correspondiente
       if (tipo == 1) {
         positiveSummary.update(dia, (value) => value + monto,
             ifAbsent: () => monto);
+        descriptionMovements.add({
+          'concepto': concepto,
+          'monto': monto,
+          'fecha': "${dia}/${mes}/${anio}",
+        });
+        print(descriptionMovements);
       } else {
         negativeSummary.update(dia, (value) => value + monto,
             ifAbsent: () => monto);
+        descriptionMovements.add({
+          'concepto': concepto,
+          'monto': -monto,
+          'fecha': "${dia}/${mes}/${anio}",
+        });
+        print(descriptionMovements);
       }
     });
 
@@ -327,7 +337,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           SfCartesianChart(
             enableSideBySideSeriesPlacement: false,
             primaryXAxis: NumericAxis(
-              interval: 7,
+              interval: 3,
               minimum: 1,
               maximum: movements.length.toDouble(),
             ),
@@ -347,31 +357,36 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ColumnSeries<ChartData, int>(
                 opacity: 0.9,
                 width: 0.4,
-                color: Theme.of(context).colorScheme.errorContainer,
+                color: Colors.red,
                 dataSource: movements,
                 xValueMapper: (ChartData data, _) => data.x,
                 yValueMapper: (ChartData data, _) => data.z,
               ),
             ],
           ),
-          Divider(),
-          TransactionItemRow(
-            icon: Icons.abc,
-            name: 'Concepto',
-            amount: 100,
-            date: '15/05/24',
-          ),
-          TransactionItemRow(
-            icon: Icons.access_alarm,
-            name: 'Concepto',
-            amount: 100,
-            date: '16/04/24',
-          ),
-          TransactionItemRow(
-            icon: Icons.access_alarm,
-            name: 'Concepto',
-            amount: -100,
-            date: '01/01/24',
+          const Divider(),
+          Container(
+            height: 400,
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                Map<String, dynamic> movement = descriptionMovements[index];
+                return ListTile(
+                  title: Text(movement['concepto']),
+                  subtitle: Text(
+                    "${movement['monto']} MXN",
+                    style: TextStyle(
+                        color:
+                            movement['monto'] < 0 ? Colors.red : Colors.green),
+                  ),
+                  trailing: Text(movement['fecha']),
+                );
+              },
+              separatorBuilder: (context, index) => const Divider(
+                color: Colors.black,
+                height: 2,
+              ),
+              itemCount: descriptionMovements.length,
+            ),
           ),
         ],
       ),
