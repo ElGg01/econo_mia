@@ -18,6 +18,9 @@ class _AddEarningState extends State<AddEarning> {
   String dropDownValue = 'MXN';
   Color bgColorSelected = Colors.green;
 
+  DateTime now = new DateTime.now();
+  late DateTime datePicked = DateTime(now.year, now.month, now.day);
+
   late String concept;
 
   @override
@@ -57,7 +60,7 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Selecciona una cuenta:",
+                    "Selecciona el tipo de movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -71,8 +74,8 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: CustomDropDownButton(
-                    dropDownValue: "Efectivo",
-                    elements: ["Efectivo", "BBVA"],
+                    dropDownValue: "Ingreso",
+                    elements: ["Ingreso", "Egreso"],
                   ),
                 ),
                 Container(
@@ -82,7 +85,7 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Nombre del ingreso:",
+                    "Nombre del movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -107,7 +110,7 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Monto del ingreso:",
+                    "Monto del movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -207,8 +210,6 @@ class _AddEarningState extends State<AddEarning> {
                     ],
                   ),
                 ),
-
-
                 Container(
                   width: double.maxFinite,
                   margin: const EdgeInsets.symmetric(
@@ -216,7 +217,7 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Fecha de ingreso:",
+                    "Fecha del movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -238,28 +239,43 @@ class _AddEarningState extends State<AddEarning> {
                         child: Icon(Icons.calendar_today),
                       ),
                       Flexible(
+                        flex: 1,
+                        child: Text(
+                          "${datePicked.day}/${datePicked.month}/${datePicked.year}",
+                        ),
+                      ),
+                      Flexible(
                         flex: 2,
                         child: TextButton(
-                          onPressed: () {
-                            DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(2018, 3, 5),
-                              maxTime: DateTime(2029, 6, 7), onChanged: (date) {
-                                print('change $date');
-                              }, onConfirm: (date) {
-                                print('confirm $date');
-                              }, currentTime: DateTime.now(), locale: LocaleType.es);
-                          },
-                          child: Text(
-                            'Selecciona la fecha',
-                            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-                          )),
+                            onPressed: () {
+                              DatePicker.showDatePicker(
+                                context,
+                                showTitleActions: true,
+                                minTime: DateTime(2018, 3, 5),
+                                maxTime: DateTime(2029, 6, 7),
+                                onChanged: (date) {
+                                  print('change $date');
+                                },
+                                onConfirm: (date) {
+                                  print('confirm $date');
+                                  setState(() {
+                                    datePicked = date;
+                                  });
+                                },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.es,
+                              );
+                            },
+                            child: Text(
+                              'Selecciona la fecha',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            )),
                       ),
                     ],
                   ),
                 ),
-
-
                 const SizedBox(
                   height: 20,
                 ),
@@ -273,8 +289,8 @@ class _AddEarningState extends State<AddEarning> {
                       );
                     }
                   },
-                  icon: Icon(Icons.save),
-                  label: Text("Guardar ingreso"),
+                  icon: const Icon(Icons.save),
+                  label: const Text("Guardar ingreso"),
                 ),
               ],
             ),

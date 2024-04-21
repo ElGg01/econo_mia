@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:econo_mia/widgets/custom_drawer.dart';
 import 'package:econo_mia/widgets/custom_page_view.dart';
-import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
