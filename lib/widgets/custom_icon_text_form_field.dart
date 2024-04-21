@@ -5,10 +5,12 @@ class CustomIconTextFormField extends StatefulWidget {
     super.key,
     required this.icon,
     required this.label,
+    required this.controller,
   });
 
   final IconData icon;
   final String label;
+  final TextEditingController controller;
 
   @override
   State<CustomIconTextFormField> createState() =>
@@ -19,6 +21,7 @@ class _CustomIconTextFormFieldState extends State<CustomIconTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       decoration: InputDecoration(
         icon: Icon(widget.icon),
         labelText: widget.label,
@@ -30,6 +33,7 @@ class _CustomIconTextFormFieldState extends State<CustomIconTextFormField> {
         }
         return null; // Retorna null si la validación es exitosa
       },
+      //onChanged: (value) => print(widget.controller.text),
     );
   }
 }

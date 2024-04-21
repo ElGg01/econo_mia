@@ -1,19 +1,58 @@
+import 'package:econo_mia/widgets/custom_drop_down_button.dart';
+import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddBalanceAccount extends StatefulWidget {
-  const AddBalanceAccount({super.key});
+class AddMovement extends StatefulWidget {
+  const AddMovement({super.key});
 
   @override
-  State<AddBalanceAccount> createState() => _AddBalanceAccountState();
+  State<AddMovement> createState() => _AddMovementState();
 }
 
-class _AddBalanceAccountState extends State<AddBalanceAccount> {
-  TextEditingController _balanceAccountName = TextEditingController();
-  String dropDownValue = 'MXN';
+class _AddMovementState extends State<AddMovement> {
   final _formKey = GlobalKey<FormState>();
+  String dropDownValue = 'MXN';
+
+  TextEditingController concept = TextEditingController();
+  TextEditingController amount = TextEditingController();
+  TextEditingController category = TextEditingController();
+  TextEditingController date = TextEditingController();
+
+  DateTime now = DateTime.now();
+  late DateTime datePicked = DateTime(now.year, now.month, now.day);
+
+  User? user = FirebaseAuth.instance.currentUser;
+
+  void addMovement(String concept, double amount, int category, DateTime date) {
+    // Referencia al documento
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('users') // Colección 'users'
+        .doc(user!.uid) // Documento 'usuario1'
+        .collection('assumption') // Subcolección 'assumption'
+        .doc(); // Crear un nuevo documento con ID automático
+    // Obtener el ID del documento generado automáticamente
+    String documentId = documentReference.id;
+    // Datos a escribir
+    Map<String, dynamic> datos = {
+      'id': documentId, // ID del documento
+      'monto': amount, // Número de gasto
+      'concept': concept, // Nombre del gasto
+      'categoria': category,
+      'fecha': date,
+    };
+
+    // Escribir los datos en el documento
+    documentReference
+        .set(datos)
+        .then((value) => print("Documento escrito correctamente"))
+        .catchError((error) => print("Error al escribir el documento: $error"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +61,7 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "Añade una cuenta",
+            "Añade un ingreso",
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -52,7 +91,7 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Nombre de la cuenta:",
+                    "Selecciona el tipo de movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -65,18 +104,9 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                     horizontal: 32,
                     vertical: 8,
                   ),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.account_balance),
-                      labelText: "Nombre",
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, ingresa al menos una letra.';
-                      }
-                      return null; // Retorna null si la validación es exitosa
-                    },
+                  child: CustomDropDownButton(
+                    dropDownValue: "Ingreso",
+                    elements: const ["Ingreso", "Egreso"],
                   ),
                 ),
                 Container(
@@ -86,7 +116,33 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Saldo inicial de la cuenta:",
+                    "Nombre del movimiento:",
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: CustomIconTextFormField(
+                    icon: Icons.money,
+                    label: "Concepto:",
+                    controller: concept,
+                  ),
+                ),
+                Container(
+                  width: double.maxFinite,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    "Monto del movimiento:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -186,6 +242,72 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                     ],
                   ),
                 ),
+                Container(
+                  width: double.maxFinite,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    "Fecha del movimiento:",
+                    style: GoogleFonts.poppins(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Flexible(
+                        flex: 1,
+                        child: Icon(Icons.calendar_today),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Text(
+                          "${datePicked.day}/${datePicked.month}/${datePicked.year}",
+                        ),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: TextButton(
+                            onPressed: () {
+                              DatePicker.showDatePicker(
+                                context,
+                                showTitleActions: true,
+                                minTime: DateTime(2018, 3, 5),
+                                maxTime: DateTime(2029, 6, 7),
+                                onChanged: (date) {
+                                  print('change $date');
+                                },
+                                onConfirm: (date) {
+                                  print('confirm $date');
+                                  setState(() {
+                                    datePicked = date;
+                                  });
+                                },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.es,
+                              );
+                            },
+                            child: Text(
+                              'Selecciona la fecha',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -194,13 +316,14 @@ class _AddBalanceAccountState extends State<AddBalanceAccount> {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text("Cuenta guardada correctamente"),
+                          content: Text("Ingreso guardado correctamente"),
                         ),
                       );
+                      //addMovement(concept, amount, category, date)
                     }
                   },
-                  icon: Icon(Icons.save),
-                  label: Text("Guardar cuenta"),
+                  icon: const Icon(Icons.save),
+                  label: const Text("Guardar ingreso"),
                 ),
               ],
             ),

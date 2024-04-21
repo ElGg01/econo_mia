@@ -6,12 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:econo_mia/pages/add_balance_account.dart';
-import 'package:econo_mia/pages/add_earning.dart';
-import 'package:econo_mia/pages/add_expense.dart';
+import 'package:econo_mia/pages/add_movement.dart';
 import 'package:econo_mia/ui/language_mode_option.dart';
 import 'package:econo_mia/auth/forgot_password.dart';
-import 'package:econo_mia/pages/balance.dart';
 import 'package:econo_mia/auth/authentication_wrapper.dart';
 import 'package:econo_mia/auth/change_password.dart';
 import 'package:econo_mia/pages/email_verification.dart';
@@ -84,10 +81,7 @@ class _AppState extends State<App> {
             '/user_settings': (context) => const UserSettings(),
             '/user_settings/change_password': (context) =>
                 const ChangePassword(),
-            '/balance': (context) => const Balance(),
-            '/add_balance_account': (context) => const AddBalanceAccount(),
-            '/add_earning': (context) => const AddEarning(),
-            '/add_expense': (context) => const AddExpense(),
+            '/add_earning': (context) => const AddMovement(),
             '/expense_assumption': (context) => const ExpenseAssumption(),
             '/add_assumption': (context) => const AddAssumption(),
           },
