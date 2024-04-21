@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class AddEarning extends StatefulWidget {
   const AddEarning({super.key});
@@ -206,6 +207,8 @@ class _AddEarningState extends State<AddEarning> {
                     ],
                   ),
                 ),
+
+
                 Container(
                   width: double.maxFinite,
                   margin: const EdgeInsets.symmetric(
@@ -213,7 +216,7 @@ class _AddEarningState extends State<AddEarning> {
                     vertical: 8,
                   ),
                   child: Text(
-                    "Categoría:",
+                    "Fecha de ingreso:",
                     style: GoogleFonts.poppins(
                       color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
@@ -222,326 +225,41 @@ class _AddEarningState extends State<AddEarning> {
                   ),
                 ),
                 Container(
-                  height: 200,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.health_and_safety_outlined),
-                              ),
-                              Text(
-                                "Salud",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
+                      const Flexible(
+                        flex: 1,
+                        child: Icon(Icons.calendar_today),
                       ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.house_outlined),
-                              ),
-                              Text(
-                                "Hogar",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.coffee_outlined),
-                              ),
-                              Text(
-                                "Café",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.pinkAccent,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.book_outlined),
-                              ),
-                              Text(
-                                "Educación",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blueGrey,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.star_border_outlined),
-                              ),
-                              Text(
-                                "Ragalos",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlueAccent,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.fastfood_outlined),
-                              ),
-                              Text(
-                                "Alimentación",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.family_restroom_outlined),
-                              ),
-                              Text(
-                                "Familia",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.lightGreenAccent,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.more_time_outlined),
-                              ),
-                              Text(
-                                "Ejercicio",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child:
-                                    Icon(Icons.emoji_transportation_outlined),
-                              ),
-                              Text(
-                                "Transporte",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            bgColorSelected = Colors.grey;
-                          });
-                        },
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          color: bgColorSelected,
-                          margin: const EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child: Icon(Icons.question_mark_outlined),
-                              ),
-                              Text(
-                                "Otros",
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
+                      Flexible(
+                        flex: 2,
+                        child: TextButton(
+                          onPressed: () {
+                            DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2018, 3, 5),
+                              maxTime: DateTime(2029, 6, 7), onChanged: (date) {
+                                print('change $date');
+                              }, onConfirm: (date) {
+                                print('confirm $date');
+                              }, currentTime: DateTime.now(), locale: LocaleType.es);
+                          },
+                          child: Text(
+                            'Selecciona la fecha',
+                            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                          )),
                       ),
                     ],
                   ),
                 ),
+
+
                 const SizedBox(
                   height: 20,
                 ),
