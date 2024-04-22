@@ -21,13 +21,13 @@ import 'package:econo_mia/pages/user_settings.dart';
 import './ui/color_schemes.dart';
 
 void main() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String? theme = prefs.getString('theme');
-  final String? language = prefs.getString('language');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? theme = prefs.getString('theme');
+  final String? language = prefs.getString('language');
   runApp(App(themeExtracted: theme, languageExtracted: language));
 }
 
@@ -45,7 +45,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   @override
-  void initState() async {
+  void initState() {
     super.initState();
   }
 

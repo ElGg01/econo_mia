@@ -56,18 +56,14 @@ class _RegisterState extends State<Register> {
         final refIngresos = db
             .collection('users')
             .doc(credential!.uid)
-            .collection('ingresos')
+            .collection('assumption')
             .doc();
-        //Generación de subcoleccion de ingresos
         refIngresos.set(datos);
-        //Subcoleccion de egresos
-        //!!!!!!!!!!!!!!CAMBIAR EL USUARIO AL ACTIVO
         final refEgresos = db
             .collection('users')
             .doc(credential!.uid)
-            .collection('egresos')
+            .collection('transactions')
             .doc();
-        //Generación de subcoleccion de ingresos
         refEgresos.set(datos);
 
         //Generación de campo SALDO, este cambiara con cada ingreso y egreso

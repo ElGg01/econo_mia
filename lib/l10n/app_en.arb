@@ -406,5 +406,9 @@
   "enter_value": "Enter a Value",
   "@enter_value": {
   "description": "Introduce un valor"
-  } 
+  },
+  "warning_networkConnection": "Please connect to the internet",
+  "@warning_networkConnection": {
+    "description": "Message displayed when there is no internet connection"
+  }
 }

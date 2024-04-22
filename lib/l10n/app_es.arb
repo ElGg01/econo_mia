@@ -101,5 +101,6 @@
   "please_enter_oneletter": "Por favor, ingresa al menos una letra.",
   "concept": "Concepto",
   "amount": "Cantidad",
-  "enter_value": "Introduce un valor"
+  "enter_value": "Introduce un valor",
+  "warning_networkConnection": "Por favor, conectate a internet"
 }
