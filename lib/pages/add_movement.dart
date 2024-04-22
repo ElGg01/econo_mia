@@ -301,8 +301,8 @@ class _AddMovementState extends State<AddMovement> {
                             child: Text(
                               'Selecciona la fecha',
                               style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                             )),
                       ),
                     ],
