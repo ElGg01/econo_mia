@@ -1,8 +1,9 @@
-import 'package:econo_mia/pages/about.dart';
-import 'package:econo_mia/pages/add_assumption.dart';
-import 'package:econo_mia/pages/expense_assumption.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,9 @@ import 'package:econo_mia/pages/register.dart';
 import 'package:econo_mia/pages/login.dart';
 import 'package:econo_mia/pages/home.dart';
 import 'package:econo_mia/pages/user_settings.dart';
+import 'package:econo_mia/pages/about.dart';
+import 'package:econo_mia/pages/add_assumption.dart';
+import 'package:econo_mia/pages/expense_assumption.dart';
 import './ui/color_schemes.dart';
 
 void main() async {
@@ -44,9 +48,32 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  Future<void> initConnectivity() async {
+    late List<ConnectivityResult> result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Could not check connectivity status ${e}');
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
   }
 
   @override

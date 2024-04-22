@@ -102,5 +102,6 @@
   "concept": "Concepto",
   "amount": "Cantidad",
   "enter_value": "Introduce un valor",
-  "warning_networkConnection": "Por favor, conectate a internet"
+  "title_lostConnectionPage": "Parece que no tienes Internet",
+  "subtitle_lostConnectionPage": "Por favor, conectate a Internet para seguir usando nuestra app"
 }

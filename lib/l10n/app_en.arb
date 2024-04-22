@@ -407,8 +407,12 @@
   "@enter_value": {
   "description": "Introduce un valor"
   },
-  "warning_networkConnection": "Please connect to the internet",
-  "@warning_networkConnection": {
-    "description": "Message displayed when there is no internet connection"
+  "title_lostConnectionPage": "Looks like you have no internet",
+  "@title_lostConnectionPage": {
+    "description": "Message title displayed when there is no internet connection"
+  },
+  "subtitle_lostConnectionPage": "Please, connecto to internet for using our app",
+  "@subtitle_lostConnectionPage": {
+    "description": "Message subtitle displayed when there is no internet connection"
   }
 }
