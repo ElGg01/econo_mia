@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:econo_mia/pages/add_movement.dart';
 import 'package:econo_mia/ui/language_mode_option.dart';
@@ -20,15 +21,23 @@ import 'package:econo_mia/pages/user_settings.dart';
 import './ui/color_schemes.dart';
 
 void main() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? theme = prefs.getString('theme');
+  final String? language = prefs.getString('language');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const App());
+  runApp(App(themeExtracted: theme, languageExtracted: language));
 }
 
 class App extends StatefulWidget {
-  const App({super.key});
+  final String? themeExtracted;
+  final String? languageExtracted;
+  const App({super.key,
+    required this.themeExtracted,
+    required this.languageExtracted,
+  });
 
   @override
   State<App> createState() => _AppState();
@@ -36,7 +45,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   @override
-  void initState() {
+  void initState() async {
     super.initState();
   }
 
@@ -44,8 +53,12 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => LanguageProvider()),
+        ChangeNotifierProvider(
+            create: (context) => ThemeProvider(widget.themeExtracted),
+        ),
+        ChangeNotifierProvider(
+            create: (context) => LanguageProvider(widget.languageExtracted),
+        ),
       ],
       builder: (context, child) {
         final themeProvider = Provider.of<ThemeProvider>(context);
