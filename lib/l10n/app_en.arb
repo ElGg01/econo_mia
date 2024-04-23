@@ -414,5 +414,13 @@
   "subtitle_lostConnectionPage": "Please, connecto to internet for using our app",
   "@subtitle_lostConnectionPage": {
     "description": "Message subtitle displayed when there is no internet connection"
+  },
+  "save_button": "Save",
+  "@save_button": {
+    "description": "Message to save a transaction"
+  },
+  "earning_saved_succesfully": "Earning saved successfully",
+  "@earning_saved_succesfully": {
+    "description": "Earning transaction saved"
   }
 }

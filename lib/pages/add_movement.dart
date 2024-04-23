@@ -1,5 +1,3 @@
-import 'package:econo_mia/widgets/custom_drop_down_button.dart';
-import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
@@ -7,6 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:econo_mia/widgets/custom_drop_down_button.dart';
+import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddMovement extends StatefulWidget {
   const AddMovement({super.key});
@@ -56,6 +57,8 @@ class _AddMovementState extends State<AddMovement> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
@@ -315,15 +318,16 @@ class _AddMovementState extends State<AddMovement> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Ingreso guardado correctamente"),
+                        SnackBar(
+                          content: Text(text.earning_saved_succesfully),
                         ),
                       );
-                      //addMovement(concept, amount, category, date)
+                      // addMovement();
+                      // !! Hot change
                     }
                   },
                   icon: const Icon(Icons.save),
-                  label: const Text("Guardar ingreso"),
+                  label: Text(text!.save_button),
                 ),
               ],
             ),

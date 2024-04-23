@@ -103,5 +103,7 @@
   "amount": "Cantidad",
   "enter_value": "Introduce un valor",
   "title_lostConnectionPage": "Parece que no tienes Internet",
-  "subtitle_lostConnectionPage": "Por favor, conectate a Internet para seguir usando nuestra app"
+  "subtitle_lostConnectionPage": "Por favor, conectate a Internet para seguir usando nuestra app",
+  "save_button": "Guardar",
+  "earning_saved_succesfully": "Earning saved successfully"
 }
