@@ -77,7 +77,9 @@ class _UserSettingsState extends State<UserSettings> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.dangerous),
+              Icon(Icons.dangerous,
+                color: Theme.of(context).colorScheme.background,
+              ),
               const SizedBox(
                 width: 20,
               ),
@@ -85,7 +87,7 @@ class _UserSettingsState extends State<UserSettings> {
                 child: Text(
                   'Requires recent login',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
               ),
@@ -122,8 +124,8 @@ class _UserSettingsState extends State<UserSettings> {
               ),
               TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  foregroundColor: Theme.of(context).colorScheme.background,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -253,12 +255,12 @@ class _UserSettingsState extends State<UserSettings> {
             ElevatedButton(
               onPressed: _signOut,
               style: ElevatedButton.styleFrom(
-                backgroundColor: ThemeData().colorScheme.error,
+                backgroundColor: Theme.of(context).colorScheme.error,
               ),
               child: Text(
                 text.logOutButton,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
             ),
@@ -271,12 +273,12 @@ class _UserSettingsState extends State<UserSettings> {
                 _showDeleteConfirmationDialog(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: ThemeData().colorScheme.error,
+                backgroundColor: Theme.of(context).colorScheme.error,
               ),
               child: Text(
                 text.deleteAccountButton,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
             ),

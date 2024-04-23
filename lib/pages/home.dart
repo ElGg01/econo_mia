@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:econo_mia/widgets/custom_drawer.dart';
 import 'package:econo_mia/widgets/custom_page_view.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Home extends StatefulWidget {
@@ -23,14 +20,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   late FirebaseFirestore db;
+  late bool _isEmailVerified = false;
 
   late PageController _controllerPageView;
   late PageController _controllerPageViewVertical;
   int currentPageView = 0;
   int currentPageViewVertical = 0;
 
-  final FirebaseAuthService _auth = FirebaseAuthService();
-  final List<String> _offlineData = [];
   User? user = FirebaseAuth.instance.currentUser;
 
   late double balance = 0;
@@ -44,6 +40,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    _isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    if (!_isEmailVerified){
+      Navigator.pushReplacementNamed(context, '/email_verification');
+    }
     _controllerPageView = PageController(
       initialPage: currentPageView,
       viewportFraction: 0.4,
@@ -53,28 +53,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       viewportFraction: 0.5,
     );
 
-    StreamSubscription<List<ConnectivityResult>> subscription = Connectivity()
-        .onConnectivityChanged
-        .listen((List<ConnectivityResult> result) {
-      // TODO: Make a listen change
-    });
     db = FirebaseFirestore.instance;
     _loadData();
     fetchYears();
-  }
-
-  Future<bool> _checkInternetAvailable() async {
-    final List<ConnectivityResult> result =
-        await Connectivity().checkConnectivity();
-    if (result.contains(ConnectivityResult.mobile)) {
-      return false;
-    } else if (result.contains(ConnectivityResult.wifi)) {
-      return true;
-    } else if (result.contains(ConnectivityResult.ethernet)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   void updateYear(int newYear, int index) {
@@ -98,82 +79,85 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<void> fillMonthMovements() async {
-    CollectionReference collectionReference =
-        db.collection('users').doc(user!.uid).collection("transactions");
-    QuerySnapshot querySnapshot = await collectionReference
-        .where(
-          'fecha',
-          isGreaterThanOrEqualTo: DateTime(year, month, 1),
-        )
-        .where(
-          'fecha',
-          isLessThan: DateTime(year, month + 1, 1),
-        )
-        .get();
+    try {
+      CollectionReference collectionReference =
+      db.collection('users').doc(user!.uid).collection("transactions");
+      QuerySnapshot querySnapshot = await collectionReference
+          .where(
+        'fecha',
+        isGreaterThanOrEqualTo: DateTime(year, month, 1),
+      )
+          .where(
+        'fecha',
+        isLessThan: DateTime(year, month + 1, 1),
+      )
+          .get();
 
-    // Mapa para almacenar datos resumidos por día del mes
-    // Mapas para almacenar los montos positivos y negativos por día
-    Map<int, double> positiveSummary = {};
-    Map<int, double> negativeSummary = {};
-    descriptionMovements = [];
+      // Mapa para almacenar datos resumidos por día del mes
+      // Mapas para almacenar los montos positivos y negativos por día
+      Map<int, double> positiveSummary = {};
+      Map<int, double> negativeSummary = {};
+      descriptionMovements = [];
 
-// Recorremos la lista de documentos
-    querySnapshot.docs.forEach((documento) {
-      // Accedemos a los datos de cada documento y los convertimos en un Map<String, dynamic>
-      Map<String, dynamic> datos = documento.data() as Map<String, dynamic>;
+      querySnapshot.docs.forEach((documento) {
+        // Accedemos a los datos de cada documento y los convertimos en un Map<String, dynamic>
+        Map<String, dynamic> datos = documento.data() as Map<String, dynamic>;
 
-      // Obtenemos la fecha del documento
-      DateTime fechaDocumento = datos['fecha'].toDate();
+        // Obtenemos la fecha del documento
+        DateTime fechaDocumento = datos['fecha'].toDate();
 
-      // Resumimos la transacción por día
-      int dia = fechaDocumento.day;
-      int mes = fechaDocumento.month;
-      int anio = fechaDocumento.year;
-      double monto = datos['monto'].toDouble();
-      int tipo = datos["categoria"];
-      String concepto = datos["concepto"];
-      print(dia);
+        // Resumimos la transacción por día
+        int dia = fechaDocumento.day;
+        int mes = fechaDocumento.month;
+        int anio = fechaDocumento.year;
+        double monto = datos['monto'].toDouble();
+        int tipo = datos["categoria"];
+        String concepto = datos["concepto"];
+        print(dia);
 
-      // Verificamos si el monto es positivo o negativo y lo almacenamos en el mapa correspondiente
-      if (tipo == 1) {
-        positiveSummary.update(dia, (value) => value + monto,
-            ifAbsent: () => monto);
-        descriptionMovements.add({
-          'concepto': concepto,
-          'monto': monto,
-          'fecha': "${dia}/${mes}/${anio}",
-        });
-        print(descriptionMovements);
-      } else {
-        negativeSummary.update(dia, (value) => value + monto,
-            ifAbsent: () => monto);
-        descriptionMovements.add({
-          'concepto': concepto,
-          'monto': -monto,
-          'fecha': "${dia}/${mes}/${anio}",
-        });
-        print(descriptionMovements);
-      }
-    });
+        // Verificamos si el monto es positivo o negativo y lo almacenamos en el mapa correspondiente
+        if (tipo == 1) {
+          positiveSummary.update(dia, (value) => value + monto,
+              ifAbsent: () => monto);
+          descriptionMovements.add({
+            'concepto': concepto,
+            'monto': monto,
+            'fecha': "${dia}/${mes}/${anio}",
+          });
+          print(descriptionMovements);
+        } else {
+          negativeSummary.update(dia, (value) => value + monto,
+              ifAbsent: () => monto);
+          descriptionMovements.add({
+            'concepto': concepto,
+            'monto': -monto,
+            'fecha': "${dia}/${mes}/${anio}",
+          });
+          print(descriptionMovements);
+        }
+      });
 
-    setState(() {
-      movements = [];
-      // Iteramos sobre los días del mes
-      for (int day = 1; day <= DateTime(year, month + 1, 0).day; day++) {
-        // Obtenemos los montos de ingresos y egresos para el día actual
-        double earnings = positiveSummary[day] ?? 0.0;
-        double expenses = negativeSummary[day] ?? 0.0;
+      setState(() {
+        movements = [];
+        // Iteramos sobre los días del mes
+        for (int day = 1; day <= DateTime(year, month + 1, 0).day; day++) {
+          // Obtenemos los montos de ingresos y egresos para el día actual
+          double earnings = positiveSummary[day] ?? 0.0;
+          double expenses = negativeSummary[day] ?? 0.0;
 
-        // Agregamos los datos a movements
-        movements.add(ChartData(day, earnings, expenses));
-      }
-    });
+          // Agregamos los datos a movements
+          movements.add(ChartData(day, earnings, expenses));
+        }
+      });
 
-    // Imprimimos o hacemos lo que necesites con los datos resumidos
-    movements.forEach((movement) {
-      print(
-          'Día: ${movement.x}, ingreso: ${movement.y}, egreso: ${movement.z}');
-    });
+      // Imprimimos o hacemos lo que necesites con los datos resumidos
+      movements.forEach((movement) {
+        print(
+            'Día: ${movement.x}, ingreso: ${movement.y}, egreso: ${movement.z}');
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> fetchYears() async {
@@ -209,28 +193,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
-  //Clear locally saved offline data
-  Future<void> _clearLocalData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('offlineData');
-    setState(() {
-      _offlineData.clear();
-    });
-  }
-
   Future<void> _loadData() async {
-    await db.collection('users').doc(user!.uid).get().then((data) {
-      setState(() {
-        balance = data.data()!['saldo'];
+    try {
+      await db.collection('users').doc(user!.uid).get().then((data) {
+        setState(() {
+          balance = data.data()!['saldo'];
+        });
+        print("El balance es: ${balance}");
       });
-      print("El balance es: ${balance}");
-    });
-  }
-
-  Future<void> _signOut() async {
-    await FirebaseAuth.instance.signOut();
-    if (!context.mounted) return;
-    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    } catch (e){
+      print("Some error happened");
+    }
   }
 
   @override
