@@ -38,7 +38,8 @@ class _AddMovementState extends State<AddMovement> {
 
   User? user = FirebaseAuth.instance.currentUser;
 
-  void addMovement(String concept, double amount, int category, DateTime date) {
+  void addMovement(
+      String concept, double amount, int category, DateTime date) async {
     // Referencia al documento
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection('users') // Colección 'users'
@@ -47,20 +48,35 @@ class _AddMovementState extends State<AddMovement> {
         .doc(); // Crear un nuevo documento con ID automático
     // Obtener el ID del documento generado automáticamente
     String documentId = documentReference.id;
+
+    DocumentSnapshot userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+    double currentBalance = userData['saldo'];
     // Datos a escribir
     Map<String, dynamic> datos = {
       'id': documentId, // ID del documento
       'monto': amount, // Número de gasto
-      'concept': concept, // Nombre del gasto
+      'concepto': concept, // Nombre del gasto
       'categoria': category,
       'fecha': date,
     };
 
     // Escribir los datos en el documento
-    documentReference
-        .set(datos)
-        .then((value) => print("Documento escrito correctamente"))
-        .catchError((error) => print("Error al escribir el documento: $error"));
+    documentReference.set(datos).then((value) async {
+      if (category == 0) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({'saldo': (currentBalance - amount)});
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update({'saldo': (currentBalance + amount)});
+      }
+    }).catchError((error) => print("Error al escribir el documento: $error"));
   }
 
   @override
