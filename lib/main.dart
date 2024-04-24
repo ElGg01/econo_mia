@@ -93,6 +93,7 @@ class _AppState extends State<App> {
 
         return MaterialApp(
           title: 'Material App',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,
