@@ -34,7 +34,6 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
       setState(() {
         balance = data.data()!['saldo'];
       });
-      print("El balance es: ${balance}");
     });
   }
 
@@ -162,7 +161,6 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               ),
           itemBuilder: (context, index) {
             Map<String, dynamic> data = assumptionData[index];
-            // TODO: Add a header that indicates the expenses and remaining
             return Dismissible(
               key: UniqueKey(),
               background: Container(
@@ -187,7 +185,6 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
               ),
               onDismissed: (direction) {
                 if (direction == DismissDirection.startToEnd) {
-                  // TODO: Call deleteItem function
                   deleteAssumptionItem(index, data['id']);
                 }
               },
@@ -235,7 +232,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
                 context: context,
                 builder: (BuildContext context2) {
                   return CustomConfirmationDialog(
-                    titleDialog: text!.title_deleteAll_Dialog,
+                    titleDialog: text.title_deleteAll_Dialog,
                     contentDialog: text.content_delete_dialog,
                     deleteFunction: deleteAllAssumptions,
                   );
@@ -277,7 +274,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             Column(
               children: [
                 Text(
-                  text!.total_expenses,
+                  text.total_expenses,
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,
@@ -296,7 +293,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
             Column(
               children: [
                 Text(
-                  text!.total_remainders,
+                  text.total_remainders,
                   style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).colorScheme.onBackground,

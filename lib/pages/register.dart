@@ -1,4 +1,5 @@
 import 'package:econo_mia/auth/firebase_auth_services.dart';
+import 'package:econo_mia/firestore_services/init_document.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:econo_mia/auth/validators.dart';
 import 'package:flutter/material.dart';
@@ -45,40 +46,7 @@ class _RegisterState extends State<Register> {
           .signUpWithEmailAndPassword(
               _emailController.text, _passwordController.text)
           .then((credential) {
-        //Inicialización de subcolección
-        //Es una inicialización de campos vacios solo para que se genere el usuario sin campos
-        final datos = <String, dynamic>{
-          "expense": 0,
-          "name": "assumption",
-        };
-        //Subcoleccion de ingresos
-        //!!!!!!!!!!!!!!CAMBIAR EL USUARIO AL ACTIVO
-        final refIngresos = db
-            .collection('users')
-            .doc(credential!.uid)
-            .collection('assumption')
-            .doc();
-        refIngresos.set(datos);
-        final refEgresos = db
-            .collection('users')
-            .doc(credential!.uid)
-            .collection('transactions')
-            .doc();
-
-        // Datos a escribir
-        Map<String, dynamic> new_datos = {
-          'concepto': "apertura", // ID del documento
-          'fecha': Timestamp.fromDate(DateTime.now()), // Número de gasto
-          'monto': 100, // Nombre del gasto
-          'categoria': 1
-        };
-        refEgresos.set(new_datos);
-
-        //Generación de campo SALDO, este cambiara con cada ingreso y egreso
-        final refUsuario = db.collection('users').doc(credential!.uid);
-        refUsuario.set({"saldo": 0.0});
-
-        return credential;
+            InitDocument.createDocumentAfterSignUpWithEmailAndPassword(credential);
       });
       if (user != null) {
         await user.updateDisplayName(_nameController.text);

@@ -1,3 +1,4 @@
+import 'package:econo_mia/firestore_services/init_document.dart';
 import 'package:econo_mia/function_widgets/func_show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -44,6 +45,7 @@ class _LoginState extends State<Login> {
     AppLocalizations? text = AppLocalizations.of(context);
     User? user = await _auth.signInWithGoogleService();
     if (user != null) {
+      await InitDocument.createDocumentAfterSignInWithGoogleProvider(user);
       if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     } else {

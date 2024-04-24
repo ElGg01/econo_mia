@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:econo_mia/widgets/custom_drop_down_button.dart';
 import 'package:econo_mia/widgets/custom_icon_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,7 +29,6 @@ class _AddMovementState extends State<AddMovement> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     valueItemDropDown = "Ingreso";
   }
@@ -76,7 +73,9 @@ class _AddMovementState extends State<AddMovement> {
             .doc(user!.uid)
             .update({'saldo': (currentBalance + amount)});
       }
-    }).catchError((error) => print("Error al escribir el documento: $error"));
+    }).catchError((error) {
+      return null;
+    });
   }
 
   @override
@@ -111,10 +110,10 @@ class _AddMovementState extends State<AddMovement> {
               key: _formKey,
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.maxFinite,
                     child: Text(
-                      text!.select_a_movement,
+                      text.select_a_movement,
                       style: GoogleFonts.poppins(
                         color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -161,7 +160,7 @@ class _AddMovementState extends State<AddMovement> {
                   SizedBox(
                     width: double.maxFinite,
                     child: Text(
-                      text!.name_movement,
+                      text.name_movement,
                       style: GoogleFonts.poppins(
                         color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -172,20 +171,18 @@ class _AddMovementState extends State<AddMovement> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    child: CustomIconTextFormField(
-                      icon: Icons.money,
-                      label: text!.concept,
-                      controller: concept,
-                    ),
+                  CustomIconTextFormField(
+                    icon: Icons.money,
+                    label: text.concept,
+                    controller: concept,
                   ),
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.maxFinite,
                     child: Text(
-                      text!.amount_movement,
+                      text.amount_movement,
                       style: GoogleFonts.poppins(
                         color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -196,21 +193,19 @@ class _AddMovementState extends State<AddMovement> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    child: CustomIconTextFormField(
-                      icon: Icons.monetization_on,
-                      label: text!.amount,
-                      controller: amount,
-                      type: TextInputType.number,
-                    ),
+                  CustomIconTextFormField(
+                    icon: Icons.monetization_on,
+                    label: text.amount,
+                    controller: amount,
+                    type: TextInputType.number,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     width: double.maxFinite,
                     child: Text(
-                      text!.date_movement,
+                      text.date_movement,
                       style: GoogleFonts.poppins(
                         color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -247,10 +242,8 @@ class _AddMovementState extends State<AddMovement> {
                                 minTime: DateTime(2018, 3, 5),
                                 maxTime: DateTime(2029, 6, 7),
                                 onChanged: (date) {
-                                  print('change $date');
                                 },
                                 onConfirm: (date) {
-                                  print('confirm $date');
                                   setState(() {
                                     datePicked = date;
                                   });
@@ -260,7 +253,7 @@ class _AddMovementState extends State<AddMovement> {
                               );
                             },
                             child: Text(
-                              text!.pick_a_date,
+                              text.pick_a_date,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
@@ -296,7 +289,7 @@ class _AddMovementState extends State<AddMovement> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          text!.save_button,
+                          text.save_button,
                           textAlign: TextAlign.center,
                         ),
                       ],

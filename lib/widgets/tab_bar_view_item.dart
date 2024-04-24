@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:econo_mia/widgets/transaction_item_row.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +17,6 @@ class _TabBarItemViewState extends State<TabBarItemView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _timeSelected = [true, false, false];
   }
