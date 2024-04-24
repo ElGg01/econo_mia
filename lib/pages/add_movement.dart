@@ -43,7 +43,7 @@ class _AddMovementState extends State<AddMovement> {
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection('users') // Colección 'users'
         .doc(user!.uid) // Documento 'usuario1'
-        .collection('assumption') // Subcolección 'assumption'
+        .collection('transactions') // Subcolección 'transactions'
         .doc(); // Crear un nuevo documento con ID automático
     // Obtener el ID del documento generado automáticamente
     String documentId = documentReference.id;
@@ -67,17 +67,14 @@ class _AddMovementState extends State<AddMovement> {
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
 
-
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
             text!.title_addMovement,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.bold,
-              fontSize: 24
-            ),
+            style:
+                GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 24),
           ),
         ),
         centerTitle: true,
@@ -109,7 +106,9 @@ class _AddMovementState extends State<AddMovement> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
@@ -140,7 +139,9 @@ class _AddMovementState extends State<AddMovement> {
                       onChanged: (value) {},
                     ),
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   SizedBox(
                     width: double.maxFinite,
                     child: Text(
@@ -152,7 +153,9 @@ class _AddMovementState extends State<AddMovement> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     child: CustomIconTextFormField(
                       icon: Icons.money,
@@ -160,7 +163,9 @@ class _AddMovementState extends State<AddMovement> {
                       controller: concept,
                     ),
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Container(
                     width: double.maxFinite,
                     child: Text(
@@ -172,7 +177,9 @@ class _AddMovementState extends State<AddMovement> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Container(
                     child: CustomIconTextFormField(
                       icon: Icons.monetization_on,
@@ -181,7 +188,9 @@ class _AddMovementState extends State<AddMovement> {
                       type: TextInputType.number,
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     width: double.maxFinite,
                     child: Text(
@@ -249,13 +258,15 @@ class _AddMovementState extends State<AddMovement> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // addMovement();
-                        if (valueItemDropDown == "Egreso"){
-                          addMovement(concept.text, double.parse(amount.text), 0, datePicked);
+                        if (valueItemDropDown == "Egreso") {
+                          addMovement(concept.text, double.parse(amount.text),
+                              0, datePicked);
                         } else {
-                          addMovement(concept.text, double.parse(amount.text), 1, datePicked);
+                          addMovement(concept.text, double.parse(amount.text),
+                              1, datePicked);
                         }
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -268,7 +279,8 @@ class _AddMovementState extends State<AddMovement> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(text!.save_button,
+                        Text(
+                          text!.save_button,
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -284,7 +296,4 @@ class _AddMovementState extends State<AddMovement> {
   }
 }
 
-enum TypeMovements {
-  earning,
-  expense
-}
+enum TypeMovements { earning, expense }
