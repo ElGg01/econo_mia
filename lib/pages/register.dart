@@ -48,8 +48,8 @@ class _RegisterState extends State<Register> {
         //Inicialización de subcolección
         //Es una inicialización de campos vacios solo para que se genere el usuario sin campos
         final datos = <String, dynamic>{
-          "monto": 0.0,
-          "fecha": DateTime.now(),
+          "expense": 0,
+          "name": "assumption",
         };
         //Subcoleccion de ingresos
         //!!!!!!!!!!!!!!CAMBIAR EL USUARIO AL ACTIVO
@@ -64,7 +64,15 @@ class _RegisterState extends State<Register> {
             .doc(credential!.uid)
             .collection('transactions')
             .doc();
-        refEgresos.set(datos);
+
+        // Datos a escribir
+        Map<String, dynamic> new_datos = {
+          'concepto': "apertura", // ID del documento
+          'fecha': Timestamp.fromDate(DateTime.now()), // Número de gasto
+          'monto': 100, // Nombre del gasto
+          'categoria': 1
+        };
+        refEgresos.set(new_datos);
 
         //Generación de campo SALDO, este cambiara con cada ingreso y egreso
         final refUsuario = db.collection('users').doc(credential!.uid);

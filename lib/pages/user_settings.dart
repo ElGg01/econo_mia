@@ -10,6 +10,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:econo_mia/auth/firebase_auth_services.dart';
 import 'package:econo_mia/ui/theme_mode_option.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
@@ -20,6 +21,7 @@ class UserSettings extends StatefulWidget {
 
 class _UserSettingsState extends State<UserSettings> {
   final FirebaseAuthService _auth = FirebaseAuthService();
+  final db = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
   late String _themeStringOption;
@@ -68,6 +70,7 @@ class _UserSettingsState extends State<UserSettings> {
 
   Future<void> _deleteAccount() async {
     try {
+      await db.collection('users').doc(user?.uid).delete();
       await _auth.deleteAccount();
       if (!context.mounted) return;
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);

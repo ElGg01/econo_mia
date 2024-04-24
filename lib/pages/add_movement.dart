@@ -18,7 +18,6 @@ class AddMovement extends StatefulWidget {
 
 class _AddMovementState extends State<AddMovement> {
   final _formKey = GlobalKey<FormState>();
-  String dropDownValue = 'MXN';
 
   TextEditingController concept = TextEditingController();
   TextEditingController amount = TextEditingController();
@@ -27,6 +26,15 @@ class _AddMovementState extends State<AddMovement> {
 
   DateTime now = DateTime.now();
   late DateTime datePicked = DateTime(now.year, now.month, now.day);
+  late String valueItemDropDown;
+  final List<String> listItemDropDown = ["Ingreso", "Egreso"];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    valueItemDropDown = "Ingreso";
+  }
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -59,15 +67,16 @@ class _AddMovementState extends State<AddMovement> {
   Widget build(BuildContext context) {
     AppLocalizations? text = AppLocalizations.of(context);
 
+
     return Scaffold(
       appBar: AppBar(
         title: BounceInDown(
           duration: const Duration(seconds: 1),
           child: Text(
-            "Añade un ingreso",
+            text!.title_addMovement,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
-              fontSize: 24,
+              fontSize: 24
             ),
           ),
         ),
@@ -81,207 +90,131 @@ class _AddMovementState extends State<AddMovement> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Container(
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Selecciona el tipo de movimiento:",
-                    style: GoogleFonts.poppins(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: CustomDropDownButton(
-                    dropDownValue: "Ingreso",
-                    elements: const ["Ingreso", "Egreso"],
-                  ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Nombre del movimiento:",
-                    style: GoogleFonts.poppins(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: CustomIconTextFormField(
-                    icon: Icons.money,
-                    label: "Concepto:",
-                    controller: concept,
-                  ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Monto del movimiento:",
-                    style: GoogleFonts.poppins(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Flexible(
-                        flex: 1,
-                        child: Icon(Icons.monetization_on),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.maxFinite,
+                    child: Text(
+                      text!.select_a_movement,
+                      style: GoogleFonts.poppins(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                      Flexible(
-                        flex: 2,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Cantidad',
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Introduce un valor";
-                            }
-                            return null;
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                    ),
+                    child: DropdownButton(
+                      value: valueItemDropDown,
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      items: listItemDropDown.map((String value) {
+                        return DropdownMenuItem(
+                          value: value,
+                          onTap: () {
+                            setState(() {
+                              valueItemDropDown = value;
+                            });
                           },
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d*\.?\d{0,2}$'),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        child: DropdownButtonHideUnderline(
-                          child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: DropdownButton(
-                              alignment: Alignment.center,
-                              value: dropDownValue,
-                              borderRadius: BorderRadius.circular(10),
-                              isExpanded: true,
-                              items: [
-                                DropdownMenuItem(
-                                  value: "MXN",
-                                  onTap: () {
-                                    setState(() {
-                                      dropDownValue = "MXN";
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "MXN",
-                                      style: GoogleFonts.poppins(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onBackground,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                DropdownMenuItem(
-                                  value: "USD",
-                                  onTap: () {
-                                    setState(() {
-                                      dropDownValue = "USD";
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "USD",
-                                      style: GoogleFonts.poppins(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onBackground,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              onChanged: (value) {},
+                          child: Text(
+                            value,
+                            style: GoogleFonts.poppins(
+                              color: Theme.of(context).colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Fecha del movimiento:",
-                    style: GoogleFonts.poppins(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                        );
+                      }).toList(),
+                      onChanged: (value) {},
                     ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 8,
+                  const SizedBox(height: 30,),
+                  SizedBox(
+                    width: double.maxFinite,
+                    child: Text(
+                      text!.name_movement,
+                      style: GoogleFonts.poppins(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Flexible(
-                        flex: 1,
-                        child: Icon(Icons.calendar_today),
+                  const SizedBox(height: 20,),
+                  Container(
+                    child: CustomIconTextFormField(
+                      icon: Icons.money,
+                      label: text!.concept,
+                      controller: concept,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Container(
+                    width: double.maxFinite,
+                    child: Text(
+                      text!.amount_movement,
+                      style: GoogleFonts.poppins(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          "${datePicked.day}/${datePicked.month}/${datePicked.year}",
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Container(
+                    child: CustomIconTextFormField(
+                      icon: Icons.monetization_on,
+                      label: text!.amount,
+                      controller: amount,
+                      type: TextInputType.number,
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+                  Container(
+                    width: double.maxFinite,
+                    child: Text(
+                      text!.date_movement,
+                      style: GoogleFonts.poppins(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Icon(Icons.calendar_today),
                         ),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: TextButton(
+                        Flexible(
+                          flex: 1,
+                          child: Text(
+                            "${datePicked.day}/${datePicked.month}/${datePicked.year}",
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          child: TextButton(
                             onPressed: () {
                               DatePicker.showDatePicker(
                                 context,
@@ -302,38 +235,56 @@ class _AddMovementState extends State<AddMovement> {
                               );
                             },
                             child: Text(
-                              'Selecciona la fecha',
+                              text!.pick_a_date,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(text.earning_saved_succesfully),
+                            ),
+                          ),
                         ),
-                      );
-                      // addMovement();
-                      // !! Hot change
-                    }
-                  },
-                  icon: const Icon(Icons.save),
-                  label: Text(text!.save_button),
-                ),
-              ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      if (_formKey.currentState!.validate()) {
+                        // addMovement();
+                        if (valueItemDropDown == "Egreso"){
+                          addMovement(concept.text, double.parse(amount.text), 0, datePicked);
+                        } else {
+                          addMovement(concept.text, double.parse(amount.text), 1, datePicked);
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(text.earning_saved_succesfully),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(text!.save_button,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
+
+enum TypeMovements {
+  earning,
+  expense
 }

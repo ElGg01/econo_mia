@@ -61,8 +61,8 @@
   "english_titleRadialButton": "Inglés",
   "spanish_titleRadialButton": "Español",
   "hello_homePage": "Hola",
-  "earnings": "Ingresos",
-  "expenses": "Egresos",
+  "earnings": "Ingreso",
+  "expenses": "Egreso",
   "totalBalance": "Saldo total",
   "addAccount_button": "Añadir cuenta",
   "rights_reserved": "© 2024 Los Truchis. Todos los derechos reservados",
@@ -105,5 +105,11 @@
   "title_lostConnectionPage": "Parece que no tienes Internet",
   "subtitle_lostConnectionPage": "Por favor, conectate a Internet para seguir usando nuestra app",
   "save_button": "Guardar",
-  "earning_saved_succesfully": "Earning saved successfully"
+  "earning_saved_succesfully": "Ganancia guardada correctamente",
+  "title_addMovement": "Añade un ingreso",
+  "select_a_movement": "Selecciona un movimiento",
+  "name_movement": "Nombre del movimiento",
+  "amount_movement": "Monto del movimiento",
+  "date_movement": "Fecha del movimiento",
+  "pick_a_date": "Selecciona la fecha"
 }

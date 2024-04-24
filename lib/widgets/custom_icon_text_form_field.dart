@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CustomIconTextFormField extends StatefulWidget {
+
   const CustomIconTextFormField({
     super.key,
     required this.icon,
     required this.label,
     required this.controller,
+    this.type = TextInputType.text,
   });
 
   final IconData icon;
   final String label;
   final TextEditingController controller;
+  final TextInputType? type;
 
   @override
   State<CustomIconTextFormField> createState() =>
@@ -33,6 +36,7 @@ class _CustomIconTextFormFieldState extends State<CustomIconTextFormField> {
         }
         return null; // Retorna null si la validación es exitosa
       },
+      keyboardType: widget.type,
       //onChanged: (value) => print(widget.controller.text),
     );
   }

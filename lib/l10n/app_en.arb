@@ -247,11 +247,11 @@
   "@hello_homePage": {
     "description": "Greenting from the home page"
   },
-  "earnings": "Earnings",
+  "earnings": "Earning",
   "@earnings": {
     "description": "Word earnings for all the app"
   },
-  "expenses": "Expenses",
+  "expenses": "Expense",
   "@expenses": {
     "description": "Word expenses for all the app"
   },
@@ -422,5 +422,26 @@
   "earning_saved_succesfully": "Earning saved successfully",
   "@earning_saved_succesfully": {
     "description": "Earning transaction saved"
-  }
+  },
+  "title_addMovement": "Add a movement",
+  "@title_addMovement": {
+    "description": "Title for add movement file"
+  },
+  "select_a_movement": "Select a movement",
+  "@select_a_movement": {
+    "description": "Heading for select a movement"
+  },
+  "name_movement": "Movement name",
+  "@name_movement": {
+    "description": "Heading name movement"
+  },
+  "amount_movement": "Amount of movement",
+  "@amount_movement": {
+    "description": "Heading amount movement"
+  },
+  "date_movement": "Date of movement",
+  "@date_movement": {
+    "description": "Heading date movement"
+  },
+  "pick_a_date": "Pick a date"
 }
