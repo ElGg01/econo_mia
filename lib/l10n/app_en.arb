@@ -367,7 +367,7 @@
   "@total_expenses": {
   "description": "total expenses"
   },
-  "total_remainders": "Total Remainders",
+  "total_remainders": "Total Reminders",
   "@total_remainders": {
   "description": "remanentes"
   },

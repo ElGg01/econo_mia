@@ -44,8 +44,7 @@ class _EmailVerificationState extends State<EmailVerification> {
     await user?.sendEmailVerification();
   }
 
-  Future<void> _backToLoginPage() async {
-    await user?.delete();
+  void _backToLoginPage() async {
     if (!context.mounted) return;
     Navigator.popAndPushNamed(context, '/login');
   }

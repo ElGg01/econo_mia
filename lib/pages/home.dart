@@ -24,7 +24,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   late PageController _controllerPageView;
   late PageController _controllerPageViewVertical;
-  int currentPageView = 0;
+  int currentPageView = DateTime.now().month - 1;
   int currentPageViewVertical = 0;
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late double balance = 0;
   late List<int> years = [];
   late int year = years[0];
-  late int month = 1;
+  late int month = DateTime.now().month;
 
   late List<ChartData> movements = [];
   List<Map<String, dynamic>> descriptionMovements = [];
@@ -54,6 +54,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
 
     db = FirebaseFirestore.instance;
+    print('init');
     _loadData();
     fetchYears();
   }
@@ -150,13 +151,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         }
       });
 
-      // Imprimimos o hacemos lo que necesites con los datos resumidos
-      movements.forEach((movement) {
-        print(
-            'Día: ${movement.x}, ingreso: ${movement.y}, egreso: ${movement.z}');
-      });
     } catch (e) {
-      print(e);
+      print("Some error happened");
     }
   }
 
@@ -197,12 +193,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     try {
       await db.collection('users').doc(user!.uid).get().then((data) {
         setState(() {
-          balance = data.data()!['saldo'];
+          balance = double.parse(data.data()!['saldo'].toString());
         });
-        print("El balance es: ${balance}");
       });
     } catch (e){
-      print("Some error happened");
+      print("Some error happened $e");
     }
   }
 

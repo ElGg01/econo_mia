@@ -34,6 +34,7 @@ class _AddMovementState extends State<AddMovement> {
   }
 
   User? user = FirebaseAuth.instance.currentUser;
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   void addMovement(
       String concept, double amount, int category, DateTime date) async {
@@ -50,11 +51,12 @@ class _AddMovementState extends State<AddMovement> {
         .collection('users')
         .doc(user!.uid)
         .get();
-    double currentBalance = userData['saldo'];
+    double currentBalance = double.parse(userData['saldo'].toString());
+
     // Datos a escribir
     Map<String, dynamic> datos = {
       'id': documentId, // ID del documento
-      'monto': amount, // Número de gasto
+      'monto': amount.toInt(), // Número de gasto
       'concepto': concept, // Nombre del gasto
       'categoria': category,
       'fecha': date,
@@ -63,16 +65,25 @@ class _AddMovementState extends State<AddMovement> {
     // Escribir los datos en el documento
     documentReference.set(datos).then((value) async {
       if (category == 0) {
-        await FirebaseFirestore.instance
+        await db
             .collection('users')
             .doc(user!.uid)
             .update({'saldo': (currentBalance - amount)});
       } else {
-        await FirebaseFirestore.instance
+        await db
             .collection('users')
             .doc(user!.uid)
             .update({'saldo': (currentBalance + amount)});
       }
+      db.collection('users').doc(user!.uid).update(
+        {
+          "saldo": FieldValue.increment(
+            category == 1
+                ? datos["monto"]
+                : -datos["monto"]
+          ),
+        },
+      );
     }).catchError((error) {
       return null;
     });

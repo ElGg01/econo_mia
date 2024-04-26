@@ -32,7 +32,8 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
   Future<void> fetchUserTotalBalance() async {
     await db.collection('users').doc(user!.uid).get().then((data) {
       setState(() {
-        balance = data.data()!['saldo'];
+        balance =  double.parse(data.data()!['saldo'].toString());
+
       });
     });
   }
@@ -47,7 +48,7 @@ class _ExpenseAssumptionState extends State<ExpenseAssumption> {
           .get();
 
       querySnapshot.docs.forEach((doc) {
-        totalExpenses += doc['expense'] ?? 0; // Sumar los valores de 'expense'
+        totalExpenses += double.parse((doc['expense'] ?? 0).toString());
       });
 
       setState(() {
