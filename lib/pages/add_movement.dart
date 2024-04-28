@@ -24,13 +24,13 @@ class _AddMovementState extends State<AddMovement> {
 
   DateTime now = DateTime.now();
   late DateTime datePicked = DateTime(now.year, now.month, now.day);
-  late String valueItemDropDown;
-  final List<String> listItemDropDown = ["Ingreso", "Egreso"];
+  late int? valueItemDropDown;
+  // final List<String> listItemDropDown = ["Egreso", "Ingreso"];
 
   @override
   void initState() {
     super.initState();
-    valueItemDropDown = "Ingreso";
+    valueItemDropDown = 1;
   }
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -91,7 +91,10 @@ class _AddMovementState extends State<AddMovement> {
 
   @override
   Widget build(BuildContext context) {
+
     AppLocalizations? text = AppLocalizations.of(context);
+    List<String> listItemDropDown =
+      [text!.expenses.toString(), text.earnings.toString()];
 
     return Scaffold(
       appBar: AppBar(
@@ -144,25 +147,35 @@ class _AddMovementState extends State<AddMovement> {
                       value: valueItemDropDown,
                       isExpanded: true,
                       underline: const SizedBox(),
-                      items: listItemDropDown.map((String value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          onTap: () {
-                            setState(() {
-                              valueItemDropDown = value;
-                            });
-                          },
+                      items: [
+                        DropdownMenuItem(
+                          value: 0,
                           child: Text(
-                            value,
+                            text.expenses,
                             style: GoogleFonts.poppins(
                               color: Theme.of(context).colorScheme.onBackground,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {},
+                        ),
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text(
+                            text.earnings,
+                            style: GoogleFonts.poppins(
+                              color: Theme.of(context).colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ].toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          valueItemDropDown = newValue;
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -281,7 +294,7 @@ class _AddMovementState extends State<AddMovement> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // addMovement();
-                        if (valueItemDropDown == "Egreso") {
+                        if (valueItemDropDown == listItemDropDown[0]) {
                           addMovement(concept.text, double.parse(amount.text),
                               0, datePicked);
                         } else {

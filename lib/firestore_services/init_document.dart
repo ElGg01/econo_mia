@@ -81,7 +81,9 @@ class InitDocument {
 
   }
 
-  static Future<bool> checkIfDocumentExists(CollectionReference<Map<String, dynamic>> collectionReference, User? user) async{
+  static Future<bool> checkIfDocumentExists(
+      CollectionReference<Map<String, dynamic>> collectionReference,
+      User? user) async{
     DocumentSnapshot<Map<String, dynamic>> doc = await collectionReference.doc(user!.uid).get();
     return doc.exists;
   }

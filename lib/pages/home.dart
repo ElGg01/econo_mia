@@ -345,7 +345,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         color:
                             movement['monto'] < 0 ? Colors.red : Colors.green),
                   ),
-                  trailing: Text(movement['fecha']),
+                  trailing: Text(movement['fecha'],
+                    style: const TextStyle(
+                      fontSize: 16
+                    ),
+                  ),
                 );
               },
               separatorBuilder: (context, index) => const Divider(
