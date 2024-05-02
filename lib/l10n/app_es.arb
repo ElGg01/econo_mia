@@ -111,5 +111,6 @@
   "name_movement": "Nombre del movimiento",
   "amount_movement": "Monto del movimiento",
   "date_movement": "Fecha del movimiento",
-  "pick_a_date": "Selecciona la fecha"
+  "pick_a_date": "Selecciona la fecha",
+  "select_count": "Selecciona Una Cuenta"
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomIconTextFormField extends StatefulWidget {
-
   const CustomIconTextFormField({
     super.key,
     required this.icon,
@@ -23,6 +23,7 @@ class CustomIconTextFormField extends StatefulWidget {
 class _CustomIconTextFormFieldState extends State<CustomIconTextFormField> {
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? text = AppLocalizations.of(context);
     return TextFormField(
       controller: widget.controller,
       decoration: InputDecoration(
@@ -32,7 +33,7 @@ class _CustomIconTextFormFieldState extends State<CustomIconTextFormField> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Por favor, ingresa al menos una letra.';
+          return text!.please_enter_oneletter;
         }
         return null; // Retorna null si la validación es exitosa
       },
