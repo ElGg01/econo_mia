@@ -443,5 +443,13 @@
   "@date_movement": {
     "description": "Heading date movement"
   },
-  "pick_a_date": "Pick a date"
+  "pick_a_date": "Pick a date",
+  "@pick_a_date":{
+    "description": "pick"
+  },
+  "select_count": "Select An Account",
+  "@select_count":{
+    "description": "Select an account"
+  }
+
 }

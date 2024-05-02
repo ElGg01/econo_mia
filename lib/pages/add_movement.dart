@@ -265,8 +265,7 @@ class _AddMovementState extends State<AddMovement> {
                                 showTitleActions: true,
                                 minTime: DateTime(2018, 3, 5),
                                 maxTime: DateTime(2029, 6, 7),
-                                onChanged: (date) {
-                                },
+                                onChanged: (date) {},
                                 onConfirm: (date) {
                                   setState(() {
                                     datePicked = date;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDropDownButton extends StatefulWidget {
   CustomDropDownButton({
@@ -18,13 +19,15 @@ class CustomDropDownButton extends StatefulWidget {
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   @override
   Widget build(BuildContext context) {
+    AppLocalizations? text = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 1),
       ),
       child: DropdownButton(
-        hint: const Text("Selecciona una cuenta"),
+        hint: Text(text!.select_count),
         value: widget.dropDownValue,
         isExpanded: true,
         underline: const SizedBox(),
