@@ -55,7 +55,6 @@ class _AddMovementState extends State<AddMovement> {
 
     // Datos a escribir
     Map<String, dynamic> datos = {
-      'id': documentId, // ID del documento
       'monto': amount.toInt(), // Número de gasto
       'concepto': concept, // Nombre del gasto
       'categoria': category,
@@ -292,14 +291,7 @@ class _AddMovementState extends State<AddMovement> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // addMovement();
-                        if (valueItemDropDown == int.parse(listItemDropDown[0])) {
-                          addMovement(concept.text, double.parse(amount.text),
-                              0, datePicked);
-                        } else {
-                          addMovement(concept.text, double.parse(amount.text),
-                              1, datePicked);
-                        }
+                        addMovement(concept.text, double.parse(amount.text), valueItemDropDown!, datePicked);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(text.earning_saved_succesfully),

@@ -31,7 +31,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   late double balance = 0;
   late List<int> years = [];
-  late int year = years[0];
+  late int year = DateTime.now().year;
   late int month = DateTime.now().month;
 
   late List<ChartData> movements = [];
@@ -180,7 +180,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       // Actualiza el estado del widget con los nuevos datos
       setState(() {
         years = uniqueYears;
-        print(years);
       });
       fillMonthMovements();
     } catch (e) {
