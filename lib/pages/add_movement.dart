@@ -293,7 +293,7 @@ class _AddMovementState extends State<AddMovement> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // addMovement();
-                        if (valueItemDropDown == listItemDropDown[0]) {
+                        if (valueItemDropDown == int.parse(listItemDropDown[0])) {
                           addMovement(concept.text, double.parse(amount.text),
                               0, datePicked);
                         } else {
